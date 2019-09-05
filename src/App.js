@@ -1,26 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// in src/App.js
+import React from "react";
+import { Admin, Resource } from "react-admin";
+import { Vehicles } from "./Vehicles";
+import { Vehicle } from "./Vehicle";
+import { getVehicles } from "./api/getVehicles";
+import dataProvider from "./dataprovider";
 
-function App() {
+//const dataProvider = jsonServerProvider('http://jsonplaceholder.typicode.com');
+
+const App = () => {
+  getVehicles().then(res => console.log(res));
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Admin dataProvider={dataProvider}>
+      {/* <Resource name="albums" list={UserList}   edit={EditGuesser} /> */}
+      <Resource name="vehicles" list={Vehicles} edit={Vehicle} />
+    </Admin>
   );
-}
+};
 
 export default App;
