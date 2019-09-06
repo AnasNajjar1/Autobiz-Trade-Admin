@@ -14,8 +14,7 @@ import { getVehicles } from "./market/dataproviderMarket";
 import { getVehicle } from "./market/dataproviderMarket";
 import { getAuction } from "./market/dataproviderMarket";
 import { updateVehicle } from "./market/dataproviderMarket";
-import { getUsers } from "./users/dataproviderUsers";
-import { getUser } from "./users/dataproviderUsers";
+import { getUserData } from "./users/dataproviderUsers";
 
 const API_URL = "my.api.url";
 
@@ -177,31 +176,3 @@ const getAuctionData = (type, resource, params) => {
   }
 };
 
-const getUserData = (type, resource, params) => {
-  switch (type) {
-    case GET_LIST: {
-      return getUsers().then(res => {
-        const users = res.Users.map(user=>{
-          console.log(user)
-          user.id = user.Username
-          user.Attributes.forEach(({Name, Value})=>{
-            user[Name] = Value
-          })
-          return user
-        })
-        return { data: users, total: res.Users.length }
-      });
-    }
-    case GET_ONE: {
-      return getUser().then(user => {
-        console.log(user)
-        user.id = user.Username
-        user.UserAttributes.forEach(({Name, Value})=>{
-          user[Name] = Value
-        })
-        return user
-      })
-    }
-    case UPDATE: {}
-  }
-};

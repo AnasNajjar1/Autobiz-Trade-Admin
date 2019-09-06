@@ -5,7 +5,6 @@ import { Vehicles } from "./market/Vehicles";
 import { Vehicle } from "./market/Vehicle";
 import { Users } from "./users/Users";
 import User from "./users/User";
-import { getVehicles } from "./market/getVehicles";
 import dataProvider from "./dataprovider";
 import Amplify, { Auth, API } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react";

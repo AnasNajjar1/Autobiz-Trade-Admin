@@ -3,11 +3,19 @@ import { B2B_API } from '../config'
 import _ from "lodash";
 
 export const getVehicle = async (id) => {
-    const result = await axios.get(
+  let auction = axios.get(
+    `${B2B_API}/auction?id=${id}`
+  );
+  let record = axios.get(
     `${B2B_API}/record?id=${id}`
   );
-  console.log(result.data)
-    return result.data
+
+  record = await record
+  auction = await auction
+  const result = record.data
+  result.auction = auction.data
+  
+  return result
 }
 
 

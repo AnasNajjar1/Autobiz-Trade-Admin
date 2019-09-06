@@ -18,7 +18,7 @@ const config = {
         userPoolId: 'eu-west-1_YYMUabLh6',
 
         // OPTIONAL - Amazon Cognito Web Client ID (26-char alphanumeric string)
-        userPoolWebClientId: 'o9vmmt4oco9kiju1nk0fqacf',
+        userPoolWebClientId: '6eaakrfqbdouvvshcku3bl3feq',
 
         // OPTIONAL - Enforce user authentication prior to accessing AWS resources or not
         mandatorySignIn: false,
