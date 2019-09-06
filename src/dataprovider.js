@@ -10,10 +10,12 @@ import {
   fetchUtils
 } from "react-admin";
 import { stringify } from "query-string";
-import { getVehicles } from "./api/getVehicles";
-import { getVehicle } from "./api/getVehicle";
-import { getAuction } from "./api/getAuction";
-import { updateVehicle } from "./api/updateVehicle";
+import { getVehicles } from "./market/dataproviderMarket";
+import { getVehicle } from "./market/dataproviderMarket";
+import { getAuction } from "./market/dataproviderMarket";
+import { updateVehicle } from "./market/dataproviderMarket";
+import { getUsers } from "./users/dataproviderUsers";
+import { getUser } from "./users/dataproviderUsers";
 
 const API_URL = "my.api.url";
 
@@ -116,11 +118,14 @@ export default (type, resource, params) => {
   console.log("test", type, resource, params);
 
   switch (resource) {
-    case "vehicles": {
-      return getVehicleData(type, resource, params);
+    case "market": {
+      return getMarketData(type, resource, params);
     }
     case "auctions": {
       return getAuctionData(type, resource, params);
+    }
+    case "users": {
+      return getUserData(type, resource, params)
     }
   }
 
@@ -136,7 +141,7 @@ export default (type, resource, params) => {
   );
 };
 
-const getVehicleData = (type, resource, params) => {
+const getMarketData = (type, resource, params) => {
   switch (type) {
     case GET_LIST: {
       return getVehicles().then(res => ({ data: res.Items, total: res.Count }));
@@ -169,5 +174,34 @@ const getAuctionData = (type, resource, params) => {
         return { data: res };
       });
     }
+  }
+};
+
+const getUserData = (type, resource, params) => {
+  switch (type) {
+    case GET_LIST: {
+      return getUsers().then(res => {
+        const users = res.Users.map(user=>{
+          console.log(user)
+          user.id = user.Username
+          user.Attributes.forEach(({Name, Value})=>{
+            user[Name] = Value
+          })
+          return user
+        })
+        return { data: users, total: res.Users.length }
+      });
+    }
+    case GET_ONE: {
+      return getUser().then(user => {
+        console.log(user)
+        user.id = user.Username
+        user.UserAttributes.forEach(({Name, Value})=>{
+          user[Name] = Value
+        })
+        return user
+      })
+    }
+    case UPDATE: {}
   }
 };

@@ -30,29 +30,6 @@ export const Vehicle = props => {
   );
 };
 
-// <Edit title="Edit vehicle" {...props}>
-//     <SimpleForm>
-//         <DisabledInput label="Id" source="id" />
-//         <TextInput label="Brand" source="content.vehicle.modelLabel" />
-//         <TextInput label="Model"  source="content.vehicle.brandLabel" />
-//         <TextInput label="Gear"  source="content.vehicle.gearLabel" />
-//         <NumberInput label="Mileage" source="content.vehicle.mileage" />
-//         <DateInput source="content.vehicle.firstRegistrationDate" />
-//         <ImageInput source="content.vehicle.carPictures.front_picture" title="front_picture" />
-//         <DateInput label="Publication date" source="published_at" />
-//         <ReferenceField source="id" reference="auctions">
-//             <TextField label="Max auction" source="auctionInfos.maxAuction" />
-//         </ReferenceField>
-//         {/* <ReferenceManyField label="Comments" reference="comments" target="post_id">
-//             <Datagrid>
-//                 <TextField source="body" />
-//                 <DateField source="created_at" />
-//                 <EditButton />
-//             </Datagrid>
-//         </ReferenceManyField> */}
-//     </SimpleForm>
-// </Edit>
-
 const generateForm = function(schema, parent = "") {
   const mainTab = [];
   const content = Object.entries(schema).map(([key, value]) => {
