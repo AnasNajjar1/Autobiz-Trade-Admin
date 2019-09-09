@@ -13,6 +13,8 @@ import {
 const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-west-1" });
 
+const UserPoolId = "eu-west-1_YYMUabLh6" 
+
 
 export const getUserData = async (type, resource, params) => {
   console.log(type, resource, params)
@@ -22,14 +24,11 @@ export const getUserData = async (type, resource, params) => {
         const users = res.Users.map(user=>{
           return user = formatUserData(user, "Attributes")
         })
-        console.log(users)
         return { data: users, total: res.Users.length }
     }
     case GET_ONE: {
       let user = await getUser(params.id)
-      console.log("user before",user)
       user = formatUserData(user)
-      console.log("user after", user)
       return { data : user }
     }
     case UPDATE: {
@@ -40,7 +39,7 @@ export const getUserData = async (type, resource, params) => {
       }
       const username = params.id
 
-      await updateAttributes(username, b2bRole, params)
+      await updateAttributes(username, b2bRole)
       let user = await getUser(username)
       user = formatUserData(user)
       console.log("user retrived", user)
@@ -51,18 +50,8 @@ export const getUserData = async (type, resource, params) => {
   }
 };
 
-
-var params = {
-  UserPoolId: "eu-west-1_YYMUabLh6" /* required */
-  // AttributesToGet: [
-  //   'STRING_VALUE',
-  //   /* more items */
-  // ],
-  // Filter: 'STRING_VALUE',
-  // Limit: 'NUMBER_VALUE',
-  // PaginationToken: 'STRING_VALUE'
-};
 export async function getUser(username) {
+  const params = {UserPoolId}
   params.Username = username
   AWS.config.credentials = await Auth.currentUserCredentials();
   var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
@@ -72,6 +61,7 @@ export async function getUser(username) {
 }
 
 export async function getUsers() {
+    const params = {UserPoolId}
     AWS.config.credentials = await Auth.currentUserCredentials();
     var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
     const data = await cognitoidentityserviceprovider.listUsers(params).promise();
@@ -82,6 +72,7 @@ export async function getUsers() {
   export async function updateAttributes(username, attr) {
     AWS.config.credentials = await Auth.currentUserCredentials();
     var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider({apiVersion: '2016-04-18'});
+    const params = {UserPoolId}
     params.Username = username
     params.UserAttributes = [attr]
     console.log(params)
