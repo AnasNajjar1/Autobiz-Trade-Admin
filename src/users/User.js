@@ -18,6 +18,7 @@ const User = props => (
       <SelectInput source="custom:b2bRole" choices={[
           { id: 'read', name: 'read' },
           { id: 'auctionneer', name: 'auctionneer' },
+          { id: 'supervisor', name: 'supervisor' },
           { id: 'admin', name: 'admin' },
       ]} />
     </SimpleForm>

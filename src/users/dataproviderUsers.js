@@ -14,30 +14,23 @@ const AWS = require("aws-sdk");
 AWS.config.update({ region: "eu-west-1" });
 
 
-export const getUserData = (type, resource, params) => {
+export const getUserData = async (type, resource, params) => {
+  console.log(type, resource, params)
   switch (type) {
     case GET_LIST: {
-      return getUsers().then(res => {
+      const res = await getUsers()
         const users = res.Users.map(user=>{
-          console.log(user)
-          user.id = user.Username
-          user.Attributes.forEach(({Name, Value})=>{
-            user[Name] = Value
-          })
-          return user
+          return user = formatUserData(user, "Attributes")
         })
+        console.log(users)
         return { data: users, total: res.Users.length }
-      });
     }
     case GET_ONE: {
-      return getUser(params.id).then(user => {
-        console.log(user)
-        user.id = user.Username
-        user.UserAttributes.forEach(({Name, Value})=>{
-          user[Name] = Value
-        })
-        return { data : user }
-      })
+      let user = await getUser(params.id)
+      console.log("user before",user)
+      user = formatUserData(user)
+      console.log("user after", user)
+      return { data : user }
     }
     case UPDATE: {
       console.log("update user", params)
@@ -47,9 +40,12 @@ export const getUserData = (type, resource, params) => {
       }
       const username = params.id
 
-      return updateAttributes(username, b2bRole, params).then(() =>{
-        return { data : {} }
-      })
+      await updateAttributes(username, b2bRole, params)
+      let user = await getUser(username)
+      user = formatUserData(user)
+      console.log("user retrived", user)
+      return { data : user }
+
       //return update(params.id, )
     }
   }
@@ -92,4 +88,13 @@ export async function getUsers() {
     const data = await cognitoidentityserviceprovider.adminUpdateUserAttributes(params).promise();
     console.log("data", data);
     return data;
+  }
+
+  function formatUserData(userInput, attr = "UserAttributes"){
+    const userOutput = {}
+    userOutput.id = userInput.Username
+    userInput[attr].forEach(({Name, Value})=>{
+      userOutput[Name] = Value
+      })
+    return userOutput
   }

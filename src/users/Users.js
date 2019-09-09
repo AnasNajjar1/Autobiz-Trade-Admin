@@ -15,7 +15,7 @@ export const Users = props => (
   <List {...props}>
     <Datagrid rowClick="edit">
       <TextField label="id" source="id" />
-      <TextField label="Username" source="Username" />
+      <TextField label="role" source="custom:b2bRole" />
       <TextField label="email" source="email" />
     </Datagrid>
   </List>
