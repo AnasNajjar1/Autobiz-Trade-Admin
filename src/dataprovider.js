@@ -114,7 +114,7 @@ const convertHTTPResponseToDataProvider = (
  * @returns {Promise} the Promise for response
  */
 export default (type, resource, params) => {
-  console.log("test", type, resource, params);
+  //console.log("test", type, resource, params);
 
   switch (resource) {
     case "market": {
@@ -124,7 +124,7 @@ export default (type, resource, params) => {
       return getAuctionData(type, resource, params);
     }
     case "users": {
-      return getUserData(type, resource, params)
+      return getUserData(type, resource, params);
     }
   }
 
@@ -175,4 +175,3 @@ const getAuctionData = (type, resource, params) => {
     }
   }
 };
-

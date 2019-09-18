@@ -1,4 +1,5 @@
 import { createMuiTheme } from "@material-ui/core/styles";
+import lowerCase from "lower-case";
 export const muiThemeOverrides = createMuiTheme({
   overrides: {
     MuiTab: {
@@ -9,8 +10,9 @@ export const muiThemeOverrides = createMuiTheme({
         }
       },
       labelContainer: {
-        paddingLeft: "12px !important",
-        paddingRight: "12px !important"
+        paddingLeft: "8px !important",
+        paddingRight: "8px !important",
+        textTransform: "capitalize"
       }
     }
   }
