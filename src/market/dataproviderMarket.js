@@ -1,23 +1,18 @@
-import axios from "axios"
-import { B2B_API } from '../config'
+import axios from "axios";
+import { B2B_API } from "../config";
 import _ from "lodash";
 
-export const getVehicle = async (id) => {
-  let auction = axios.get(
-    `${B2B_API}/auction?id=${id}`
-  );
-  let record = axios.get(
-    `${B2B_API}/record?id=${id}`
-  );
+export const getVehicle = async id => {
+  let auction = axios.get(`${B2B_API}/auction?id=${id}`);
+  let record = axios.get(`${B2B_API}/record?id=${id}`);
 
-  record = await record
-  auction = await auction
-  const result = record.data
-  result.auction = auction.data
-  
-  return result
-}
+  record = await record;
+  auction = await auction;
+  const result = record.data;
+  result.auction = auction.data;
 
+  return result;
+};
 
 export const getVehicles = async (query = {}) => {
   let apiQuery = {
@@ -105,13 +100,11 @@ export const getVehicles = async (query = {}) => {
   return result.data;
 };
 
-export const getAuction = async (id) => {
-  const result = await axios.get(
-  `${B2B_API}/auction?id=${id}`
-);
-console.log(result.data)
-return result.data
-}
+export const getAuction = async id => {
+  const result = await axios.get(`${B2B_API}/auction?id=${id}`);
+  console.log(result.data);
+  return result.data;
+};
 
 export const updateVehicle = async (id, data) => {
   console.log("PUT", `${B2B_API}/record?id=${id}`, data);

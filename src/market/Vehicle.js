@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Create,
   Edit,
   TextInput,
   DateInput,
@@ -24,12 +25,21 @@ import { fuelChoices } from "./assets/fuelChoices";
 import { gearChoices } from "./assets/gearChoices";
 import { statusChoices } from "./assets/statusChoices";
 
-export const Vehicle = props => {
+export const editVehicle = props => {
   const form = generateForm(vehSchema, "");
   return (
     <Edit {...props}>
       <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
     </Edit>
+  );
+};
+
+export const createVehicle = props => {
+  const form = generateForm(vehSchema, "");
+  return (
+    <Create {...props}>
+      <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
+    </Create>
   );
 };
 
