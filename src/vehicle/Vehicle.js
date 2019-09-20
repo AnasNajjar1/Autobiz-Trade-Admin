@@ -26,7 +26,7 @@ import { gearChoices } from "./assets/gearChoices";
 import { statusChoices } from "./assets/statusChoices";
 
 export const editVehicle = props => {
-  const form = generateForm(vehSchema, "");
+  const form = generateForm(vehSchema);
   return (
     <Edit {...props}>
       <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
@@ -35,7 +35,7 @@ export const editVehicle = props => {
 };
 
 export const createVehicle = props => {
-  const form = generateForm(vehSchema, "");
+  const form = generateForm(vehSchema);
   return (
     <Create {...props}>
       <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
@@ -68,6 +68,8 @@ const required = (message = "Required") => value => {
 
 const generateField = (key, content, parentSource, isRequired) => {
   let source = "";
+
+  console.log(parentSource, parentSource !== "");
   if (parentSource !== "") {
     source = `${parentSource}.`;
   }
@@ -90,12 +92,14 @@ const generateField = (key, content, parentSource, isRequired) => {
       return generateField(
         field,
         content.properties[field],
-        `${parentSource}.${key}`,
+        `${source}`,
         required.includes(field)
       );
     });
     return fields;
   }
+
+  console.log("##info : ", key, source);
 
   switch (name) {
     case "string":

@@ -4,7 +4,7 @@ exports.vehSchema = {
   properties: {
     fileNumber: {
       type: "string",
-      name: "string" // Edit Marceau
+      name: "string"
     },
     salesInfos: {
       type: "object",
@@ -153,16 +153,17 @@ exports.vehSchema = {
         }
       },
       required: [
-        "brandLabel",
+        /*         "brandLabel",
         "brandId",
         "modelId",
         "versionLabel",
         "versionId",
         "firstRegistrationDate",
         "profileCosts",
-        "carPictures"
+        "carPictures" */
       ]
     },
+
     pointOfSale: {
       type: "object",
       properties: {
@@ -184,8 +185,11 @@ exports.vehSchema = {
           name: "string"
         }
       },
-      required: ["pointOfSaleName", "zipCode", "city", "country"]
+      required: [
+        /* "pointOfSaleName", "zipCode", "city", "country" */
+      ]
     },
+
     keyPoints: {
       type: "object",
       properties: {
@@ -206,7 +210,9 @@ exports.vehSchema = {
           name: "array"
         }
       },
-      required: ["keyPoints"]
+      required: [
+        /* "keyPoints" */
+      ]
     },
     documents: {
       type: "object",
@@ -246,7 +252,7 @@ exports.vehSchema = {
           name: "array"
         }
       },
-      required: ["equipments"]
+      required: []
     },
     characteristics: {
       type: "object",
@@ -425,7 +431,7 @@ exports.vehSchema = {
         }
       },
       required: [
-        "mileage",
+        /*         "mileage",
         "fuelLabel",
         "liter",
         "gearBoxLabel",
@@ -438,7 +444,7 @@ exports.vehSchema = {
         "wheelsFrontDimensions",
         "wheelsBackDimensions",
         "rimTypeFront",
-        "rimTypeBack"
+        "rimTypeBack" */
       ]
     },
     administrativeDetails: {
@@ -462,7 +468,9 @@ exports.vehSchema = {
           name: "string"
         }
       },
-      required: ["gcDate", "vehicleType", "co2"]
+      required: [
+        /* "gcDate", "vehicleType", "co2" */
+      ]
     },
     history: {
       type: "object",
@@ -496,10 +504,10 @@ exports.vehSchema = {
         }
       },
       required: [
-        "servicingHistory",
+        /*         "servicingHistory",
         "nextTechnicalCheckDate",
         "lastservicingDate",
-        "purchaseInvoice"
+        "purchaseInvoice" */
       ]
     },
     constructorEquipments: {

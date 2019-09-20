@@ -8685,6 +8685,14 @@ ra-data-json-server@^2.9.6:
     query-string "~5.1.1"
     ra-core "^2.9.6"
 
+ra-data-simple-rest@^2.9.6:
+  version "2.9.6"
+  resolved "https://registry.yarnpkg.com/ra-data-simple-rest/-/ra-data-simple-rest-2.9.6.tgz#cd19d2d0bf7e864755479d88c6bf56f3b50978d9"
+  integrity sha512-t+nJTxz7eEBoeQ6J6zYNcrGc97yz7ISSQT2iQJjAcU7JAlkNKTsV0XPYlW0v13d4yMiKYTbfsDQ+8yVqe7ql1A==
+  dependencies:
+    query-string "~5.1.1"
+    ra-core "^2.9.6"
+
 ra-language-english@^2.9.3:
   version "2.9.3"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-2.9.3.tgz#346528ad8bc54c16ba23c011b7866d98541c6d7b"

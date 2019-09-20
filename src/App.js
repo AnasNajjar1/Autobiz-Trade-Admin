@@ -1,7 +1,7 @@
 // in src/App.js
 import React from "react";
 import { Admin, Resource, Login } from "react-admin";
-import market from "./market";
+import vehicle from "./vehicle";
 import { Users } from "./users/Users";
 import User from "./users/User";
 import dataProvider from "./dataprovider";
@@ -25,7 +25,7 @@ const App = () => {
     >
       {permissions => [
         // Restrict access to the edit and remove views to admin only
-        <Resource name="market" {...market} />,
+        <Resource name="vehicle" {...vehicle} />,
         // Only include the categories resource for admin users
         permissions === "admin" ? (
           <Resource name="users" list={Users} edit={User} />
