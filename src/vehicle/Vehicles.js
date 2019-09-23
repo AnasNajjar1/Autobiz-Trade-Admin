@@ -17,12 +17,12 @@ const PostFilter = props => (
       defaultValue=""
       alwaysOn
     />
-    <TextInput
+    {/*     <TextInput
       label="BRAND"
       source="content.vehicle.brandLabel"
       defaultValue=""
       alwaysOn
-    />
+    /> */}
   </Filter>
 );
 
