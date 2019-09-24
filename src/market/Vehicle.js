@@ -17,7 +17,7 @@ import {
 } from "react-admin";
 import RimSizeInput from "./components/RimSizeInput";
 import { DateTimeInput } from "react-admin-date-inputs";
-import MomentUtils from "material-ui-pickers/utils/moment-utils";
+import MomentUtils from '@date-io/moment';
 import frLocale from "date-fns/locale/fr";
 import { vehSchema } from "./assets/contentVehicle";
 import { fuelChoices } from "./assets/fuelChoices";
