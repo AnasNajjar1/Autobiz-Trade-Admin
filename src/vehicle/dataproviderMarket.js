@@ -1,25 +1,17 @@
-import axios from "axios"
-import { B2B_API } from '../config'
+import axios from "axios";
+import { B2B_API } from "../config";
 import _ from "lodash";
 
-export const getVehicle = async (id) => {
-  let auction = axios.get(
-    `${B2B_API}/auction?id=${id}`
-  );
-  let record = axios.get(
-    `${B2B_API}/record?id=${id}`
-  );
-
-  record = await record
-  auction = await auction
-  const result = record.data
-  result.auction = auction.data
-  
-  return result
-}
-
+export const getVehicle = async id => {
+  const result = await axios.get(`${B2B_API}/vehicle/${id}`);
+  console.log("result push", result.data);
+  return result.data;
+};
 
 export const getVehicles = async (query = {}) => {
+  const r = await axios.get(`${B2B_API}/vehicle`);
+  return r.data;
+
   let apiQuery = {
     ProjectionExpression:
       "id, content.fileNumber, content.vehicle.brandLabel, content.vehicle.modelLabel, content.vehicle.versionLabel, content.vehicle.firstRegistrationDate, content.vehicle.fuelLabel, content.vehicle.mileage, content.vehicle.profileCosts, content.vehicle.carPictures.front_picture, content.pointOfSale.city, content.pointOfSale.zipCode, content.salesInfo.#TYPE"
@@ -105,17 +97,27 @@ export const getVehicles = async (query = {}) => {
   return result.data;
 };
 
-export const getAuction = async (id) => {
-  const result = await axios.get(
-  `${B2B_API}/auction?id=${id}`
-);
-console.log(result.data)
-return result.data
-}
+export const getAuction = async id => {
+  const result = await axios.get(`${B2B_API}/auction?id=${id}`);
+  console.log(result.data);
+  return result.data;
+};
 
 export const updateVehicle = async (id, data) => {
   console.log("PUT", `${B2B_API}/record?id=${id}`, data);
   const result = await axios.put(`${B2B_API}/record?id=${id}`, data);
+  console.log("result push", result.data);
+  return result.data;
+};
+
+export const createVehicle = async data => {
+  const result = await axios.post(`${B2B_API}/vehicle`, data);
+  console.log("result push", result.data);
+  return result.data;
+};
+
+export const deleteVehicle = async id => {
+  const result = await axios.delete(`${B2B_API}/vehicle/${id}`);
   console.log("result push", result.data);
   return result.data;
 };

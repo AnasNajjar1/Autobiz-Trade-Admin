@@ -1,10 +1,10 @@
 export const gearChoices = [
   {
     id: 1,
-    name: "MANUELLE"
+    name: "Manuelle"
   },
   {
     id: 2,
-    name: "AUTOMATIQUE"
+    name: "Automatique"
   }
 ];

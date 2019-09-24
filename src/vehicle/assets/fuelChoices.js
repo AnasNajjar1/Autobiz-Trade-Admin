@@ -1,11 +1,11 @@
 export const fuelChoices = [
   {
     id: 1,
-    name: "ESSENCE"
+    name: "Essence"
   },
   {
     id: 2,
-    name: "DIESEL"
+    name: "Diesel"
   },
   {
     id: 3,
@@ -13,7 +13,7 @@ export const fuelChoices = [
   },
   {
     id: 4,
-    name: "ELECTRIQUE"
+    name: "Eléctrique"
   },
   {
     id: 5,
@@ -21,30 +21,30 @@ export const fuelChoices = [
   },
   {
     id: 6,
-    name: "BIOETHANOL"
+    name: "Bioéthanol"
   },
   {
     id: 13,
-    name: "ESSENCE-GPL"
+    name: "Essence-GPL"
   },
   {
     id: 14,
-    name: "HYBRIDE ( ESSENCE - ELECTRIQUE )"
+    name: "Hybride (Essence - Eléctrique)"
   },
   {
     id: 15,
-    name: "ESSENCE-GNV"
+    name: "Essence-GNV"
   },
   {
     id: 16,
-    name: "ESSENCE-BIOETHANOL"
+    name: "Essence-Bioéthanol"
   },
   {
     id: 24,
-    name: "HYBRIDE ( DIESEL - ELECTRIQUE )"
+    name: "Hybride (Diesel - Eléctrique)"
   },
   {
     id: 25,
-    name: "TRI-FUEL"
+    name: "Tri-fuel"
   }
 ];
