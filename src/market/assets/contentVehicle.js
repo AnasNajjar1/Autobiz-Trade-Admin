@@ -1,161 +1,552 @@
 exports.vehSchema = {
-    "fileNumber": {
-        "type": "string"
+  type: "object",
+  description: "Data content for b2b plateform",
+  properties: {
+    fileNumber: {
+      type: "string",
+      name: "string" // Edit Marceau
     },
-    "salesInfo": {
-        "status": {
-            "type": "int"
+    salesInfos: {
+      type: "object",
+      properties: {
+        purchaseDate: {
+          type: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          name: "date"
         },
-        "type": {
-            "type": "string"
+        status: {
+          type: "integer",
+          name: "array",
+          $ref: "statusChoices" // Edit Marceau
         },
-        "minimalPrice": {
-            "type": "int"
+        type: {
+          type: "string",
+          enum: ["stock", "private"], // Edit Marceau
+          name: "array" // Edit Marceau
+        },
+        minimalPrice: {
+          type: "integer",
+          name: "int"
+        },
+        salesDateTimeEnd: {
+          type: "string",
+          name: "datetime"
+        },
+        partnersAuthorized: {
+          type: "array",
+          enum: ["Lorem", "Ipsum"], // Edit Marceau
+          name: "array"
+        },
+        salesComment: {
+          type: "string",
+          name: "text" // Edit Marceau
         }
+      },
+      required: []
     },
-    "vehicle": {
-        "brandLabel": {
-            "type": "string"
+    vehicle: {
+      type: "object",
+      properties: {
+        brandLabel: {
+          type: "string",
+          name: "string"
         },
-        "brandId": {
-            "type": "int"
+        brandId: {
+          type: "integer",
+          name: "int"
         },
-        "modelLabel": {
-            "type": "string"
+        modelId: {
+          type: "integer",
+          name: "int"
         },
-        "modelId": {
-            "type": "int"
+        modelLabel: {
+          type: "string",
+          name: "string"
         },
-        "versionLabel": {
-            "type": "string"
+        versionLabel: {
+          type: "string",
+          name: "string"
         },
-        "versionId": {
-            "type": "int"
+        versionId: {
+          type: "integer",
+          name: "int"
         },
-        "firstRegistrationDate": {
-            "type": "date"
+        firstRegistrationDate: {
+          type: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          name: "date"
         },
-        "fuelLabel": {
-            "type": "string"
+        profileCosts: {
+          type: "string",
+          enum: ["A", "B", "C", "D", "E"],
+          name: "array"
         },
-        "fuelId": {
-            "type": "int"
-        },
-        "mileage": {
-            "type": "int"
-        },
-        "profileCosts": {
-            "type": "string"
-        },
-        "carPictures": {
-            "type": "object"
+        carPictures: {
+          type: "object",
+          properties: {
+            left_side_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            front_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            right_side_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            back_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            motor_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            trunk_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            inside_front_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            dashboard_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            inside_back_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            counter_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            vin_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            purchase_invoice_picture: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            },
+            purchase_invoice_picture2: {
+              type: "string",
+              name: "string", // Edit Marceau
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            }
+          }
         }
+      },
+      required: [
+        "brandLabel",
+        "brandId",
+        "modelId",
+        "versionLabel",
+        "versionId",
+        "firstRegistrationDate",
+        "profileCosts",
+        "carPictures"
+      ]
     },
-    "pointOfSale": {
-        "pointOfSaleName": {
-            "type": "string"
+    pointOfSale: {
+      type: "object",
+      properties: {
+        pointOfSaleName: {
+          type: "string",
+          name: "string"
         },
-        "zipCode": {
-            "type": "string"
+        zipCode: {
+          type: "string",
+          name: "string",
+          pattern: "^[0-9]{5}$" // Edit Marceau
         },
-        "city": {
-            "type": "string"
+        city: {
+          type: "string",
+          name: "string"
         },
-        "country": {
-            "type": "string"
+        country: {
+          type: "string",
+          name: "string"
         }
+      },
+      required: ["pointOfSaleName", "zipCode", "city", "country"]
     },
-    "keyPoints": {
-        "type": "array"
-    },
-    "documents": {
-        "type": "object"
-    },
-    "equipments": {
-        "type": "array"
-    },
-    "characteristics": {
-        "liter": {
-            "type": "number"
-        },
-        "gearBoxLabel": {
-            "type": "string"
-        },
-        "gearBoxId": {
-            "type": "int"
-        },
-        "seats": {
-            "type": "string"
-        },
-        "door": {
-            "type": "string"
-        },
-        "kw": {
-            "type": "int"
-        },
-        "fiscal": {
-            "type": "int"
-        },
-        "wheelsFrontDimensions": {
-            "type": "object"
-        },
-        "wheelsBackDimensions": {
-            "type": "object"
-        },
-        "rimTypeFront": {
-            "type": "string"
-        },
-        "rimTypeBack": {
-            "type": "string"
-        },
-        "metallic": {
-            "type": "boolean"
+    keyPoints: {
+      type: "object",
+      properties: {
+        keyPoints: {
+          type: "array",
+          enum: [
+            "firstHand",
+            "vat",
+            "servicingInBrandNetwork",
+            "origin",
+            "7seats",
+            "readyToBuy",
+            "fewCosts",
+            "smallPrice",
+            "ctLessThan6Months",
+            "purchaseInvoice"
+          ],
+          name: "array"
         }
+      },
+      required: ["keyPoints"]
     },
-    "administrativeDetails": {
-        "gcDate": {
-            "type": "date"
-        },
-        "firstHand": {
-            "type": "boolean"
-        },
-        "vehicleType": {
-            "type": "string"
-        },
-        "cO2": {
-            "type": "string"
+    documents: {
+      type: "object",
+      properties: {
+        documents: {
+          type: "object",
+          name: "iterator", // Edit Marceau
+          properties: {
+            // Edit Marceau
+            title: {
+              type: "string",
+              name: "string"
+            },
+            link: {
+              type: "string",
+              name: "string",
+              pattern: "^https*://.*\\.[a-z]{2,3}"
+            }
+          }
         }
+      },
+      required: [] // Edit Marceau
     },
-    "market": {
-        "link": "",
-        "b2cMarketValue": {
-            "type": "string"
-        },
-        "standardMileage": {
-            "type": "string"
+    declaredEquipments: {
+      type: "object",
+      properties: {
+        equipments: {
+          type: "array",
+          enum: [
+            "leather_seat",
+            "sunroof",
+            "gps",
+            "speed_regulator",
+            "parking_assistance",
+            "auto_ac"
+          ],
+          name: "array"
         }
+      },
+      required: ["equipments"]
     },
-    "history": {
-        "servicingHistory": {
-            "type": "string"
+    characteristics: {
+      type: "object",
+      properties: {
+        mileage: {
+          type: "integer",
+          name: "int"
         },
-        "nextTechnicalCheckDate": {
-            "type": "month"
+        fuelLabel: {
+          type: "string",
+          name: "string"
         },
-        "lastServicingDate": {
-            "type": "month"
+        fuelId: {
+          type: "integer",
+          name: "array",
+          $ref: "fuelChoices" // Edit Marceau
         },
-        "servicingInBrandNetwork": {
-            "type": "boolean"
+        liter: {
+          type: "number",
+          name: "number"
         },
-        "invoice": {
-            "type": "image"
+        gearBoxLabel: {
+          type: "string",
+          name: "string"
         },
-        "vat": {
-            "type": "boolean"
+        gearBoxId: {
+          type: "integer",
+          name: "array",
+          $ref: "gearChoices" // Edit Marceau
+        },
+        seats: {
+          type: "string",
+          name: "string"
+        },
+        door: {
+          type: "string",
+          name: "string"
+        },
+        ch: {
+          type: "integer",
+          name: "int"
+        },
+        kw: {
+          type: "integer",
+          name: "int"
+        },
+        fiscal: {
+          type: "integer",
+          name: "int"
+        },
+        wheelsFrontDimensions: {
+          type: "object",
+          properties: {
+            width: {
+              enum: [
+                "",
+                "155",
+                "165",
+                "175",
+                "185",
+                "195",
+                "205",
+                "215",
+                "225",
+                "235",
+                "245",
+                "255",
+                "265",
+                "275",
+                "285",
+                "295"
+              ]
+            },
+            height: {
+              enum: [
+                "",
+                "30",
+                "35",
+                "40",
+                "45",
+                "50",
+                "55",
+                "60",
+                "65",
+                "70",
+                "75",
+                "80"
+              ]
+            },
+            diameter: {
+              enum: [
+                "",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22"
+              ]
+            }
+          },
+          name: "rimSize"
+        },
+        wheelsBackDimensions: {
+          type: "object",
+          properties: {
+            width: {
+              enum: [
+                "",
+                "155",
+                "165",
+                "175",
+                "185",
+                "195",
+                "205",
+                "215",
+                "225",
+                "235",
+                "245",
+                "255",
+                "265",
+                "275",
+                "285",
+                "295"
+              ]
+            },
+            height: {
+              enum: [
+                "",
+                "30",
+                "35",
+                "40",
+                "45",
+                "50",
+                "55",
+                "60",
+                "65",
+                "70",
+                "75",
+                "80"
+              ]
+            },
+            diameter: {
+              enum: [
+                "",
+                "13",
+                "14",
+                "15",
+                "16",
+                "17",
+                "18",
+                "19",
+                "20",
+                "21",
+                "22"
+              ]
+            }
+          },
+          name: "rimSize"
+        },
+        rimTypeFront: {
+          type: "string",
+          name: "string"
+        },
+        rimTypeBack: {
+          type: "string",
+          name: "string"
+        },
+        metallic: {
+          type: "boolean",
+          name: "boolean"
         }
+      },
+      required: [
+        "mileage",
+        "fuelLabel",
+        "liter",
+        "gearBoxLabel",
+        "gearBoxId",
+        "seats",
+        "door",
+        "ch",
+        "kw",
+        "fiscal",
+        "wheelsFrontDimensions",
+        "wheelsBackDimensions",
+        "rimTypeFront",
+        "rimTypeBack"
+      ]
     },
-    "constructorsEquipments": {
-        "type": "array"
+    administrativeDetails: {
+      type: "object",
+      properties: {
+        gcDate: {
+          type: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+          name: "date"
+        },
+        firstHand: {
+          type: "boolean",
+          name: "boolean"
+        },
+        vehicleType: {
+          type: "string",
+          name: "string"
+        },
+        co2: {
+          type: "string",
+          name: "string"
+        }
+      },
+      required: ["gcDate", "vehicleType", "co2"]
+    },
+    history: {
+      type: "object",
+      properties: {
+        servicingHistory: {
+          type: "string",
+          name: "string"
+        },
+        nextTechnicalCheckDate: {
+          type: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}$",
+          name: "month"
+        },
+        lastservicingDate: {
+          type: "string",
+          pattern: "^[0-9]{4}-[0-9]{2}$",
+          name: "month"
+        },
+        servicingInBrandNetwork: {
+          type: "boolean",
+          name: "boolean"
+        },
+        purchaseInvoice: {
+          type: "string",
+          pattern: "^https*://.*\\.[a-z]{2,3}",
+          name: "image"
+        },
+        vat: {
+          type: "boolean",
+          name: "boolean"
+        }
+      },
+      required: [
+        "servicingHistory",
+        "nextTechnicalCheckDate",
+        "lastservicingDate",
+        "purchaseInvoice"
+      ]
+    },
+    constructorEquipments: {
+      type: "object",
+      properties: {
+        constructorEquipments: {
+          type: "array",
+          name: "array",
+          enum: [
+            "Direction assistée",
+            "Volant Multifonctions",
+            "Peinture métalisée"
+          ]
+        }
+      },
+      required: []
+    },
+    market: {
+      type: "object",
+      properties: {
+        link: {
+          type: "string",
+          pattern: "^https*://.*\\.[a-z]{2,3}",
+          name: "url"
+        },
+        b2cMarketValue: {
+          type: "string",
+          name: "string"
+        },
+        standardMileage: {
+          type: "string",
+          name: "string"
+        }
+      },
+      required: []
     }
-}
+  },
+
+  required: [
+    "fileNumber",
+    "vehicle",
+    "pointOfSale",
+    "keyPoints",
+    "documents",
+    "declaredEquipments",
+    "characteristics",
+    "administrativeDetails",
+    "history"
+  ]
+};

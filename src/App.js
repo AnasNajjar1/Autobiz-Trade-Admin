@@ -10,24 +10,28 @@ import authProvider from "./authProvider";
 import Amplify, { Auth, API } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react";
 import awsconfig from "./aws-config";
-
+import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
 
 Amplify.configure(awsconfig);
 
 const MyLoginPage = () => <Login backgroundImage="/background.jpg" />;
 
 const App = () => {
-
-  return (    
-    <Admin dataProvider={dataProvider} authProvider={authProvider} loginPage={MyLoginPage}>
-    {permissions => [
+  return (
+    <Admin
+      theme={muiThemeOverrides}
+      dataProvider={dataProvider}
+      authProvider={authProvider}
+      loginPage={MyLoginPage}
+    >
+      {permissions => [
         // Restrict access to the edit and remove views to admin only
         <Resource name="market" list={Vehicles} edit={Vehicle} />,
         // Only include the categories resource for admin users
-        (permissions === 'admin')
-            ? <Resource name="users" list={Users} edit={User} />
-            : null,
-    ]}
+        permissions === "admin" ? (
+          <Resource name="users" list={Users} edit={User} />
+        ) : null
+      ]}
     </Admin>
   );
 };
