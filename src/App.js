@@ -2,6 +2,7 @@
 import React from "react";
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
+import pointOfSale from "./pointOfSale";
 import { Users } from "./users/Users";
 import User from "./users/User";
 import dataProvider from "./dataprovider";
@@ -10,6 +11,7 @@ import Amplify, { Auth, API } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react";
 import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
+import VisitorIcon from "@material-ui/icons/People";
 
 Amplify.configure(awsconfig);
 
@@ -25,10 +27,16 @@ const App = () => {
     >
       {permissions => [
         // Restrict access to the edit and remove views to admin only
+
         <Resource name="vehicle" {...vehicle} />,
+        <Resource name="pointOfSale" {...pointOfSale} />,
+        <Resource name="facadeBrand" />,
+        <Resource name="facadeModel" />,
+        <Resource name="facadePointOfSale" />,
+        <Resource name="status" />,
         // Only include the categories resource for admin users
         permissions === "admin" ? (
-          <Resource name="users" list={Users} edit={User} />
+          <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
         ) : null
       ]}
     </Admin>
