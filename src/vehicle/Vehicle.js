@@ -3,14 +3,11 @@ import {
   Create,
   Edit,
   TextInput,
-  ImageInput,
   ImageField,
   DisabledInput,
   NumberInput,
-  DateInput,
   TabbedForm,
   FormTab,
-  BooleanInput,
   ArrayInput,
   SimpleFormIterator,
   SelectInput,
@@ -23,7 +20,7 @@ import {
   number,
   regex
 } from "react-admin";
-import { DateTimeInput } from "react-admin-date-inputs";
+import { DateTimeInput, DateInput } from "react-admin-date-inputs";
 import MomentUtils from "material-ui-pickers/utils/moment-utils";
 
 import RimSizeInput from "./components/RimSizeInput";
@@ -40,6 +37,7 @@ import vehicleTypeChoices from "../assets/choices/vehicleType";
 import originChoices from "../assets/choices/origin";
 import servicingHistoryChoices from "../assets/choices/servicingHistory";
 import gearBoxChoices from "../assets/choices/gearBox";
+import boolOrNullChoices from "../assets/choices/boolOrNull";
 
 export const CreateVehicle = props => {
   const form = commonForm("create");
@@ -85,7 +83,13 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="salesInfo">
-        <DateInput label="purchaseDate" source="purchaseDate" />
+        <DateInput
+          source="purchaseDate"
+          label="purchaseDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
+        />
+
         <ReferenceInput
           source="statusId"
           reference="status"
@@ -101,6 +105,7 @@ const commonForm = type => {
           source="minimalPrice"
           validate={[number(), minValue(0)]}
         />
+
         <DateTimeInput
           label="salesDateTimeEnd"
           source="salesDateTimeEnd"
@@ -143,8 +148,10 @@ const commonForm = type => {
         <TextInput label="versionLabel" source="versionLabel" />
 
         <DateInput
-          label="firstRegistrationDate"
           source="firstRegistrationDate"
+          label="firstRegistrationDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
         />
 
         <SelectInput
@@ -346,12 +353,26 @@ const commonForm = type => {
           source="rimTypeBack"
           choices={rimTypeChoices}
         />
-        <BooleanInput label="metallic" source="metallic" />
+        <SelectInput
+          label="metallic"
+          source="metallic"
+          choices={boolOrNullChoices}
+        />
       </FormTab>
 
       <FormTab label="administrativeDetails">
-        <DateInput label="gcDate" source="gcDate" />
-        <BooleanInput label="firstHand" source="firstHand" />
+        <DateInput
+          source="gcDate"
+          label="gcDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
+        />
+
+        <SelectInput
+          label="firstHand"
+          source="firstHand"
+          choices={boolOrNullChoices}
+        />
         <SelectInput
           label="vehicleType"
           source="vehicleType"
@@ -388,9 +409,11 @@ const commonForm = type => {
             <i>Format (YYYY-MM)</i>
           </small>
         </div>
-        <BooleanInput
+
+        <SelectInput
           label="servicingInBrandNetwork"
           source="servicingInBrandNetwork"
+          choices={boolOrNullChoices}
         />
 
         <TextInput
@@ -399,7 +422,7 @@ const commonForm = type => {
           validate={validateURL}
         />
 
-        <BooleanInput label="vat" source="vat" />
+        <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
       </FormTab>
 
       <FormTab label="market">
