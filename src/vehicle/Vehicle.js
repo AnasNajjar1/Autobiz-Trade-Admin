@@ -80,6 +80,8 @@ const commonForm = type => {
           source="fileNumber"
           validate={required()}
         />
+
+        <TextInput label="userId" source="userId" placeholder="Ex: FR_1234" />
       </FormTab>
 
       <FormTab label="salesInfo">
