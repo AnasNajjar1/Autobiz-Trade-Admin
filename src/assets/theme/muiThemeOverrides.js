@@ -14,6 +14,11 @@ export const muiThemeOverrides = createMuiTheme({
         paddingRight: "8px !important",
         textTransform: "capitalize"
       }
+    },
+    MuiFormControl: {
+      root: {
+        width: "50% !important"
+      }
     }
   }
 });

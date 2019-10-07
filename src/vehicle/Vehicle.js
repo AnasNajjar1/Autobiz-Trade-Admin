@@ -1,8 +1,14 @@
 import React from "react";
 import {
   Create,
+  AutocompleteInput,
   Edit,
   TextInput,
+  Datagrid,
+  ReferenceManyField,
+  TextField,
+  NumberField,
+  DateField,
   ImageField,
   DisabledInput,
   NumberInput,
@@ -56,24 +62,12 @@ const validateURL = regex(
 
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 
-const largerInput = {
-  width: "50%"
-};
-const fullWidth = {
-  width: "100%"
-};
-
-const inlineBlock = {
-  width: "50%",
-  display: "inline-block"
-};
-
 const commonForm = type => {
   return (
     <TabbedForm submitOnEnter={false}>
       <FormTab label="record" key="record">
         {type === "edit" && <DisabledInput source="id" />}
-        {type === "edit" && <DisabledInput source="uuid" style={largerInput} />}
+        {type === "edit" && <DisabledInput source="uuid" />}
 
         <TextInput
           label="fileNumber"
@@ -124,6 +118,21 @@ const commonForm = type => {
           source="salesComment"
         ></LongTextInput>
       </FormTab>
+      <FormTab label="auctions" key="auctions">
+        <ReferenceManyField reference="offer" target={"vehicleId"}>
+          <Datagrid>
+            <NumberField
+              source="amount"
+              options={{
+                style: "currency",
+                currency: "EUR"
+              }}
+            />
+            <TextField label="userId" source="userId" />
+            <DateField label="createdAt" source="createdAt" showTime />
+          </Datagrid>
+        </ReferenceManyField>
+      </FormTab>
 
       <FormTab label="vehicle" key="vehicle">
         <ReferenceInput
@@ -168,91 +177,63 @@ const commonForm = type => {
         <TextInput
           label="left_side_picture"
           source="carPictures.left_side_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.front_picture" />
-        <TextInput
-          label="front_picture"
-          source="carPictures.front_picture"
-          style={fullWidth}
-        />
+        <TextInput label="front_picture" source="carPictures.front_picture" />
 
         <ImageField source="carPictures.right_side_picture" />
         <TextInput
           label="right_side_picture"
           source="carPictures.right_side_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.back_picture" />
-        <TextInput
-          label="back_picture"
-          source="carPictures.back_picture"
-          style={fullWidth}
-        />
+        <TextInput label="back_picture" source="carPictures.back_picture" />
 
         <ImageField source="carPictures.motor_picture" />
-        <TextInput
-          label="motor_picture"
-          source="carPictures.motor_picture"
-          style={fullWidth}
-        />
+        <TextInput label="motor_picture" source="carPictures.motor_picture" />
 
         <ImageField source="carPictures.trunk_picture" />
-        <TextInput
-          label="trunk_picture"
-          source="carPictures.trunk_picture"
-          style={fullWidth}
-        />
+        <TextInput label="trunk_picture" source="carPictures.trunk_picture" />
 
         <ImageField source="carPictures.inside_front_picture" />
         <TextInput
           label="inside_front_picture"
           source="carPictures.inside_front_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.dashboard_picture" />
         <TextInput
           label="dashboard_picture"
           source="carPictures.dashboard_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.inside_back_picture" />
         <TextInput
           label="inside_back_picture"
           source="carPictures.inside_back_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.counter_picture" />
         <TextInput
           label="counter_picture"
           source="carPictures.counter_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.vin_picture" />
-        <TextInput
-          label="vin_picture"
-          source="carPictures.vin_picture"
-          style={fullWidth}
-        />
+        <TextInput label="vin_picture" source="carPictures.vin_picture" />
 
         <ImageField source="carPictures.purchase_invoice_picture" />
         <TextInput
           label="purchase_invoice_picture"
           source="carPictures.purchase_invoice_picture"
-          style={fullWidth}
         />
 
         <ImageField source="carPictures.purchase_invoice_picture2" />
         <TextInput
           label="purchase_invoice_picture2"
           source="carPictures.purchase_invoice_picture2"
-          style={fullWidth}
         />
       </FormTab>
 
@@ -262,7 +243,8 @@ const commonForm = type => {
           reference="pointOfSale"
           sort={{ field: "name", order: "ASC" }}
         >
-          <SelectInput source="id" />
+          {/* <SelectInput source="id" /> */}
+          <AutocompleteInput optionText="name" />
         </ReferenceInput>
       </FormTab>
 
@@ -288,13 +270,11 @@ const commonForm = type => {
           label="declaredEquipments"
           source="declaredEquipments"
           choices={declaredEquipmentsChoices}
-          style={largerInput}
         />
         <SelectArrayInput
           label="constructorEquipments"
           source="constructorEquipments"
           choices={constructorEquipmentsChoices}
-          style={largerInput}
         />
       </FormTab>
 
