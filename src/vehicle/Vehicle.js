@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  BooleanInput,
   Create,
   AutocompleteInput,
   Edit,
@@ -52,7 +53,11 @@ export const CreateVehicle = props => {
 
 export const EditVehicle = (props, { basePath, data, resource }) => {
   const form = commonForm("edit");
-  return <Edit {...props}>{form}</Edit>;
+  return (
+    <Edit {...props} undoable={false}>
+      {form}
+    </Edit>
+  );
 };
 
 const validateURL = regex(
@@ -96,28 +101,39 @@ const commonForm = type => {
 
         <SelectInput label="type" source="type" choices={typeChoices} />
 
-        <NumberInput
-          label="minimalPrice"
-          source="minimalPrice"
-          validate={[number(), minValue(0)]}
-        />
-
-        <DateTimeInput
-          label="salesDateTimeEnd"
-          source="salesDateTimeEnd"
-          providerOptions={{ utils: MomentUtils }}
-          options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
-            ampm: false,
-            clearable: true
-          }}
-        />
-
         <LongTextInput
           label="salesComment"
           source="salesComment"
         ></LongTextInput>
+
+        <BooleanInput source="hasAuction" />
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.hasAuction === true && (
+              <NumberInput label="minimalPrice" source="minimalPrice" />
+            )
+          }
+        </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.hasAuction === true && (
+              <DateTimeInput
+                label="salesDateTimeEnd"
+                source="salesDateTimeEnd"
+                providerOptions={{ utils: MomentUtils }}
+                options={{
+                  format: "DD/MM/YYYY, HH:mm:ss",
+                  ampm: false,
+                  clearable: true
+                }}
+              />
+            )
+          }
+        </FormDataConsumer>
       </FormTab>
+
       <FormTab label="auctions" key="auctions">
         <ReferenceManyField reference="offer" target={"vehicleId"}>
           <Datagrid>
@@ -173,14 +189,14 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="carPictures">
+        <ImageField source="carPictures.front_picture" />
+        <TextInput label="front_picture" source="carPictures.front_picture" />
+
         <ImageField source="carPictures.left_side_picture" />
         <TextInput
           label="left_side_picture"
           source="carPictures.left_side_picture"
         />
-
-        <ImageField source="carPictures.front_picture" />
-        <TextInput label="front_picture" source="carPictures.front_picture" />
 
         <ImageField source="carPictures.right_side_picture" />
         <TextInput
@@ -260,7 +276,7 @@ const commonForm = type => {
         <ArrayInput label="documents" source="documents">
           <SimpleFormIterator>
             <TextInput source="title" />
-            <TextInput source="link" />
+            <TextInput source="link" validate={validateURL} />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
@@ -290,7 +306,7 @@ const commonForm = type => {
           source="fuelLabel"
           choices={fuelChoices}
         />
-        <NumberInput label="liter" source="liter" />
+        <TextInput label="liter" source="liter" />
         <SelectInput
           label="gearBoxLabel"
           source="gearBoxLabel"
@@ -298,9 +314,9 @@ const commonForm = type => {
         />
         <TextInput label="seats" source="seats" />
         <TextInput label="door" source="door" />
-        <NumberInput label="ch" source="ch" />
-        <NumberInput label="kw" source="kw" />
-        <NumberInput label="fiscal" source="fiscal" />
+        <TextInput label="ch" source="ch" />
+        <TextInput label="kw" source="kw" />
+        <TextInput label="fiscal" source="fiscal" />
 
         <RimSizeInput
           label="wheelsFrontDimensions"
@@ -360,7 +376,7 @@ const commonForm = type => {
           source="vehicleType"
           choices={vehicleTypeChoices}
         />
-        <NumberInput label="co2" source="co2" />
+        <TextInput label="co2" source="co2" />
       </FormTab>
 
       <FormTab label="history">
