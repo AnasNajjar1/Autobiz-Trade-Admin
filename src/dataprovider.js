@@ -5,9 +5,19 @@ import { API } from 'aws-amplify'
 
 //this method to get the signed api call
 const httpClientAWS = async (path, options) =>{
-  let { method } = options
+  let { method, body } = options
+  
+  if(body!==undefined){
+    body = JSON.parse(body)
+    options.body = body
+  }
+  
   options.response = true
   if(method===undefined) method = "get"
+  else {
+    method = _.toLower(method)
+    delete options.method
+  }
   const response = await API[method]("b2bPlateform", path, options)
   const json = response.data
   var myHeaders = new Headers();

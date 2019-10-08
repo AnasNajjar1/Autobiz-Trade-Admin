@@ -36,9 +36,9 @@ const App = () => {
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
         // Only include the categories resource for admin users
-        permissions === "admin" ? (
-          <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
-        ) : null
+        // permissions === "admin" ? (
+        //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
+        // ) : null
       ]}
     </Admin>
   );
