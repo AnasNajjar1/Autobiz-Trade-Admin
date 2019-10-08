@@ -7,33 +7,29 @@ import {
   DateField,
   NumberField,
   Filter,
-  TextInput
+  TextInput,
+  EditButton
 } from "react-admin";
-const PostFilter = props => (
+
+import LinkToRelatedOffers from "./LinkToRelatedOffers";
+
+const VehicleFilter = props => (
   <Filter {...props}>
-    <TextInput
-      label="REF"
-      source="content.fileNumber"
-      defaultValue=""
-      alwaysOn
-    />
-    {/*     <TextInput
-      label="BRAND"
-      source="content.vehicle.brandLabel"
-      defaultValue=""
-      alwaysOn
-    /> */}
+    <TextInput label="REF" source="fileNumber" defaultValue="" alwaysOn />
   </Filter>
 );
 
 export const Vehicles = props => (
-  <List {...props} filters={<PostFilter />}>
-    <Datagrid rowClick="edit">
-      <TextField label="REF" source="content.fileNumber" sortable={false} />
-      <TextField label="BRAND" source="content.vehicle.brandLabel" />
-      <TextField label="MODEL" source="content.vehicle.modelLabel" />
-      <NumberField label="MILEAGE" source="content.characteristics.mileage" />
-      <DateField label="MEC" source="content.vehicle.firstRegistrationDate" />
+  <List {...props} filters={<VehicleFilter />}>
+    <Datagrid>
+      <TextField label="id" source="id" />
+      <TextField label="REF" source="fileNumber" sortable={false} />
+      <TextField label="BRAND" source="brandLabel" />
+      <TextField label="MODEL" source="modelLabel" />
+      <NumberField label="MILEAGE" source="mileage" />
+      <DateField label="MEC" source="firstRegistrationDate" />
+      <LinkToRelatedOffers />
+      <EditButton />
     </Datagrid>
   </List>
 );

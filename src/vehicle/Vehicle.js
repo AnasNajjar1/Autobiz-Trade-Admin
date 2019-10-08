@@ -1,240 +1,445 @@
 import React from "react";
 import {
+  BooleanInput,
   Create,
+  AutocompleteInput,
   Edit,
   TextInput,
-  DateInput,
-  ImageInput,
+  Datagrid,
+  ReferenceManyField,
+  TextField,
+  NumberField,
+  DateField,
+  ImageField,
+  DisabledInput,
   NumberInput,
   TabbedForm,
   FormTab,
-  BooleanInput,
   ArrayInput,
   SimpleFormIterator,
   SelectInput,
   SelectArrayInput,
   LongTextInput,
+  ReferenceInput,
+  FormDataConsumer,
+  required,
+  minValue,
+  number,
   regex
 } from "react-admin";
-import RimSizeInput from "./components/RimSizeInput";
-import { DateTimeInput } from "react-admin-date-inputs";
-import MomentUtils from '@date-io/moment';
-import frLocale from "date-fns/locale/fr";
-import { vehSchema } from "./assets/contentVehicle";
-import { fuelChoices } from "./assets/fuelChoices";
-import { gearChoices } from "./assets/gearChoices";
-import { statusChoices } from "./assets/statusChoices";
+import { DateTimeInput, DateInput } from "react-admin-date-inputs";
+import MomentUtils from "material-ui-pickers/utils/moment-utils";
 
-export const editVehicle = props => {
-  const form = generateForm(vehSchema);
+import RimSizeInput from "./components/RimSizeInput";
+
+import keyPointsChoices from "../assets/choices/keyPoints";
+import fuelChoices from "../assets/choices/fuel";
+import declaredEquipmentsChoices from "../assets/choices/declaredEquipments";
+import constructorEquipmentsChoices from "../assets/choices/constructorEquipments";
+import rimTypeChoices from "../assets/choices/rimType";
+import profileCostsChoices from "../assets/choices/profileCosts";
+import typeChoices from "../assets/choices/type";
+import wheelsTireBrandChoices from "../assets/choices/wheelsTireBrand";
+import vehicleTypeChoices from "../assets/choices/vehicleType";
+import originChoices from "../assets/choices/origin";
+import servicingHistoryChoices from "../assets/choices/servicingHistory";
+import gearBoxChoices from "../assets/choices/gearBox";
+import boolOrNullChoices from "../assets/choices/boolOrNull";
+
+export const CreateVehicle = props => {
+  const form = commonForm("create");
+  return <Create {...props}>{form}</Create>;
+};
+
+export const EditVehicle = (props, { basePath, data, resource }) => {
+  const form = commonForm("edit");
   return (
-    <Edit {...props}>
-      <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
+    <Edit {...props} undoable={false}>
+      {form}
     </Edit>
   );
 };
 
-export const createVehicle = props => {
-  const form = generateForm(vehSchema);
+const validateURL = regex(
+  new RegExp("^https*://.*\\.[a-z].{2,3}"),
+  "Must be an URL"
+);
+
+const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
+
+const commonForm = type => {
   return (
-    <Create {...props}>
-      <TabbedForm submitOnEnter={false}>{form}</TabbedForm>
-    </Create>
-  );
-};
+    <TabbedForm submitOnEnter={false}>
+      <FormTab label="record" key="record">
+        {type === "edit" && <DisabledInput source="id" />}
+        {type === "edit" && <DisabledInput source="uuid" />}
 
-const generateForm = function(schema) {
-  const form = Object.keys(schema.properties).map(tab => {
-    const { required = [] } = schema;
-    const field = generateField(
-      tab,
-      schema.properties[tab],
-      "content",
-      required.includes(tab)
-    );
-    return (
-      <FormTab label={tab} key={tab}>
-        {field}
+        <TextInput
+          label="fileNumber"
+          source="fileNumber"
+          validate={required()}
+        />
+
+        <TextInput label="userId" source="userId" placeholder="Ex: FR_1234" />
       </FormTab>
-    );
-  });
 
-  return form;
-};
-
-const required = (message = "Required") => value => {
-  return value ? undefined : message;
-};
-
-const generateField = (key, content, parentSource, isRequired) => {
-  let source = "";
-
-  console.log(parentSource, parentSource !== "");
-  if (parentSource !== "") {
-    source = `${parentSource}.`;
-  }
-
-  source += key;
-
-  const { name, type, pattern } = content;
-
-  let validate = [];
-  if (isRequired) {
-    validate.push(required());
-  }
-  if (pattern) {
-    validate.push(regex(new RegExp(pattern), "incorrect value"));
-  }
-
-  if (type === "object" && typeof content.name === "undefined") {
-    const fields = Object.keys(content.properties).map(field => {
-      const { required = [] } = content;
-      return generateField(
-        field,
-        content.properties[field],
-        `${source}`,
-        required.includes(field)
-      );
-    });
-    return fields;
-  }
-
-  console.log("##info : ", key, source);
-
-  switch (name) {
-    case "string":
-      return (
-        <TextInput key={key} label={key} source={source} validate={validate} />
-      );
-    case "text": {
-      return (
-        <LongTextInput
-          key={key}
-          label={key}
-          source={source}
-          validate={validate}
-        />
-      );
-    }
-    case "int": {
-      return (
-        <NumberInput
-          key={key}
-          label={key}
-          source={source}
-          validate={validate}
-        />
-      );
-    }
-    case "boolean": {
-      return (
-        <BooleanInput
-          key={key}
-          label={key}
-          source={source}
-          validate={validate}
-        />
-      );
-    }
-    case "date": {
-      return (
-        <DateInput key={key} label={key} source={source} validate={validate} />
-      );
-    }
-    case "datetime": {
-      return (
-        <DateTimeInput
-          key={key}
-          label={key}
-          source={source}
+      <FormTab label="salesInfo">
+        <DateInput
+          source="purchaseDate"
+          label="purchaseDate"
           providerOptions={{ utils: MomentUtils }}
-          options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
-            ampm: false,
-            clearable: true
-          }}
-          validate={validate}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
         />
-      );
-    }
-    case "month": {
-      return (
-        <React.Fragment key={key}>
-          <TextInput label={key} source={source} validate={validate} />
-          <div>
-            <small>
-              <i>Format ({pattern})</i>
-            </small>
-          </div>
-        </React.Fragment>
-      );
-    }
-    case "rimSize": {
-      return (
-        <RimSizeInput
-          key={key}
-          label={key}
-          content={content.properties}
-          source={source}
-          validate={validate}
+
+        <ReferenceInput
+          source="statusId"
+          reference="status"
+          validate={required()}
+        >
+          <SelectInput source="name" />
+        </ReferenceInput>
+
+        <SelectInput label="type" source="type" choices={typeChoices} />
+
+        <LongTextInput
+          label="salesComment"
+          source="salesComment"
+        ></LongTextInput>
+
+        <BooleanInput source="hasAuction" />
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.hasAuction === true && (
+              <NumberInput label="minimalPrice" source="minimalPrice" />
+            )
+          }
+        </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.hasAuction === true && (
+              <DateTimeInput
+                label="salesDateTimeEnd"
+                source="salesDateTimeEnd"
+                providerOptions={{ utils: MomentUtils }}
+                options={{
+                  format: "DD/MM/YYYY, HH:mm:ss",
+                  ampm: false,
+                  clearable: true
+                }}
+              />
+            )
+          }
+        </FormDataConsumer>
+      </FormTab>
+
+      {/*       <FormTab label="auctions" key="auctions">
+        <ReferenceManyField reference="offer" target={"vehicleId"}>
+          <Datagrid>
+            <NumberField
+              source="amount"
+              options={{
+                style: "currency",
+                currency: "EUR"
+              }}
+            />
+            <TextField label="userId" source="userId" />
+            <DateField label="createdAt" source="createdAt" showTime />
+          </Datagrid>
+        </ReferenceManyField>
+      </FormTab> */}
+
+      <FormTab label="vehicle" key="vehicle">
+        <ReferenceInput
+          label="brandLabel"
+          source="brandLabel"
+          reference="facadeBrand"
+        >
+          <SelectInput optionValue="name" optionText="name" />
+        </ReferenceInput>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) => (
+            <ReferenceInput
+              label="modelLabel"
+              source="modelLabel"
+              reference="facadeModel"
+              filter={{ brandLabel: formData.brandLabel }}
+            >
+              <SelectInput optionValue="name" optionText="name" />
+            </ReferenceInput>
+          )}
+        </FormDataConsumer>
+
+        <TextInput label="versionLabel" source="versionLabel" />
+
+        <DateInput
+          source="firstRegistrationDate"
+          label="firstRegistrationDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
         />
-      );
-    }
-    case "iterator": {
-      return (
-        <ArrayInput key={key} label={key} source={source}>
+
+        <SelectInput
+          label="profileCosts"
+          source="profileCosts"
+          choices={profileCostsChoices}
+        />
+      </FormTab>
+
+      <FormTab label="carPictures">
+        <ImageField source="carPictures.front_picture" />
+        <TextInput label="front_picture" source="carPictures.front_picture" />
+
+        <ImageField source="carPictures.left_side_picture" />
+        <TextInput
+          label="left_side_picture"
+          source="carPictures.left_side_picture"
+        />
+
+        <ImageField source="carPictures.right_side_picture" />
+        <TextInput
+          label="right_side_picture"
+          source="carPictures.right_side_picture"
+        />
+
+        <ImageField source="carPictures.back_picture" />
+        <TextInput label="back_picture" source="carPictures.back_picture" />
+
+        <ImageField source="carPictures.motor_picture" />
+        <TextInput label="motor_picture" source="carPictures.motor_picture" />
+
+        <ImageField source="carPictures.trunk_picture" />
+        <TextInput label="trunk_picture" source="carPictures.trunk_picture" />
+
+        <ImageField source="carPictures.inside_front_picture" />
+        <TextInput
+          label="inside_front_picture"
+          source="carPictures.inside_front_picture"
+        />
+
+        <ImageField source="carPictures.dashboard_picture" />
+        <TextInput
+          label="dashboard_picture"
+          source="carPictures.dashboard_picture"
+        />
+
+        <ImageField source="carPictures.inside_back_picture" />
+        <TextInput
+          label="inside_back_picture"
+          source="carPictures.inside_back_picture"
+        />
+
+        <ImageField source="carPictures.counter_picture" />
+        <TextInput
+          label="counter_picture"
+          source="carPictures.counter_picture"
+        />
+
+        <ImageField source="carPictures.vin_picture" />
+        <TextInput label="vin_picture" source="carPictures.vin_picture" />
+
+        <ImageField source="carPictures.purchase_invoice_picture" />
+        <TextInput
+          label="purchase_invoice_picture"
+          source="carPictures.purchase_invoice_picture"
+        />
+
+        <ImageField source="carPictures.purchase_invoice_picture2" />
+        <TextInput
+          label="purchase_invoice_picture2"
+          source="carPictures.purchase_invoice_picture2"
+        />
+      </FormTab>
+
+      <FormTab label="PointOfSale">
+        <ReferenceInput
+          source="pointOfSaleId"
+          reference="pointOfSale"
+          sort={{ field: "name", order: "ASC" }}
+        >
+          {/* <SelectInput source="id" /> */}
+          <AutocompleteInput optionText="name" />
+        </ReferenceInput>
+      </FormTab>
+
+      <FormTab label="keyPoints">
+        <SelectArrayInput
+          label="keyPoints"
+          source="keyPoints"
+          choices={keyPointsChoices}
+        />
+      </FormTab>
+
+      <FormTab label="documents">
+        <ArrayInput label="documents" source="documents">
           <SimpleFormIterator>
-            {Object.keys(content.properties).map(k => {
-              return generateField(k, content.properties[k], "", false);
-            })}
+            <TextInput source="title" />
+            <TextInput source="link" validate={validateURL} />
           </SimpleFormIterator>
         </ArrayInput>
-      );
-    }
-    case "array": {
-      let choices = [];
+      </FormTab>
 
-      if (content.enum) {
-        content.enum.map(keyValue => {
-          choices.push({ id: keyValue, name: keyValue });
-        });
-      }
+      <FormTab label="equipments">
+        <SelectArrayInput
+          label="declaredEquipments"
+          source="declaredEquipments"
+          choices={declaredEquipmentsChoices}
+        />
+        <SelectArrayInput
+          label="constructorEquipments"
+          source="constructorEquipments"
+          choices={constructorEquipmentsChoices}
+        />
+      </FormTab>
 
-      switch (content.$ref) {
-        case "fuelChoices":
-          choices = fuelChoices;
-          break;
-        case "gearChoices":
-          choices = gearChoices;
-          break;
-        case "statusChoices":
-          choices = statusChoices;
-          break;
-      }
+      <FormTab label="characteristics">
+        <NumberInput
+          label="mileage"
+          source="mileage"
+          validate={[number(), minValue(0)]}
+        />
 
-      if (type === "array") {
-        return (
-          <SelectArrayInput
-            key={key}
-            label={key}
-            source={source}
-            choices={choices}
-            validate={validate}
-          />
-        );
-      }
+        <SelectInput
+          label="fuelLabel"
+          source="fuelLabel"
+          choices={fuelChoices}
+        />
+        <TextInput label="liter" source="liter" />
+        <SelectInput
+          label="gearBoxLabel"
+          source="gearBoxLabel"
+          choices={gearBoxChoices}
+        />
+        <TextInput label="seats" source="seats" />
+        <TextInput label="door" source="door" />
+        <TextInput label="ch" source="ch" />
+        <TextInput label="kw" source="kw" />
+        <TextInput label="fiscal" source="fiscal" />
 
-      if (type === "string" || type === "integer") {
-        return (
-          <SelectInput
-            key={key}
-            label={key}
-            source={source}
-            choices={choices}
-            validate={validate}
-          />
-        );
-      }
-    }
-  }
+        <RimSizeInput
+          label="wheelsFrontDimensions"
+          source="wheelsFrontDimensions"
+        />
+
+        <RimSizeInput
+          label="wheelsBackDimensions"
+          source="wheelsBackDimensions"
+        />
+
+        <SelectInput
+          label="wheelsFrontTireBrand"
+          source="wheelsFrontTireBrand"
+          choices={wheelsTireBrandChoices}
+        />
+
+        <SelectInput
+          label="wheelsBackTireBrand"
+          source="wheelsBackTireBrand"
+          choices={wheelsTireBrandChoices}
+        />
+
+        <SelectInput
+          label="rimTypeFront"
+          source="rimTypeFront"
+          choices={rimTypeChoices}
+        />
+
+        <SelectInput
+          label="rimTypeBack"
+          source="rimTypeBack"
+          choices={rimTypeChoices}
+        />
+        <SelectInput
+          label="metallic"
+          source="metallic"
+          choices={boolOrNullChoices}
+        />
+      </FormTab>
+
+      <FormTab label="administrativeDetails">
+        <DateInput
+          source="gcDate"
+          label="gcDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
+        />
+
+        <SelectInput
+          label="firstHand"
+          source="firstHand"
+          choices={boolOrNullChoices}
+        />
+        <SelectInput
+          label="vehicleType"
+          source="vehicleType"
+          choices={vehicleTypeChoices}
+        />
+        <TextInput label="co2" source="co2" />
+      </FormTab>
+
+      <FormTab label="history">
+        <SelectInput label="origin" source="origin" choices={originChoices} />
+        <SelectInput
+          label="servicingHistory"
+          source="servicingHistory"
+          choices={servicingHistoryChoices}
+        />
+
+        <TextInput
+          label="nextTechnicalCheckDate"
+          source="nextTechnicalCheckDate"
+          validate={validateMonth}
+        />
+        <div>
+          <small>
+            <i>Format (YYYY-MM)</i>
+          </small>
+        </div>
+        <TextInput
+          label="lastservicingDate"
+          source="lastservicingDate"
+          validate={validateMonth}
+        />
+        <div>
+          <small>
+            <i>Format (YYYY-MM)</i>
+          </small>
+        </div>
+
+        <SelectInput
+          label="servicingInBrandNetwork"
+          source="servicingInBrandNetwork"
+          choices={boolOrNullChoices}
+        />
+
+        <TextInput
+          label="purchaseInvoice"
+          source="purchaseInvoice"
+          validate={validateURL}
+        />
+
+        <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
+      </FormTab>
+
+      <FormTab label="market">
+        <TextInput
+          label="marketLink"
+          source="marketLink"
+          validate={validateURL}
+        />
+        <NumberInput
+          label="b2cMarketValue"
+          source="b2cMarketValue"
+          validate={[number(), minValue(0)]}
+        />
+        <NumberInput
+          label="standardMileage"
+          source="standardMileage"
+          validate={[number(), minValue(0)]}
+        />
+      </FormTab>
+    </TabbedForm>
+  );
 };
