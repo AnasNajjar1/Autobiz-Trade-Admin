@@ -7,8 +7,11 @@ import {
   DateField,
   NumberField,
   Filter,
-  TextInput
+  TextInput,
+  EditButton
 } from "react-admin";
+
+import LinkToRelatedOffers from "./LinkToRelatedOffers";
 
 const VehicleFilter = props => (
   <Filter {...props}>
@@ -18,13 +21,15 @@ const VehicleFilter = props => (
 
 export const Vehicles = props => (
   <List {...props} filters={<VehicleFilter />}>
-    <Datagrid rowClick="edit">
+    <Datagrid>
       <TextField label="id" source="id" />
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
       <NumberField label="MILEAGE" source="mileage" />
       <DateField label="MEC" source="firstRegistrationDate" />
+      <LinkToRelatedOffers />
+      <EditButton />
     </Datagrid>
   </List>
 );

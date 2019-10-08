@@ -24,6 +24,7 @@ const restProvider = simpleRestProvider("", httpClientAWS)
 export default async (type, resource, params) => {
   switch (resource) {
     case "pointOfSale":
+    case "offer":
     case "facadePointOfSale":
     case "facadeBrand":
     case "facadeModel":
