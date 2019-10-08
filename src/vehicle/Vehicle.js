@@ -5,11 +5,6 @@ import {
   AutocompleteInput,
   Edit,
   TextInput,
-  Datagrid,
-  ReferenceManyField,
-  TextField,
-  NumberField,
-  DateField,
   ImageField,
   DisabledInput,
   NumberInput,
@@ -106,49 +101,72 @@ const commonForm = type => {
           source="salesComment"
         ></LongTextInput>
 
-        <BooleanInput source="hasAuction" />
+        <BooleanInput source="auction.active" label="Enable auctions" />
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.hasAuction === true && (
-              <NumberInput label="minimalPrice" source="minimalPrice" />
-            )
-          }
-        </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.hasAuction === true && (
+            formData.auction &&
+            formData.auction.active === true && (
               <DateTimeInput
-                label="salesDateTimeEnd"
-                source="salesDateTimeEnd"
+                label="auction startDateTime"
+                source="auction.startDateTime"
                 providerOptions={{ utils: MomentUtils }}
                 options={{
                   format: "DD/MM/YYYY, HH:mm:ss",
                   ampm: false,
                   clearable: true
                 }}
+                validate={required()}
+              />
+            )
+          }
+        </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.auction &&
+            formData.auction.active === true && (
+              <DateTimeInput
+                label="auction endDateTime"
+                source="auction.endDateTime"
+                providerOptions={{ utils: MomentUtils }}
+                options={{
+                  format: "DD/MM/YYYY, HH:mm:ss",
+                  ampm: false,
+                  clearable: true
+                }}
+                validate={required()}
+              />
+            )
+          }
+        </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.auction &&
+            formData.auction.active === true && (
+              <NumberInput
+                label="auction minimalPrice"
+                source="auction.minimalPrice"
+                validate={[number(), minValue(0), required()]}
+              />
+            )
+          }
+        </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.auction &&
+            formData.auction.active === true && (
+              <NumberInput
+                label="auction stepPrice"
+                source="auction.stepPrice"
+                validate={[number(), minValue(1), required()]}
               />
             )
           }
         </FormDataConsumer>
       </FormTab>
-
-      {/*       <FormTab label="auctions" key="auctions">
-        <ReferenceManyField reference="offer" target={"vehicleId"}>
-          <Datagrid>
-            <NumberField
-              source="amount"
-              options={{
-                style: "currency",
-                currency: "EUR"
-              }}
-            />
-            <TextField label="userId" source="userId" />
-            <DateField label="createdAt" source="createdAt" showTime />
-          </Datagrid>
-        </ReferenceManyField>
-      </FormTab> */}
 
       <FormTab label="vehicle" key="vehicle">
         <ReferenceInput
