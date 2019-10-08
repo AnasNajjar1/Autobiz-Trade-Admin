@@ -134,7 +134,7 @@ const commonForm = type => {
         </FormDataConsumer>
       </FormTab>
 
-      <FormTab label="auctions" key="auctions">
+      {/*       <FormTab label="auctions" key="auctions">
         <ReferenceManyField reference="offer" target={"vehicleId"}>
           <Datagrid>
             <NumberField
@@ -148,7 +148,7 @@ const commonForm = type => {
             <DateField label="createdAt" source="createdAt" showTime />
           </Datagrid>
         </ReferenceManyField>
-      </FormTab>
+      </FormTab> */}
 
       <FormTab label="vehicle" key="vehicle">
         <ReferenceInput

@@ -1,10 +1,29 @@
 // in src/posts.js
 import React from "react";
-import { List, Datagrid, TextField, NumberField, DateField } from "react-admin";
+import {
+  List,
+  Filter,
+  TextInput,
+  Datagrid,
+  TextField,
+  NumberField,
+  DateField
+} from "react-admin";
+
+const VehicleFilter = props => (
+  <Filter {...props}>
+    <TextInput
+      label="fileNumber"
+      source="fileNumber"
+      defaultValue=""
+      alwaysOn
+    />
+  </Filter>
+);
 
 export const Offers = props => {
   return (
-    <List {...props}>
+    <List {...props} filters={<VehicleFilter />}>
       <Datagrid>
         <TextField label="fileNumber" source="fileNumber" />
         <NumberField
