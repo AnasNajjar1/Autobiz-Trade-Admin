@@ -14,6 +14,7 @@ const httpClientAWS = async (path, options) =>{
   
   options.response = true
   if(method===undefined) method = "get"
+  else if(method==="DELETE") method = "del"
   else {
     method = _.toLower(method)
     delete options.method
