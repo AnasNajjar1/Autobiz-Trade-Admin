@@ -416,8 +416,8 @@ const commonForm = type => {
           </small>
         </div>
         <TextInput
-          label="lastservicingDate"
-          source="lastservicingDate"
+          label="lastServicingDate"
+          source="lastServicingDate"
           validate={validateMonth}
         />
         <div>
