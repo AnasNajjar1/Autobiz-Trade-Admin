@@ -1,4 +1,4 @@
 export default [
-  { id: "private", name: "private" },
+  { id: "offerToPrivate", name: "offerToPrivate" },
   { id: "stock", name: "stock" }
 ];
