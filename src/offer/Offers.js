@@ -26,6 +26,10 @@ export const Offers = props => {
     <List {...props} filters={<VehicleFilter />}>
       <Datagrid>
         <TextField label="fileNumber" source="fileNumber" />
+        <TextField label="brandLabel" source="brandLabel" />
+        <TextField label="modelLabel" source="modelLabel" />
+        <DateField label="purchaseDate" source="purchaseDate" />
+        <TextField label="pointOfSaleName" source="pointOfSaleName" />
         <NumberField
           source="amount"
           options={{
@@ -33,8 +37,8 @@ export const Offers = props => {
             currency: "EUR"
           }}
         />
-        <TextField label="userId" source="userId" />
         <DateField label="createdAt" source="createdAt" showTime />
+        <TextField label="userId" source="userId" />
       </Datagrid>
     </List>
   );
