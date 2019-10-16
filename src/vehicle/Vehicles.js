@@ -27,7 +27,8 @@ export const Vehicles = props => (
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
       <NumberField label="MILEAGE" source="mileage" />
-      <DateField label="MEC" source="firstRegistrationDate" />
+      <TextField label="POINT OF SALE" source="pointOfSaleName" />
+      <DateField label="EXPERTISE DATE" source="expertiseDate" />
       <LinkToRelatedOffers />
       <EditButton />
     </Datagrid>
