@@ -8,20 +8,8 @@ export default [
     name: "DIESEL"
   },
   {
-    id: "LPG",
-    name: "LPG"
-  },
-  {
     id: "ELECTRIC",
     name: "ELECTRIC"
-  },
-  {
-    id: "CNG",
-    name: "CNG"
-  },
-  {
-    id: "ETHANOL",
-    name: "ETHANOL"
   },
   {
     id: "LPG",
