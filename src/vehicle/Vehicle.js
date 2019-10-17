@@ -23,6 +23,7 @@ import {
   regex
 } from "react-admin";
 import { DateTimeInput, DateInput } from "react-admin-date-inputs";
+import moment from "moment";
 import MomentUtils from "material-ui-pickers/utils/moment-utils";
 
 import RimSizeInput from "./components/RimSizeInput";
@@ -40,6 +41,7 @@ import originChoices from "../assets/choices/origin";
 import servicingHistoryChoices from "../assets/choices/servicingHistory";
 import gearBoxChoices from "../assets/choices/gearBox";
 import boolOrNullChoices from "../assets/choices/boolOrNull";
+import salesTypeChoices from "../assets/choices/salesType";
 
 export const CreateVehicle = props => {
   const form = commonForm("create");
@@ -60,11 +62,34 @@ const validateURL = regex(
   "Must be an URL"
 );
 
+const auctionDatesValidation = (value, allValues) => {
+  let { startDateTime, endDateTime } = allValues.auction;
+
+  if (!moment.isMoment(startDateTime)) {
+    startDateTime = moment.utc(startDateTime);
+  }
+
+  if (!moment.isMoment(endDateTime)) {
+    endDateTime = moment.utc(endDateTime);
+  }
+
+  if (endDateTime.isBefore(startDateTime)) {
+    return "EndDateTime must be after StartDateTime";
+  }
+};
+
+const validateAuctionDates = [required(), auctionDatesValidation];
+
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
+const vehicleDefaultValue = {
+  statusId: 1,
+  salesType: "auction",
+  auction: { startDateTime: new Date() }
+};
 
 const commonForm = type => {
   return (
-    <TabbedForm submitOnEnter={false}>
+    <TabbedForm submitOnEnter={false} defaultValue={vehicleDefaultValue}>
       <FormTab label="record" key="record">
         {type === "edit" && <DisabledInput source="id" />}
         {type === "edit" && <DisabledInput source="uuid" />}
@@ -101,22 +126,27 @@ const commonForm = type => {
           source="salesComment"
         ></LongTextInput>
 
-        <BooleanInput source="auction.active" label="Enable auctions" />
+        <SelectInput
+          label="salesType"
+          source="salesType"
+          choices={salesTypeChoices}
+          validate={[required()]}
+        />
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.auction &&
-            formData.auction.active === true && (
+            formData.salesType === "auction" && (
               <DateTimeInput
                 label="auction startDateTime"
                 source="auction.startDateTime"
                 providerOptions={{ utils: MomentUtils }}
+                disablePast
                 options={{
                   format: "DD/MM/YYYY, HH:mm:ss",
                   ampm: false,
                   clearable: true
                 }}
-                validate={required()}
+                validate={validateAuctionDates}
               />
             )
           }
@@ -124,8 +154,7 @@ const commonForm = type => {
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.auction &&
-            formData.auction.active === true && (
+            formData.salesType === "auction" && (
               <DateTimeInput
                 label="auction endDateTime"
                 source="auction.endDateTime"
@@ -135,7 +164,7 @@ const commonForm = type => {
                   ampm: false,
                   clearable: true
                 }}
-                validate={required()}
+                validate={validateAuctionDates}
               />
             )
           }
@@ -143,8 +172,7 @@ const commonForm = type => {
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.auction &&
-            formData.auction.active === true && (
+            formData.salesType === "auction" && (
               <NumberInput
                 label="auction minimalPrice"
                 source="auction.minimalPrice"
@@ -156,8 +184,7 @@ const commonForm = type => {
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.auction &&
-            formData.auction.active === true && (
+            formData.salesType === "auction" && (
               <NumberInput
                 label="auction stepPrice"
                 source="auction.stepPrice"
