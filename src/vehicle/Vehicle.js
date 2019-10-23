@@ -42,6 +42,7 @@ import servicingHistoryChoices from "../assets/choices/servicingHistory";
 import gearBoxChoices from "../assets/choices/gearBox";
 import boolOrNullChoices from "../assets/choices/boolOrNull";
 import salesTypeChoices from "../assets/choices/salesType";
+import distributionBeltChoices from "../assets/choices/distributionBelt";
 
 export const CreateVehicle = props => {
   const form = commonForm("create");
@@ -426,22 +427,38 @@ const commonForm = type => {
 
       <FormTab label="history">
         <SelectInput label="origin" source="origin" choices={originChoices} />
+
+        <TextInput
+          label="purchaseInvoice"
+          source="purchaseInvoice"
+          validate={validateURL}
+        />
+
+        <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
+      </FormTab>
+
+      <FormTab label="servicing">
         <SelectInput
           label="servicingHistory"
           source="servicingHistory"
           choices={servicingHistoryChoices}
         />
-
-        <TextInput
-          label="nextTechnicalCheckDate"
-          source="nextTechnicalCheckDate"
-          validate={validateMonth}
+        <SelectInput
+          label="servicingInBrandNetwork"
+          source="servicingInBrandNetwork"
+          choices={boolOrNullChoices}
         />
-        <div>
-          <small>
-            <i>Format (YYYY-MM)</i>
-          </small>
-        </div>
+        <TextInput
+          label="servicingManualPicture"
+          source="servicingManualPicture"
+          validate={validateURL}
+        />
+        <SelectInput
+          label="servicingInvoices"
+          source="servicingInvoices"
+          choices={boolOrNullChoices}
+        />
+
         <TextInput
           label="lastServicingDate"
           source="lastServicingDate"
@@ -454,18 +471,21 @@ const commonForm = type => {
         </div>
 
         <SelectInput
-          label="servicingInBrandNetwork"
-          source="servicingInBrandNetwork"
-          choices={boolOrNullChoices}
+          label="distributionBelt"
+          source="distributionBelt"
+          choices={distributionBeltChoices}
         />
 
         <TextInput
-          label="purchaseInvoice"
-          source="purchaseInvoice"
-          validate={validateURL}
+          label="nextTechnicalCheckDate"
+          source="nextTechnicalCheckDate"
+          validate={validateMonth}
         />
-
-        <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
+        <div>
+          <small>
+            <i>Format (YYYY-MM)</i>
+          </small>
+        </div>
       </FormTab>
 
       <FormTab label="market">
