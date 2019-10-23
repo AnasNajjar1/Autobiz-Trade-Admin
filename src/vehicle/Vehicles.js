@@ -8,14 +8,22 @@ import {
   NumberField,
   Filter,
   TextInput,
+  SelectInput,
   EditButton
 } from "react-admin";
 
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
+import offerTypeChoices from "../assets/choices/offerType";
 
 const VehicleFilter = props => (
   <Filter {...props}>
     <TextInput label="REF" source="fileNumber" defaultValue="" alwaysOn />
+    <SelectInput
+      label="offerType"
+      source="offerType"
+      choices={offerTypeChoices}
+      alwaysOn
+    />
   </Filter>
 );
 

@@ -34,7 +34,7 @@ import declaredEquipmentsChoices from "../assets/choices/declaredEquipments";
 import constructorEquipmentsChoices from "../assets/choices/constructorEquipments";
 import rimTypeChoices from "../assets/choices/rimType";
 import profileCostsChoices from "../assets/choices/profileCosts";
-import typeChoices from "../assets/choices/type";
+import offerTypeChoices from "../assets/choices/offerType";
 import wheelsTireBrandChoices from "../assets/choices/wheelsTireBrand";
 import vehicleTypeChoices from "../assets/choices/vehicleType";
 import originChoices from "../assets/choices/origin";
@@ -119,7 +119,11 @@ const commonForm = type => {
           <SelectInput source="name" />
         </ReferenceInput>
 
-        <SelectInput label="type" source="type" choices={typeChoices} />
+        <SelectInput
+          label="offerType"
+          source="offerType"
+          choices={offerTypeChoices}
+        />
 
         <LongTextInput
           label="salesComment"
