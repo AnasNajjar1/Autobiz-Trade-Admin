@@ -84,8 +84,7 @@ const validateAuctionDates = [required(), auctionDatesValidation];
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const vehicleDefaultValue = {
   statusId: 1,
-  salesType: "auction",
-  auction: { startDateTime: new Date() }
+  auction: { startDateTime: new Date(), salesType: "auction" }
 };
 
 const commonForm = type => {
@@ -129,63 +128,46 @@ const commonForm = type => {
 
         <SelectInput
           label="salesType"
-          source="salesType"
+          source="auction.salesType"
           choices={salesTypeChoices}
           validate={[required()]}
         />
 
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.salesType === "auction" && (
-              <DateTimeInput
-                label="auction startDateTime"
-                source="auction.startDateTime"
-                providerOptions={{ utils: MomentUtils }}
-                disablePast
-                options={{
-                  format: "DD/MM/YYYY, HH:mm:ss",
-                  ampm: false,
-                  clearable: true
-                }}
-                validate={validateAuctionDates}
-              />
-            )
-          }
-        </FormDataConsumer>
+        <DateTimeInput
+          label="Sale startDateTime"
+          source="auction.startDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          disablePast
+          options={{
+            format: "DD/MM/YYYY, HH:mm:ss",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <DateTimeInput
+          label="Sale endDateTime"
+          source="auction.endDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          options={{
+            format: "DD/MM/YYYY, HH:mm:ss",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <NumberInput
+          label="Sale minimalPrice"
+          source="auction.minimalPrice"
+          validate={[number(), minValue(0), required()]}
+        />
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.salesType === "auction" && (
-              <DateTimeInput
-                label="auction endDateTime"
-                source="auction.endDateTime"
-                providerOptions={{ utils: MomentUtils }}
-                options={{
-                  format: "DD/MM/YYYY, HH:mm:ss",
-                  ampm: false,
-                  clearable: true
-                }}
-                validate={validateAuctionDates}
-              />
-            )
-          }
-        </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.salesType === "auction" && (
-              <NumberInput
-                label="auction minimalPrice"
-                source="auction.minimalPrice"
-                validate={[number(), minValue(0), required()]}
-              />
-            )
-          }
-        </FormDataConsumer>
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.salesType === "auction" && (
+            formData.auction &&
+            formData.auction.salesType === "auction" && (
               <NumberInput
                 label="auction stepPrice"
                 source="auction.stepPrice"
