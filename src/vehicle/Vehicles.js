@@ -22,13 +22,16 @@ const VehicleFilter = props => (
 export const Vehicles = props => (
   <List {...props} filters={<VehicleFilter />}>
     <Datagrid>
-      <TextField label="id" source="id" />
+      <TextField label="ID" source="id" />
       <TextField label="REF" source="fileNumber" sortable={false} />
+      <TextField label="STATUS" source="statusName" />
+      <TextField label="OFFER TYPE" source="offerType" />
+      <TextField label="SALES TYPE" source="salesType" />
+      <DateField label="EXPERTISE DATE" source="createdAt" />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
       <NumberField label="MILEAGE" source="mileage" />
       <TextField label="POINT OF SALE" source="pointOfSaleName" />
-      <DateField label="EXPERTISE DATE" source="expertiseDate" />
       <LinkToRelatedOffers />
       <EditButton />
     </Datagrid>
