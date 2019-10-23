@@ -26,7 +26,9 @@ export const Vehicles = props => (
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
-      <TextField label="SALES TYPE" source="salesType" />
+      <TextField label="SALE TYPE" source="salesType" />
+      <DateField label="SALE START" source="startDateTime" />
+      <DateField label="SALE END" source="endDateTime" />
       <DateField label="EXPERTISE DATE" source="createdAt" />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
