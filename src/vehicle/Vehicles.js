@@ -9,21 +9,40 @@ import {
   Filter,
   TextInput,
   SelectInput,
-  EditButton
+  EditButton,
+  ReferenceInput
 } from "react-admin";
 
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
+import salesTypeChoices from "../assets/choices/salesType";
 
 const VehicleFilter = props => (
   <Filter {...props}>
     <TextInput label="REF" source="fileNumber" defaultValue="" alwaysOn />
+    <ReferenceInput source="statusId" reference="status" alwaysOn>
+      <SelectInput source="name" />
+    </ReferenceInput>
     <SelectInput
       label="offerType"
       source="offerType"
       choices={offerTypeChoices}
       alwaysOn
     />
+    <SelectInput
+      label="salesType"
+      source="salesType"
+      choices={salesTypeChoices}
+      alwaysOn
+    />
+    <ReferenceInput
+      label="brandLabel"
+      source="brandLabel"
+      reference="facadeBrand"
+      alwaysOn
+    >
+      <SelectInput optionValue="id" optionText="name" />
+    </ReferenceInput>
   </Filter>
 );
 

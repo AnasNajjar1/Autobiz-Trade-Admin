@@ -188,7 +188,7 @@ const commonForm = type => {
           source="brandLabel"
           reference="facadeBrand"
         >
-          <SelectInput optionValue="name" optionText="name" />
+          <SelectInput optionValue="id" optionText="name" />
         </ReferenceInput>
 
         <FormDataConsumer>
@@ -199,7 +199,7 @@ const commonForm = type => {
               reference="facadeModel"
               filter={{ brandLabel: formData.brandLabel }}
             >
-              <SelectInput optionValue="name" optionText="name" />
+              <SelectInput optionValue="id" optionText="name" />
             </ReferenceInput>
           )}
         </FormDataConsumer>
