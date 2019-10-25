@@ -3,9 +3,13 @@ import React from "react";
 import {
   List,
   Datagrid,
+  DateInput,
   TextField,
   DateField,
+  AutocompleteInput,
+  CheckboxGroupInput,
   NumberField,
+  BooleanInput,
   Filter,
   TextInput,
   SelectInput,
@@ -19,29 +23,96 @@ import salesTypeChoices from "../assets/choices/salesType";
 
 const VehicleFilter = props => (
   <Filter {...props}>
-    <TextInput label="REF" source="fileNumber" defaultValue="" alwaysOn />
-    <ReferenceInput source="statusId" reference="status" alwaysOn>
-      <SelectInput source="name" />
-    </ReferenceInput>
+    <TextInput
+      label="REF"
+      source="fileNumber"
+      defaultValue=""
+      alwaysOn
+      resettable
+    />
+    {/* 
+    <ReferenceInput source="statusId" reference="status">
+      <SelectInput source="name" resettable />
+    </ReferenceInput> */}
+
+    <CheckboxGroupInput
+      source="statusId"
+      choices={[
+        { id: "1", name: "Offline" },
+        { id: "2", name: "Online" },
+        { id: "3", name: "Sold" }
+      ]}
+    />
+
     <SelectInput
       label="offerType"
       source="offerType"
       choices={offerTypeChoices}
-      alwaysOn
+      resettable
     />
     <SelectInput
-      label="salesType"
+      label="sales Type"
       source="salesType"
       choices={salesTypeChoices}
-      alwaysOn
+      resettable
     />
     <ReferenceInput
-      label="brandLabel"
+      label="brand Label"
       source="brandLabel"
       reference="facadeBrand"
-      alwaysOn
+      resettable
     >
-      <SelectInput optionValue="id" optionText="name" />
+      <SelectInput optionValue="id" optionText="name" resettable />
+    </ReferenceInput>
+
+    <TextInput
+      label="modelLabel"
+      source="modelLabel"
+      defaultValue=""
+      resettable
+    />
+
+    <TextInput
+      label="mileage Min"
+      source="mileageMin"
+      defaultValue=""
+      resettable
+    />
+    <TextInput
+      label="mileage Max"
+      source="mileageMax"
+      defaultValue=""
+      resettable
+    />
+    <DateInput
+      label="Expertise date"
+      source="createdAt"
+      defaultValue=""
+      resettable
+    />
+
+    <DateInput
+      label="Sales Start"
+      source="startDateTime"
+      defaultValue=""
+      resettable
+    />
+
+    <DateInput
+      label="Sales end"
+      source="endDateTime"
+      defaultValue=""
+      resettable
+    />
+
+    <BooleanInput label="with Offers" source="withOffers" />
+
+    <ReferenceInput
+      source="pointOfSaleId"
+      reference="pointOfSale"
+      sort={{ field: "name", order: "ASC" }}
+    >
+      <AutocompleteInput optionText="name" />
     </ReferenceInput>
   </Filter>
 );
@@ -53,9 +124,9 @@ export const Vehicles = props => (
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
-      <TextField label="SALE TYPE" source="salesType" />
-      <DateField label="SALE START" source="startDateTime" />
-      <DateField label="SALE END" source="endDateTime" />
+      <TextField label="SALEs TYPE" source="salesType" />
+      <DateField label="SALES START" source="startDateTime" />
+      <DateField label="SALES END" source="endDateTime" />
       <DateField label="EXPERTISE DATE" source="createdAt" />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
