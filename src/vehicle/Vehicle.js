@@ -220,6 +220,12 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="carPictures">
+        <ImageField source="carPictures.three_quarters_front_picture" />
+        <TextInput
+          label="three_quarters_front_picture"
+          source="carPictures.three_quarters_front_picture"
+        />
+
         <ImageField source="carPictures.front_picture" />
         <TextInput label="front_picture" source="carPictures.front_picture" />
 
