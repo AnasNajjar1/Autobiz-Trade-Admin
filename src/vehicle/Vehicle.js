@@ -461,6 +461,8 @@ const commonForm = type => {
           </small>
         </div>
 
+        <TextInput label="lastServicingKm" source="lastServicingKm" />
+
         <SelectInput
           label="distributionBelt"
           source="distributionBelt"
