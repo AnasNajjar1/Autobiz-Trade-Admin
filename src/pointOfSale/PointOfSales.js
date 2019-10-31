@@ -1,13 +1,6 @@
 // in src/posts.js
 import React from "react";
-import {
-  List,
-  Datagrid,
-  TextField,
-  Filter,
-  TextInput,
-  SelectInput
-} from "react-admin";
+import { List, Datagrid, TextField, Filter, SelectInput } from "react-admin";
 
 import countryChoices from "../assets/choices/country";
 

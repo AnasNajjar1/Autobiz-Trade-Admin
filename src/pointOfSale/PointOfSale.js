@@ -4,25 +4,9 @@ import {
   Edit,
   SimpleForm,
   TextInput,
-  ImageInput,
-  ImageField,
-  DisabledInput,
-  NumberInput,
-  DateInput,
-  TabbedForm,
-  FormTab,
-  BooleanInput,
-  ArrayInput,
-  SimpleFormIterator,
   SelectInput,
-  SelectArrayInput,
-  LongTextInput,
   ReferenceInput,
-  FormDataConsumer,
-  required,
-  minValue,
-  number,
-  regex
+  FormDataConsumer
 } from "react-admin";
 
 import countryChoices from "../assets/choices/country";

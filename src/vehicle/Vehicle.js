@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  BooleanInput,
   Create,
   AutocompleteInput,
   Edit,
