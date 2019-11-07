@@ -42,6 +42,7 @@ const VehicleFilter = props => (
         { id: "2", name: "Online" },
         { id: "3", name: "Sold" }
       ]}
+      alwaysOn
     />
 
     <SelectInput
@@ -90,7 +91,19 @@ const VehicleFilter = props => (
       defaultValue=""
       resettable
     />
-
+    <DateInput
+      label="MAX Sales end"
+      source="maxEndDateTime"
+      defaultValue=""
+      resettable
+      alwaysOn
+    />
+    <DateInput
+      label="MIN Sales end"
+      source="minEndDateTime"
+      defaultValue=""
+      resettable
+    />
     <DateInput
       label="Sales Start"
       source="startDateTime"

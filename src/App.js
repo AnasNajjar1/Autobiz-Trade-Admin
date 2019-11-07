@@ -35,6 +35,7 @@ const App = () => {
         <Resource name="facadeModel" />,
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
+        <Resource name="facadeUser" />
         // Only include the categories resource for admin users
         // permissions === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />

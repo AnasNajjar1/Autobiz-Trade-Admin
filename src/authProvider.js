@@ -109,6 +109,6 @@ async function refreshToken() {
 
 Auth.configure({
   refreshHandlers: {
-      'developer': refreshToken
+      'developer': refreshToken()
   }
 })

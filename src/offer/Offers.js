@@ -44,6 +44,9 @@ export const Offers = props => {
         <ReferenceField label="User" source="userId" reference="facadeUser">
           <TextField source="name" />
         </ReferenceField>
+        <ReferenceField label="User" source="userId" reference="facadeUser">
+          <TextField source="email" />
+        </ReferenceField>
       </Datagrid>
     </List>
   );
