@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  BooleanInput,
   Create,
   AutocompleteInput,
   Edit,
@@ -221,6 +220,12 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="carPictures">
+        <ImageField source="carPictures.three_quarters_front_picture" />
+        <TextInput
+          label="three_quarters_front_picture"
+          source="carPictures.three_quarters_front_picture"
+        />
+
         <ImageField source="carPictures.front_picture" />
         <TextInput label="front_picture" source="carPictures.front_picture" />
 
@@ -271,18 +276,6 @@ const commonForm = type => {
 
         <ImageField source="carPictures.vin_picture" />
         <TextInput label="vin_picture" source="carPictures.vin_picture" />
-
-        <ImageField source="carPictures.purchase_invoice_picture" />
-        <TextInput
-          label="purchase_invoice_picture"
-          source="carPictures.purchase_invoice_picture"
-        />
-
-        <ImageField source="carPictures.purchase_invoice_picture2" />
-        <TextInput
-          label="purchase_invoice_picture2"
-          source="carPictures.purchase_invoice_picture2"
-        />
       </FormTab>
 
       <FormTab label="PointOfSale">
@@ -455,6 +448,8 @@ const commonForm = type => {
             <i>Format (YYYY-MM)</i>
           </small>
         </div>
+
+        <TextInput label="lastServicingKm" source="lastServicingKm" />
 
         <SelectInput
           label="distributionBelt"

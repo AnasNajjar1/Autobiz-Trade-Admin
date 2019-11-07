@@ -1,15 +1,6 @@
 // in src/posts.js
 import React from "react";
-import {
-  List,
-  Datagrid,
-  TextField,
-  ReferenceField,
-  ImageField,
-  DateField,
-  NumberField
-} from "react-admin";
-
+import { List, Datagrid, TextField } from "react-admin";
 
 export const Users = props => (
   <List {...props}>

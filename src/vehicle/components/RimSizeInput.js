@@ -1,6 +1,5 @@
 import React from "react";
-import { Field } from "redux-form";
-import { Labeled, TextInput, SelectInput } from "react-admin";
+import { Labeled, SelectInput } from "react-admin";
 
 import {
   widthChoices,

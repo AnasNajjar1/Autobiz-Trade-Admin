@@ -1,5 +1,4 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import lowerCase from "lower-case";
 export const muiThemeOverrides = createMuiTheme({
   overrides: {
     MuiTab: {
