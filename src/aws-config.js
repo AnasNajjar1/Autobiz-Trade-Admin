@@ -4,7 +4,7 @@ const config = {
     Auth: {
 
         // REQUIRED only for Federated Authentication - Amazon Cognito Identity Pool ID
-        identityPoolId: 'eu-west-1:c7ed857d-d1cd-4459-8329-3b146d3738f1',
+        identityPoolId: 'eu-west-1:e8cbcb21-aa17-41e1-bdfc-58c09cb55566',
         
         // REQUIRED - Amazon Cognito Region
         region: 'eu-west-1',
