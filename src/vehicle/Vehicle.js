@@ -276,18 +276,6 @@ const commonForm = type => {
 
         <ImageField source="carPictures.vin_picture" />
         <TextInput label="vin_picture" source="carPictures.vin_picture" />
-
-        <ImageField source="carPictures.purchase_invoice_picture" />
-        <TextInput
-          label="purchase_invoice_picture"
-          source="carPictures.purchase_invoice_picture"
-        />
-
-        <ImageField source="carPictures.purchase_invoice_picture2" />
-        <TextInput
-          label="purchase_invoice_picture2"
-          source="carPictures.purchase_invoice_picture2"
-        />
       </FormTab>
 
       <FormTab label="PointOfSale">
