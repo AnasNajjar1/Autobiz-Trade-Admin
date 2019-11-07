@@ -39,6 +39,7 @@ export default async (type, resource, params) => {
     case "facadePointOfSale":
     case "facadeBrand":
     case "facadeModel":
+    case "facadeUser":
     case "status":
     case "auction":
     case "vehicle": {

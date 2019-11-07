@@ -6,6 +6,7 @@ import {
   TextInput,
   Datagrid,
   TextField,
+  ReferenceField,
   NumberField,
   DateField
 } from "react-admin";
@@ -39,6 +40,10 @@ export const Offers = props => {
         />
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
+
+        <ReferenceField label="User" source="userId" reference="facadeUser">
+          <TextField source="name" />
+        </ReferenceField>
       </Datagrid>
     </List>
   );
