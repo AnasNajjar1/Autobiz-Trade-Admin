@@ -3,6 +3,7 @@ import React from "react";
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import pointOfSale from "./pointOfSale";
+import facadeCarcheck from "./carcheck"
 import offer from "./offer";
 import { Users } from "./users/Users";
 import User from "./users/User";
@@ -29,13 +30,14 @@ const App = () => {
         // Restrict access to the edit and remove views to admin only
 
         <Resource name="vehicle" {...vehicle} />,
+        <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
         <Resource name="pointOfSale" {...pointOfSale} />,
         <Resource name="facadeBrand" />,
         <Resource name="facadeModel" />,
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
-        <Resource name="facadeUser" />
+        <Resource name="facadeUser" />,
         // Only include the categories resource for admin users
         // permissions === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />

@@ -40,6 +40,7 @@ export default async (type, resource, params) => {
     case "facadeBrand":
     case "facadeModel":
     case "facadeUser":
+    case "facadeCarcheck":
     case "status":
     case "auction":
     case "vehicle": {
