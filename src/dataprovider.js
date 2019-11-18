@@ -41,9 +41,23 @@ export default async (type, resource, params) => {
     case "facadeModel":
     case "facadeUser":
     case "status":
-    case "auction":
-    case "vehicle": {
-      return await restProvider(type, "admin/" + resource, params);
+    case "auction":{
+      return restProvider(type, "admin/" + resource, params);
+    }
+    case "vehicles":
+    case "offline": 
+    case "online" : 
+    case "others" : {
+      let res = await restProvider(type, "admin/" + 'vehicle', params);
+      if(res.total == 0) {
+        if(resource === 'others') {
+          params.filter = {
+            minEndDateTime : new Date().toISOString() 
+          }
+          return restProvider(type, "admin/" + 'vehicle', params);
+        }
+      }
+      return res
     }
     case "users": {
       return getUserData(type, resource, params);

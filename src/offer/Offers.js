@@ -34,6 +34,7 @@ export const Offers = props => {
         <NumberField
           source="amount"
           options={{
+            minimumFractionDigits: 0,
             style: "currency",
             currency: "EUR"
           }}
