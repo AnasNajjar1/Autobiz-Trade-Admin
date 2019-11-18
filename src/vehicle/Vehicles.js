@@ -42,7 +42,7 @@ const VehicleFilter = props => (
         { id: "2", name: "Online" },
         { id: "3", name: "Sold" }
       ]}
-      //alwaysOn
+      alwaysOn
     />
 
     <SelectInput
@@ -96,7 +96,7 @@ const VehicleFilter = props => (
       source="maxEndDateTime"
       defaultValue=""
       resettable
-      //alwaysOn
+      alwaysOn
     />
     <DateInput
       label="MIN Sales end"
@@ -130,8 +130,8 @@ const VehicleFilter = props => (
   </Filter>
 );
 
-export const Vehicles = props => {
-  return(<List {...props} filters={<VehicleFilter />} >
+export const Vehicles = props => (
+  <List {...props} filters={<VehicleFilter />} perPage={25}> 
     <Datagrid>
       <TextField label="ID" source="id" />
       <TextField label="REF" source="fileNumber" sortable={false} />
@@ -139,7 +139,7 @@ export const Vehicles = props => {
       <TextField label="OFFER TYPE" source="offerType" />
       <TextField label="SALEs TYPE" source="salesType" />
       <DateField label="SALES START" source="startDateTime" />
-      <DateField label="SALES END" source="endDateTime"/>
+      <DateField label="SALES END" source="endDateTime" />
       <DateField label="EXPERTISE DATE" source="createdAt" />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
@@ -148,8 +148,8 @@ export const Vehicles = props => {
       <LinkToRelatedOffers />
       <EditButton />
     </Datagrid>
-  </List>)
-}
+  </List>
+);
 
 export const Offline = props => (
   <Vehicles {...props} filter={{ statusId : [1] }} />
