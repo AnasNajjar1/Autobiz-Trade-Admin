@@ -20,25 +20,27 @@ import {
   Show,
   RichTextField,
   SimpleShowLayout,
-  Create,
+  Pagination,
   ChipField
 } from "react-admin";
 import ButtonImport from "./ButtonImport";
 
+const RecordPagination = props => <div/>//remove pagination until it works on api
+
 export const Records = props => (
-  <List {...props} filters={<RecordFilter />}>
+  <List {...props} filters={<RecordFilter />} pagination={<RecordPagination />}>
     <Datagrid>
-      <TextField label="ID" source="id" />
-      <TextField label="REF" source="refHexaId" sortable={false} />
-      <DateField label="EXPERTISE DATE" source="createdAt" />
-      <TextField label="BRAND" source="brandName" />
-      <TextField label="MODEL" source="modelName" />
-      <TextField label="registration" source="registration" />
-      <TextField label="vin" source="vin" />
-      <TextField label="concessionId" source="concessionId" />
-      <NumberField label="MILEAGE" source="mileage" />
-      <ChipField source="sourceId" />
-      <EditButton label="Open" />
+      <TextField label="ID" source="id" sortable={false} />
+      <TextField label="REF" source="refHexaId" sortable={false} sortable={false}/>
+      <DateField label="EXPERTISE DATE" source="createdAt" sortable={false}/>
+      <TextField label="BRAND" source="brandName" sortable={false}/>
+      <TextField label="MODEL" source="modelName" sortable={false}/>
+      <TextField label="registration" source="registration" sortable={false}/>
+      <TextField label="vin" source="vin" sortable={false}/>
+      <TextField label="concessionId" source="concessionId" sortable={false}/>
+      <NumberField label="MILEAGE" source="mileage" sortable={false}/>
+      <ChipField source="sourceId" sortable={false}/>
+      <EditButton label="Open" sortable={false}/>
     </Datagrid>
   </List>
 );
@@ -63,7 +65,7 @@ const RecordFilter = props => (
   <Filter {...props}>
     <TextInput
       label="REF"
-      source="fileNumber"
+      source="refHexaId"
       defaultValue=""
       alwaysOn
       resettable

@@ -10,12 +10,17 @@ import { API } from "aws-amplify";
 const ButtonImport = props => {
   const handleClick = async () => {
     const { push, record, showNotification } = props;
-    const vehicle = await API.post(
-      "b2bPlateform",
-      `/carcheckImport/${record.id}`
-    );
-    showNotification(`Vehicle created ${vehicle.id}`);
-    push(`/vehicle/${vehicle.id}`);
+    try{
+      const vehicle = await API.post(
+        "b2bPlateform",
+        `/carcheckImport/${record.id}`
+      );
+      showNotification(`Vehicle created ${vehicle.id}`);
+      push(`/vehicle/${vehicle.id}`);
+    }
+    catch(e){
+      showNotification(`ERROR ! ${e.message}`);
+    }
   };
 
   return (
