@@ -1,5 +1,6 @@
 // in src/App.js
 import React from "react";
+import { Route } from 'react-router-dom';
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import pointOfSale from "./pointOfSale";
@@ -38,6 +39,7 @@ const App = () => {
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
         <Resource name="facadeUser" />,
+        <Resource name="carcheckImport" />,
         // Only include the categories resource for admin users
         // permissions === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
