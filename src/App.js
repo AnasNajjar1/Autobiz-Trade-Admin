@@ -37,11 +37,11 @@ const App = () => {
         <Resource name="vehicles" {...vehicle} />,
         <Resource name="offer" {...offer} />,
         <Resource name="pointOfSale" {...pointOfSale} />,
-        // <Resource name="facadeBrand" />,
-        // <Resource name="facadeModel" />,
-        // <Resource name="facadePointOfSale" />,
-        // <Resource name="status" />,
-        // <Resource name="facadeUser" />
+        <Resource name="facadeBrand" />,
+        <Resource name="facadeModel" />,
+        <Resource name="facadePointOfSale" />,
+        <Resource name="status" />,
+        <Resource name="facadeUser" />
         // Only include the categories resource for admin users
         // permissions === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
