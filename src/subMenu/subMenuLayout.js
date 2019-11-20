@@ -10,7 +10,7 @@ import DirectionsCar from "@material-ui/icons/DirectionsCar";
 const SubMenuLayout = ({resources, onMenuClick}) => {
     const [open, setOpen] = useState(false);
     const subMenu = ['offline', 'online', 'others']
-    const facadeList = ['facadeBrand', 'facadeModel', 'facadePointOfSale', 'status', 'facadeUser']
+    const facadeList = ['vehicle','facadeBrand', 'facadeModel', 'facadePointOfSale', 'status', 'facadeUser', 'carcheckImport']
     
     const handleClick = () => {
         setOpen(!open);
@@ -19,10 +19,10 @@ const SubMenuLayout = ({resources, onMenuClick}) => {
     return (
         <div>
             <MenuItemLink
-                key='vehicles'
-                to='/vehicles'
+                key='vehicle'
+                to='/vehicle'
                 primaryText={<>
-                    <span style={{flex: 1}}>vehicles</span>
+                    <span style={{flex: 1}}>vehicle</span>
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </>}
                 leftIcon={<DirectionsCar />}
