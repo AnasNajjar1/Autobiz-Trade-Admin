@@ -23,7 +23,7 @@ import {
 } from "react-admin";
 import { DateTimeInput, DateInput } from "react-datetime-inputs";
 import moment from "moment";
-import MomentUtils from '@date-io/moment';
+import MomentUtils from "material-ui-pickers/utils/moment-utils";
 
 import RimSizeInput from "./components/RimSizeInput";
 
