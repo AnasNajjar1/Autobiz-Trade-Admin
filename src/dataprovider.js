@@ -49,16 +49,7 @@ export default async (type, resource, params) => {
     case "offline": 
     case "online" : 
     case "others" : {
-      let res = await restProvider(type, "admin/" + 'vehicle', params);
-      if(res.total == 0) {
-        if(resource === 'others') {
-          params.filter = {
-            minEndDateTime : new Date().toISOString() 
-          }
-          return restProvider(type, "admin/" + 'vehicle', params);
-        }
-      }
-      return res
+      return restProvider(type, "admin/" + 'vehicle', params);
     }
     case "users": {
       return getUserData(type, resource, params);
