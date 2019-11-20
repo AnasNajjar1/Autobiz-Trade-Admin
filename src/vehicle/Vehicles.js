@@ -156,9 +156,21 @@ export const Offline = props => (
 )
 
 export const Online = props => (
-  <Vehicles {...props} filter={{ statusId : [2], maxEndDateTime : new Date().toISOString() }} />
+  <Vehicles {...props} filter={{ statusId : [2] }} />
 )
 
-export const Others = props => (
-  <Vehicles {...props} filter={{ statusId : [3], salesType : 'immediatePurchase'}} />
+export const AuctionFinished = props => (
+  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+)
+
+export const AuctionFailed = props => (
+  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+)
+
+export const PurchasedImmediately = props => (
+  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase'}} />
+)
+
+export const Sold = props => (
+  <Vehicles {...props} filter={{ statusId : [3] }} />
 )

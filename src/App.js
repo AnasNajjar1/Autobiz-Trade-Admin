@@ -3,7 +3,7 @@ import React from "react";
 import { Route } from 'react-router-dom';
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
-import { Offline, Online, Others } from "./vehicle/Vehicles";
+import { Offline, Online, AuctionFinished, AuctionFailed, PurchasedImmediately, Sold } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
 import facadeCarcheck from "./carcheck"
 import offer from "./offer";
@@ -16,7 +16,7 @@ import { withAuthenticator } from "aws-amplify-react";
 import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
 import DirectionsCar from "@material-ui/icons/DirectionsCar";
-import MyLayout from "./subMenu/myLayout"
+import MyLayout from "./Menu/CustomLayout"
 
 Amplify.configure(awsconfig);
 
@@ -35,7 +35,10 @@ const App = () => {
         // Restrict access to the edit and remove views to admin only
         <Resource name="offline" list={Offline} icon={DirectionsCar}/>,
         <Resource name="online" list={Online} icon={DirectionsCar}/>,
-        <Resource name="others" list={Others} icon={DirectionsCar} />,
+        <Resource name="auctionFinished" list={AuctionFinished} icon={DirectionsCar} />,
+        <Resource name="auctionFailed" list={AuctionFailed} icon={DirectionsCar} />,
+        <Resource name="purchasedImmediately" list={PurchasedImmediately} icon={DirectionsCar} />,
+        <Resource name="sold" list={Sold} icon={DirectionsCar} />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
