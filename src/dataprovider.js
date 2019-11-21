@@ -42,10 +42,11 @@ export default async (type, resource, params) => {
     case "facadeUser":
     case "facadeCarcheck":
     case "status":
+    case "vehicle":
     case "auction":{
       return restProvider(type, "admin/" + resource, params);
     }
-    case "vehicles":
+    
     case "offline": 
     case "online" : 
     case "auctionFinished": 
