@@ -21,7 +21,7 @@ import {
   number,
   regex,
   DateTimeInput,
-  DateInput
+  DateInput 
 } from "react-admin";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";

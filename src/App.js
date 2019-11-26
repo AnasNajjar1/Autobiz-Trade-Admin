@@ -16,6 +16,7 @@ import { withAuthenticator } from "aws-amplify-react";
 import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
 import MyLayout from "./Menu/CustomLayout"
+import { Home, Computer, Gavel, MonetizationOn, SyncDisabled, ErrorOutline } from "@material-ui/icons";
 
 Amplify.configure(awsconfig);
 
@@ -32,12 +33,12 @@ const App = () => {
     >
       {permission => [
         //Restrict access to the edit and remove views to admin only
-        <Resource name="offline" list={Offline} create={vehicle.create} edit={vehicle.edit} icon={vehicle.icon} />,
-        <Resource name="online" list={Online} create={vehicle.create} edit={vehicle.edit}  icon={vehicle.icon}/>,
-        <Resource name="auctionFinished" list={AuctionFinished} create={vehicle.create} edit={vehicle.edit}  icon={vehicle.icon} />,
-        <Resource name="auctionFailed" list={AuctionFailed} create={vehicle.create} edit={vehicle.edit}  icon={vehicle.icon} />,
-        <Resource name="purchasedImmediately" list={PurchasedImmediately} create={vehicle.create} edit={vehicle.edit}  icon={vehicle.icon} />,
-        <Resource name="sold" list={Sold} create={vehicle.create} edit={vehicle.edit} icon={vehicle.icon} />,
+        <Resource name="offline" {...vehicle} list={Offline} icon={Home} />,
+        <Resource name="online" {...vehicle} list={Online} icon={Computer} />,
+        <Resource name="auctionFinished" {...vehicle} list={AuctionFinished} icon={Gavel} />,
+        <Resource name="auctionFailed" {...vehicle} list={AuctionFailed} icon={ErrorOutline} />,
+        <Resource name="purchasedImmediately" {...vehicle} list={PurchasedImmediately} icon={MonetizationOn} />,
+        <Resource name="sold" {...vehicle} list={Sold} icon={SyncDisabled} />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
