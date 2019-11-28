@@ -19,9 +19,11 @@ import {
   required,
   minValue,
   number,
-  regex
+  regex,
+  DateTimeInput,
+  DateInput
 } from "react-admin";
-import { DateTimeInput, DateInput } from "react-admin-date-inputs";
+// import { DateTimeInput, DateInput } from "react-admin-date-inputs";
 import moment from "moment";
 import MomentUtils from "material-ui-pickers/utils/moment-utils";
 
