@@ -29,7 +29,7 @@ export default async (type, params) => {
     return await checkPermission(true);
   }
   if (type === AUTH_CHECK) {
-    return await Auth.currentAuthenticatedUser();
+      return await Auth.currentAuthenticatedUser();
   }
   if (type === AUTH_GET_PERMISSIONS) {
     return checkPermission();
@@ -57,7 +57,6 @@ async function signInAutobiz(username, password) {
   const authAutobiz = await API.post("b2bPlateform", "/auth", {
     body: { username, password }
   });
-
   // To derive necessary data from the provider
   const {
     token, // the token you get from the provider
@@ -71,7 +70,7 @@ async function signInAutobiz(username, password) {
     {
       token,
       identity_id, // Optional
-      expires_at: expiresIn * 1000 + new Date().getTime() // the expiration timestamp
+      expires_at:  ((expiresIn * 1000) + new Date().getTime())//expiresIn * 1000 + new Date().getTime()// the expiration timestamp
     },
     user
   )
@@ -91,24 +90,20 @@ async function signInAutobiz(username, password) {
 }
 
 async function refreshToken() {
-  // refresh the token here and get the new token info
-  // ......
-  const authAutobiz = await API.post("b2bPlateform", "/auth/refresh");
-  const {
-    token, // the token you get from the provider
-    expiresIn,
-    identity_id
-  } = authAutobiz;
-
-  return {
-      token, // the token from the provider
-      expires_at: expiresIn * 1000 + new Date().getTime(), // the expiration timestamp
-      identity_id, // optional, the identityId for the credentials
-  }
+  //refresh the token here and get the new token info
+  let response = await API.post("b2bPlateform", "/auth/refresh")
+  return new Promise((res, rej) => {
+    const data = {
+        token: response.token, // the token from the provider
+        expires_at : ((response.expiresIn * 1000) + new Date().getTime()),//response.expiresIn, // the timestamp for the expiration
+        identity_id : response.identity_id, // optional, the identityId for the credentials
+    }
+    res(data);
+  });
 }
 
 Auth.configure({
   refreshHandlers: {
-      'developer': refreshToken()
+      'developer': refreshToken
   }
 })

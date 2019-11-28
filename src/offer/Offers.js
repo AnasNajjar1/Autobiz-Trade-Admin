@@ -24,7 +24,7 @@ const VehicleFilter = props => (
 
 export const Offers = props => {
   return (
-    <List {...props} filters={<VehicleFilter />}>
+    <List {...props} filters={<VehicleFilter />} perPage={25}>
       <Datagrid>
         <TextField label="fileNumber" source="fileNumber" />
         <TextField label="brandLabel" source="brandLabel" />
@@ -34,6 +34,7 @@ export const Offers = props => {
         <NumberField
           source="amount"
           options={{
+            minimumFractionDigits: 0,
             style: "currency",
             currency: "EUR"
           }}

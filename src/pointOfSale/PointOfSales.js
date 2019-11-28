@@ -15,7 +15,7 @@ const PointOfSaleFilter = props => (
 );
 
 export const PointOfSales = props => (
-  <List {...props} filters={<PointOfSaleFilter />}>
+  <List {...props} filters={<PointOfSaleFilter />} perPage={25}>
     <Datagrid rowClick="edit">
       <TextField label="id" source="id" />
       <TextField label="name" source="name" />

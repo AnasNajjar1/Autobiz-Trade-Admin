@@ -131,7 +131,7 @@ const VehicleFilter = props => (
 );
 
 export const Vehicles = props => (
-  <List {...props} filters={<VehicleFilter />}>
+  <List {...props} filters={<VehicleFilter />} perPage={25}> 
     <Datagrid>
       <TextField label="ID" source="id" />
       <TextField label="REF" source="fileNumber" sortable={false} />
@@ -150,3 +150,27 @@ export const Vehicles = props => (
     </Datagrid>
   </List>
 );
+
+export const Offline = props => (
+  <Vehicles {...props} filter={{ statusId : [1] }} />
+)
+
+export const Online = props => (
+  <Vehicles {...props} filter={{ statusId : [2] }} />
+)
+
+export const AuctionFinished = props => (
+  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+)
+
+export const AuctionFailed = props => (
+  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+)
+
+export const PurchasedImmediately = props => (
+  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase'}} />
+)
+
+export const Sold = props => (
+  <Vehicles {...props} filter={{ statusId : [3] }} />
+)
