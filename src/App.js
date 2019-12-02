@@ -34,7 +34,7 @@ const App = () => {
       {permission => [
         //Restrict access to the edit and remove views to admin only
         <Resource name="offline" {...vehicle} list={Offline} icon={Home} />,
-        <Resource name="online" {...vehicle} list={Online} icon={Computer} />,
+        <Resource name="onSale" {...vehicle} list={Online} icon={Computer} />,
         <Resource name="auctionFinished" {...vehicle} list={AuctionFinished} icon={Gavel} />,
         <Resource name="auctionFailed" {...vehicle} list={AuctionFailed} icon={ErrorOutline} />,
         <Resource name="purchasedImmediately" {...vehicle} list={PurchasedImmediately} icon={MonetizationOn} />,
