@@ -156,7 +156,7 @@ export const Offline = props => (
 )
 
 export const Online = props => (
-  <Vehicles {...props} filter={{ statusId : [2] }} />
+  <Vehicles {...props} filter={{ statusId : [2] , minEndDateTime : new Date().toISOString()}} />
 )
 
 export const AuctionFinished = props => (
@@ -168,7 +168,7 @@ export const AuctionFailed = props => (
 )
 
 export const PurchasedImmediately = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase'}} />
+  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date().toISOString()}} />
 )
 
 export const Sold = props => (

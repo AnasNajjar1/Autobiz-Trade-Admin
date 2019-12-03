@@ -48,7 +48,7 @@ export default async (type, resource, params) => {
     }
     
     case "offline": 
-    case "online" : 
+    case "onSale" : 
     case "auctionFinished": 
     case "auctionFailed": 
     case "purchasedImmediately": 
