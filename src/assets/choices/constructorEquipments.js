@@ -382,10 +382,6 @@ export default [
     name: "Sièges tissu, velours, alcantara/tissu, tissu/simili-cuir"
   },
   {
-    id: "documentationDeBord",
-    name: "Documentation de bord"
-  },
-  {
     id: "taxi",
     name: "Taxi"
   },
