@@ -20,7 +20,7 @@ import {
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
 import salesTypeChoices from "../assets/choices/salesType";
-
+import moment from 'moment'
 const VehicleFilter = props => (
   <Filter {...props}>
     <TextInput
@@ -156,19 +156,19 @@ export const Offline = props => (
 )
 
 export const Online = props => (
-  <Vehicles {...props} filter={{ statusId : [2] , minEndDateTime : new Date().toISOString()}} />
+  <Vehicles {...props} filter={{ statusId : [2] , minEndDateTime : new Date()}} />
 )
 
 export const AuctionFinished = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date() , salesType : 'auction' }} />
 )
 
 export const AuctionFailed = props => (
-  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date().toISOString() , salesType : 'auction' }} />
+  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date() , salesType : 'auction' }} />
 )
 
 export const PurchasedImmediately = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date().toISOString()}} />
+  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date()}} />
 )
 
 export const Sold = props => (
