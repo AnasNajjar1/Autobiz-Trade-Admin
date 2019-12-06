@@ -276,6 +276,13 @@ const commonForm = type => {
 
         <ImageField source="carPictures.vin_picture" />
         <TextInput label="vin_picture" source="carPictures.vin_picture" />
+
+        <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
+          <SimpleFormIterator>
+            <TextInput source="key" />
+            <TextInput source="value" validate={validateURL} />
+          </SimpleFormIterator>
+        </ArrayInput>
       </FormTab>
 
       <FormTab label="PointOfSale">
