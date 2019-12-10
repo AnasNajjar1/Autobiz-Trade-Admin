@@ -281,8 +281,9 @@ const commonForm = type => {
 
         <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
           <SimpleFormIterator>
-            <TextInput source="dommage" />
-            <TextInput source="value" validate={validateURL} />
+            <TextInput source="dommage" label="description" />
+            <TextInput source="value" validate={validateURL} label="url" />
+            <ImageField source="value" />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
