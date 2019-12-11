@@ -160,15 +160,15 @@ export const Online = props => (
 )
 
 export const AuctionFinished = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date() , salesType : 'auction' }} />
+  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date() , salesType : 'auction', statusId : [1,2] }} />
 )
 
 export const AuctionFailed = props => (
-  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date() , salesType : 'auction' }} />
+  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date() , salesType : 'auction', statusId : [1,2] }} />
 )
 
 export const PurchasedImmediately = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date()}} />
+  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date(), statusId : [1,2] }} />
 )
 
 export const Sold = props => (
