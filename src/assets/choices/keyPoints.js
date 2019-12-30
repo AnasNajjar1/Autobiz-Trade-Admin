@@ -8,5 +8,7 @@ export default [
   { id: "fewCosts", name: "fewCosts" },
   { id: "smallPrice", name: "smallPrice" },
   { id: "ctLessThan6Months", name: "ctLessThan6Months" },
-  { id: "purchaseInvoice", name: "purchaseInvoice" }
+  { id: "purchaseInvoice", name: "purchaseInvoice" },
+  { id: "userManual", name: "userManual" },
+  { id: "secondSetKey", name: "secondSetKey" }
 ];

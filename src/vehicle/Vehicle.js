@@ -424,6 +424,16 @@ const commonForm = type => {
           choices={vehicleTypeChoices}
         />
         <TextInput label="co2" source="co2" />
+        <SelectInput
+          label="userManual"
+          source="userManual"
+          choices={boolOrNullChoices}
+        />
+        <SelectInput
+          label="secondSetKey"
+          source="secondSetKey"
+          choices={boolOrNullChoices}
+        />
       </FormTab>
 
       <FormTab label="history">
