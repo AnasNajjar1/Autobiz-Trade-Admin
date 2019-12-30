@@ -288,6 +288,18 @@ const commonForm = type => {
         </ArrayInput>
       </FormTab>
 
+      <FormTab label="damages">
+        <ArrayInput label="damages" source="damages">
+          <SimpleFormIterator>
+            <TextInput source="zone" />
+            <TextInput source="element" />
+            <TextInput source="damage" />
+            <TextInput source="damage_picture" validate={validateURL} />
+            <TextInput source="damage_picture2" validate={validateURL} />
+          </SimpleFormIterator>
+        </ArrayInput>
+      </FormTab>
+
       <FormTab label="PointOfSale">
         <ReferenceInput
           source="pointOfSaleId"
