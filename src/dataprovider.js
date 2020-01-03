@@ -34,19 +34,21 @@ const restProvider = simpleRestProvider("", httpClientAWS);
 export default async (type, resource, params) => {
   switch (resource) {
     default:
-    case "pointOfSale":
-    case "offer":
     case "facadePointOfSale":
     case "facadeBrand":
     case "facadeModel":
     case "facadeUser":
-    case "facadeCarcheck":
+    case "facadeCarcheck":{
+      resource = resource.replace('facade', '')
+      return restProvider(type, "admin/facade/" + resource, params);
+    }
+    case "pointOfSale":
+    case "offer":
     case "status":
     case "vehicle":
     case "auction":{
       return restProvider(type, "admin/" + resource, params);
     }
-    
     case "offline": 
     case "onSale" : 
     case "auctionFinished": 
