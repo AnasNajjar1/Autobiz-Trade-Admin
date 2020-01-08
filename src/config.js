@@ -6,3 +6,10 @@ const apisB2bPlateform = {
   prod : "https://ttqmvnrudk.execute-api.eu-west-1.amazonaws.com/prod"
 };
 exports.B2B_API = apisB2bPlateform[ENV];
+
+const autobizTradeUlrs = {
+  dev: "https://stg72-trade.shakazoola.com",
+  staging: "https://stg72-trade.shakazoola.com",
+  prod : "https://trade.autobiz.com"
+};
+exports.TRADE_URL = autobizTradeUlrs[ENV];

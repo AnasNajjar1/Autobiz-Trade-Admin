@@ -20,7 +20,8 @@ import {
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
 import salesTypeChoices from "../assets/choices/salesType";
-import moment from 'moment'
+import { TRADE_URL } from "../config"
+
 const VehicleFilter = props => (
   <Filter {...props}>
     <TextInput
@@ -134,6 +135,7 @@ export const Vehicles = props => (
   <List {...props} filters={<VehicleFilter />} perPage={25}> 
     <Datagrid>
       <TextField label="ID" source="id" />
+      
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
@@ -145,6 +147,7 @@ export const Vehicles = props => (
       <TextField label="MODEL" source="modelLabel" />
       <NumberField label="MILEAGE" source="mileage" />
       <TextField label="POINT OF SALE" source="pointOfSaleName" />
+      <LinkRecord label="urlAds" source="uuid" />
       <LinkToRelatedOffers />
       <EditButton />
     </Datagrid>
@@ -174,3 +177,9 @@ export const PurchasedImmediately = props => (
 export const Sold = props => (
   <Vehicles {...props} filter={{ statusId : [3] }} />
 )
+
+
+const LinkRecord = ({ record }) => {
+          if(record.statusName ==="online") return <a href={`${TRADE_URL}/records/${record.uuid}`} rel="noopener" target="_blank">Link</a>
+          return null
+}
