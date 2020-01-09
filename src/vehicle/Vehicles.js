@@ -20,7 +20,7 @@ import {
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
 import salesTypeChoices from "../assets/choices/salesType";
-import { TRADE_URL } from "../config"
+import { TRADE_URL } from "../config";
 
 const VehicleFilter = props => (
   <Filter {...props}>
@@ -132,10 +132,10 @@ const VehicleFilter = props => (
 );
 
 export const Vehicles = props => (
-  <List {...props} filters={<VehicleFilter />} perPage={25}> 
+  <List {...props} filters={<VehicleFilter />} perPage={25}>
     <Datagrid>
       <TextField label="ID" source="id" />
-      
+
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
@@ -155,31 +155,61 @@ export const Vehicles = props => (
 );
 
 export const Offline = props => (
-  <Vehicles {...props} filter={{ statusId : [1] }} />
-)
+  <Vehicles {...props} filter={{ statusId: [1] }} />
+);
 
 export const Online = props => (
-  <Vehicles {...props} filter={{ statusId : [2] , minEndDateTime : new Date()}} />
-)
+  <Vehicles {...props} filter={{ statusId: [2], minEndDateTime: new Date() }} />
+);
 
 export const AuctionFinished = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, maxEndDateTime : new Date() , salesType : 'auction', statusId : [1,2] }} />
-)
+  <Vehicles
+    {...props}
+    filter={{
+      withOffers: true,
+      maxEndDateTime: new Date(),
+      salesType: "auction",
+      statusId: [1, 2]
+    }}
+  />
+);
 
 export const AuctionFailed = props => (
-  <Vehicles {...props} filter={{ "withOffers":false, maxEndDateTime : new Date() , salesType : 'auction', statusId : [1,2] }} />
-)
+  <Vehicles
+    {...props}
+    filter={{
+      withOffers: false,
+      maxEndDateTime: new Date(),
+      salesType: "auction",
+      statusId: [1, 2]
+    }}
+  />
+);
 
 export const PurchasedImmediately = props => (
-  <Vehicles {...props} filter={{ "withOffers":true, salesType : 'immediatePurchase', maxEndDateTime : new Date(), statusId : [1,2] }} />
-)
+  <Vehicles
+    {...props}
+    filter={{
+      withOffers: true,
+      salesType: "immediatePurchase",
+      maxEndDateTime: new Date(),
+      statusId: [1, 2]
+    }}
+  />
+);
 
-export const Sold = props => (
-  <Vehicles {...props} filter={{ statusId : [3] }} />
-)
-
+export const Sold = props => <Vehicles {...props} filter={{ statusId: [3] }} />;
 
 const LinkRecord = ({ record }) => {
-          if(record.statusName ==="online") return <a href={`${TRADE_URL}/records/${record.uuid}`} rel="noopener" target="_blank">Link</a>
-          return null
-}
+  if (["online", "sold"].includes(record.statusName))
+    return (
+      <a
+        href={`${TRADE_URL}/records/${record.uuid}`}
+        rel="noopener"
+        target="_blank"
+      >
+        Link
+      </a>
+    );
+  return null;
+};
