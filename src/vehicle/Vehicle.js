@@ -446,6 +446,7 @@ const commonForm = type => {
         />
 
         <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
+        <SelectInput label="imported" source="imported" choices={boolOrNullChoices} />
       </FormTab>
 
       <FormTab label="servicing">
