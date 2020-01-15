@@ -44,6 +44,7 @@ import gearBoxChoices from "../assets/choices/gearBox";
 import boolOrNullChoices from "../assets/choices/boolOrNull";
 import salesTypeChoices from "../assets/choices/salesType";
 import distributionBeltChoices from "../assets/choices/distributionBelt";
+import zone from "../assets/choices/zone";
 
 export const CreateVehicle = props => {
   const form = commonForm("create");
@@ -291,7 +292,9 @@ const commonForm = type => {
       <FormTab label="damages">
         <ArrayInput label="damages" source="damages">
           <SimpleFormIterator>
-            <TextInput source="zone" />
+            <SelectInput label="is_custom" source="is_custom" choices={boolOrNullChoices} />
+            <TextInput source="custom_damage" />
+            <SelectInput source="zone" choices={zone}/>
             <TextInput source="element" />
             <TextInput source="damage" />
             <TextInput source="damage_picture" validate={validateURL} />
