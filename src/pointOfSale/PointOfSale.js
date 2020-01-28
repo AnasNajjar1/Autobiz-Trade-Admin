@@ -6,7 +6,9 @@ import {
   TextInput,
   SelectInput,
   ReferenceInput,
-  FormDataConsumer
+  FormDataConsumer,
+  NumberInput,
+  required
 } from "react-admin";
 
 import countryChoices from "../assets/choices/country";
@@ -15,14 +17,15 @@ export const CreatePointOfSale = props => {
   return (
     <Create {...props}>
       <SimpleForm>
-        <SelectInput source="country" choices={countryChoices}></SelectInput>
-
-        <TextInput label="zipCode" source="zipCode"></TextInput>
+      <SelectInput
+          source="country"
+          choices={countryChoices}
+          validate={required()}
+        ></SelectInput>
 
         <FormDataConsumer>
           {({ formData, ...rest }) =>
-            formData.country &&
-            formData.zipCode && (
+            formData.country && (
               <SelectInput
                 source="action"
                 choices={[
@@ -40,14 +43,26 @@ export const CreatePointOfSale = props => {
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.action === "import" && (
-              <ReferenceInput
+              <NumberInput
+                label="Concession id"
+                source="concessionId"
+                validate={required()}
+              ></NumberInput>
+            )
+          }
+        </FormDataConsumer>
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.action === "import" &&
+            formData.concessionId && (
+              <ReferenceInput 
                 label="From autobiz API"
-                source="autobizPosId"
+                source="autobizConcessionId"
                 reference="facadePointOfSale"
                 allowEmpty={true}
                 filter={{
                   country: formData.country,
-                  zipCode: formData.zipCode
+                  ids: [formData.concessionId]
                 }}
               >
                 <SelectInput optionValue="id" optionText="name" />
