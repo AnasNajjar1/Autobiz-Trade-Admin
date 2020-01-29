@@ -86,6 +86,14 @@ export const CreatePointOfSale = props => {
             )
           }
         </FormDataConsumer>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.action === "create" && (
+              <TextInput label="zipCode" source="zipCode"></TextInput>
+            )
+          }
+        </FormDataConsumer>
       </SimpleForm>
     </Create>
   );
