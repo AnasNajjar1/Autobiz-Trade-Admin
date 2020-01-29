@@ -57,7 +57,7 @@ export const CreatePointOfSale = props => {
             formData.concessionId && (
               <ReferenceInput 
                 label="From autobiz API"
-                source="autobizConcessionId"
+                source="autobizPosId"
                 reference="facadePointOfSale"
                 allowEmpty={true}
                 filter={{
