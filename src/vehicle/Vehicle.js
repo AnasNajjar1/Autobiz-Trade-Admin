@@ -20,10 +20,8 @@ import {
   minValue,
   number,
   regex,
-  DateTimeInput,
-  DateInput
 } from "react-admin";
-// import { DateTimeInput, DateInput } from "react-admin-date-inputs";
+import { DateInput, TimeInput } from './lib';
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
@@ -139,25 +137,51 @@ const commonForm = type => {
           validate={[required()]}
         />
 
-        <DateTimeInput
-          label="Sale startDateTime"
+        <DateInput
+          label="Sale startDate"
           source="auction.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
           options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
+            format: "DD/MM/YYYY",
             ampm: false,
             clearable: true
           }}
           validate={validateAuctionDates}
         />
 
-        <DateTimeInput
-          label="Sale endDateTime"
+        <TimeInput
+          label="Sale startTime"
+          source="auction.startDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          disablePast
+          options={{
+            format: "HH:mm",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <DateInput
+          label="Sale endDate"
           source="auction.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
+            format: "DD/MM/YYYY",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <TimeInput
+          label="Sale endTime"
+          source="auction.endDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          disablePast
+          options={{
+            format: "HH:mm",
             ampm: false,
             clearable: true
           }}
