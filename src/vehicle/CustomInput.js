@@ -47,7 +47,6 @@ const makePicker = PickerComponent => {
             error={!!(touched && error)}
             helperText={touched && error}
             ref={ref}
-            className={"MuiFormControl-root-195 MuiTextField-filled-208"}
             value={input.value ? input.value : null}
             variant="inline"
             onChange={date => onChange(date)}

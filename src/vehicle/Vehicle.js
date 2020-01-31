@@ -21,7 +21,7 @@ import {
   number,
   regex,
 } from "react-admin";
-import { DateInput, TimeInput } from './lib';
+import { DateInput, TimeInput } from './CustomInput';
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
