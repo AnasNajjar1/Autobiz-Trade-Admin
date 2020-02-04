@@ -20,10 +20,8 @@ import {
   minValue,
   number,
   regex,
-  DateTimeInput,
-  DateInput
 } from "react-admin";
-// import { DateTimeInput, DateInput } from "react-admin-date-inputs";
+import { KeyboardDateInput, KeyboardTimeInput } from './CustomInput';
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
@@ -106,7 +104,7 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="salesInfo">
-        <DateInput
+        <KeyboardDateInput
           source="purchaseDate"
           label="purchaseDate"
           providerOptions={{ utils: MomentUtils }}
@@ -139,25 +137,51 @@ const commonForm = type => {
           validate={[required()]}
         />
 
-        <DateTimeInput
-          label="Sale startDateTime"
+        <KeyboardDateInput
+          label="Sale startDate"
           source="auction.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
           options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
+            format: "DD/MM/YYYY",
             ampm: false,
             clearable: true
           }}
           validate={validateAuctionDates}
         />
 
-        <DateTimeInput
-          label="Sale endDateTime"
+        <KeyboardTimeInput
+          label="Sale startTime"
+          source="auction.startDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          disablePast
+          options={{
+            format: "HH:mm",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <KeyboardDateInput
+          label="Sale endDate"
           source="auction.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           options={{
-            format: "DD/MM/YYYY, HH:mm:ss",
+            format: "DD/MM/YYYY",
+            ampm: false,
+            clearable: true
+          }}
+          validate={validateAuctionDates}
+        />
+
+        <KeyboardTimeInput
+          label="Sale endTime"
+          source="auction.endDateTime"
+          providerOptions={{ utils: MomentUtils }}
+          disablePast
+          options={{
+            format: "HH:mm",
             ampm: false,
             clearable: true
           }}
@@ -208,7 +232,7 @@ const commonForm = type => {
 
         <TextInput label="versionLabel" source="versionLabel" />
 
-        <DateInput
+        <KeyboardDateInput
           source="firstRegistrationDate"
           label="firstRegistrationDate"
           providerOptions={{ utils: MomentUtils }}
@@ -409,7 +433,7 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="administrativeDetails">
-        <DateInput
+        <KeyboardDateInput
           source="gcDate"
           label="gcDate"
           providerOptions={{ utils: MomentUtils }}
