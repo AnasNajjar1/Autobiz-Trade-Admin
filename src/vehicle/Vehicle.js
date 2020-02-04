@@ -417,8 +417,8 @@ const commonForm = type => {
         />
 
         <TextInput
-          source="immat"
-          label="immat"
+          source="registration"
+          label="registration"
         />
 
         <SelectInput

@@ -32,8 +32,8 @@ const VehicleFilter = props => (
       resettable
     />
     <TextInput
-      label="IMMAT"
-      source="immat"
+      label="REGISTRATION"
+      source="registration"
       defaultValue=""
       alwaysOn
       resettable
@@ -144,7 +144,7 @@ export const Vehicles = props => (
       <TextField label="ID" source="id" />
 
       <TextField label="REF" source="fileNumber" sortable={false} />
-      <TextField label="IMMAT" source="immat" sortable={false} />
+      <TextField label="REGISTRATION" source="registration" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
       <TextField label="SALEs TYPE" source="salesType" />
