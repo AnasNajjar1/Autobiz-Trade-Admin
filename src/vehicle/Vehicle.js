@@ -416,6 +416,11 @@ const commonForm = type => {
           options={{ format: "DD/MM/YYYY", clearable: true }}
         />
 
+        <TextInput
+          source="immat"
+          label="immat"
+        />
+
         <SelectInput
           label="firstHand"
           source="firstHand"
