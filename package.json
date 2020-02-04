@@ -5,6 +5,7 @@
   "dependencies": {
     "@date-io/moment": "^1.3.11",
     "@material-ui/core": "^4.6.1",
+    "@material-ui/pickers": "^3.2.10",
     "admin-on-rest": "^1.4.1",
     "aws-amplify": "^1.1.40",
     "aws-amplify-react": "^2.4.4",
