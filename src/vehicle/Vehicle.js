@@ -21,7 +21,7 @@ import {
   number,
   regex,
 } from "react-admin";
-import { DateInput, TimeInput } from './CustomInput';
+import { KeyboardDateInput, KeyboardTimeInput } from './CustomInput';
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
@@ -104,7 +104,7 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="salesInfo">
-        <DateInput
+        <KeyboardDateInput
           source="purchaseDate"
           label="purchaseDate"
           providerOptions={{ utils: MomentUtils }}
@@ -137,7 +137,7 @@ const commonForm = type => {
           validate={[required()]}
         />
 
-        <DateInput
+        <KeyboardDateInput
           label="Sale startDate"
           source="auction.startDateTime"
           providerOptions={{ utils: MomentUtils }}
@@ -150,7 +150,7 @@ const commonForm = type => {
           validate={validateAuctionDates}
         />
 
-        <TimeInput
+        <KeyboardTimeInput
           label="Sale startTime"
           source="auction.startDateTime"
           providerOptions={{ utils: MomentUtils }}
@@ -163,7 +163,7 @@ const commonForm = type => {
           validate={validateAuctionDates}
         />
 
-        <DateInput
+        <KeyboardDateInput
           label="Sale endDate"
           source="auction.endDateTime"
           providerOptions={{ utils: MomentUtils }}
@@ -175,7 +175,7 @@ const commonForm = type => {
           validate={validateAuctionDates}
         />
 
-        <TimeInput
+        <KeyboardTimeInput
           label="Sale endTime"
           source="auction.endDateTime"
           providerOptions={{ utils: MomentUtils }}
@@ -232,7 +232,7 @@ const commonForm = type => {
 
         <TextInput label="versionLabel" source="versionLabel" />
 
-        <DateInput
+        <KeyboardDateInput
           source="firstRegistrationDate"
           label="firstRegistrationDate"
           providerOptions={{ utils: MomentUtils }}
@@ -433,7 +433,7 @@ const commonForm = type => {
       </FormTab>
 
       <FormTab label="administrativeDetails">
-        <DateInput
+        <KeyboardDateInput
           source="gcDate"
           label="gcDate"
           providerOptions={{ utils: MomentUtils }}

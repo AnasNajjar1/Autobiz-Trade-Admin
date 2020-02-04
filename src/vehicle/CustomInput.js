@@ -4,6 +4,7 @@ import {
   DateTimePicker,
   MuiPickersUtilsProvider,
   TimePicker,
+  KeyboardTimePicker,
   KeyboardDatePicker
 } from "@material-ui/pickers";
 import PropTypes from "prop-types";
@@ -91,3 +92,4 @@ export const DateInput = addField(makePicker(DatePicker));
 export const KeyboardDateInput = addField(makePicker(KeyboardDatePicker));
 export const TimeInput = addField(makePicker(TimePicker));
 export const DateTimeInput = addField(makePicker(DateTimePicker));
+export const KeyboardTimeInput = addField(makePicker(KeyboardTimePicker));
