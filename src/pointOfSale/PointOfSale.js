@@ -3,12 +3,18 @@ import {
   Create,
   Edit,
   SimpleForm,
+  DisabledInput,
   TextInput,
+  NumberInput,
+  required,
+  regex,
+  LongTextInput,
   SelectInput,
   ReferenceInput,
-  FormDataConsumer,
-  NumberInput,
-  required
+  ImageField,
+  SimpleFormIterator,
+  ArrayInput,
+  FormDataConsumer
 } from "react-admin";
 
 import countryChoices from "../assets/choices/country";
@@ -17,7 +23,7 @@ export const CreatePointOfSale = props => {
   return (
     <Create {...props}>
       <SimpleForm>
-      <SelectInput
+        <SelectInput
           source="country"
           choices={countryChoices}
           validate={required()}
@@ -55,7 +61,7 @@ export const CreatePointOfSale = props => {
           {({ formData, ...rest }) =>
             formData.action === "import" &&
             formData.concessionId && (
-              <ReferenceInput 
+              <ReferenceInput
                 label="From autobiz API"
                 source="autobizPosId"
                 reference="facadePointOfSale"
@@ -99,14 +105,35 @@ export const CreatePointOfSale = props => {
   );
 };
 
+const validateURL = regex(
+  new RegExp("^https*://.*\\.[a-z].{2,3}"),
+  "Must be an URL"
+);
+
 export const EditPointOfSale = props => {
   return (
     <Edit {...props}>
       <SimpleForm>
+        <DisabledInput source="id" />
+        <DisabledInput source="uuid" />
         <TextInput label="name" source="name"></TextInput>
+        <ImageField source="picture" />
+        <TextInput label="picture" source="picture"></TextInput>
+        <LongTextInput label="info" source="info"></LongTextInput>
         <TextInput label="zipCode" source="zipCode"></TextInput>
         <TextInput label="city" source="city"></TextInput>
+        <TextInput label="latitude" source="latitude"></TextInput>
+        <TextInput label="longitude" source="longitude"></TextInput>
+        <TextInput label="city" source="city"></TextInput>
         <SelectInput source="country" choices={countryChoices}></SelectInput>
+
+        <ArrayInput label="documentation" source="documentation">
+          <SimpleFormIterator>
+            <TextInput source="title" />
+            <TextInput source="pdf" validate={validateURL} />
+            <LongTextInput source="text" />
+          </SimpleFormIterator>
+        </ArrayInput>
       </SimpleForm>
     </Edit>
   );
