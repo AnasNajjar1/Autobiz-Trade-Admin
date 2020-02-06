@@ -46,6 +46,7 @@ export default async (type, resource, params) => {
     case "offer":
     case "status":
     case "vehicle":
+    case "config":
     case "auction":{
       return restProvider(type, "admin/" + resource, params);
     }
