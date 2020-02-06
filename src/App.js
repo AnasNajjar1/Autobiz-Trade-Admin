@@ -5,6 +5,7 @@ import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import { Offline, Online, AuctionFinished, AuctionFailed, PurchasedImmediately, Sold } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
+import configPage from "./configPage";
 import facadeCarcheck from "./carcheck"
 import offer from "./offer";
 import { Users } from "./users/Users";
@@ -49,6 +50,7 @@ const App = () => {
         <Resource name="status" />,
         <Resource name="facadeUser" />,
         <Resource name="carcheckImport" />,
+        <Resource name="config" {...configPage} />,
         // Only include the categories resource for admin users
         // permission === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />
