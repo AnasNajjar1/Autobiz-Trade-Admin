@@ -1,10 +1,10 @@
 import Settings from "@material-ui/icons/Settings";
 
 import { Configs } from "./Configs";
-import { EditAuctions } from "./Auction";
+import { EditConfig } from "./Config";
 
 export default {
   list: Configs,
-  edit: EditAuctions,
+  edit: EditConfig,
   icon: Settings
 };
