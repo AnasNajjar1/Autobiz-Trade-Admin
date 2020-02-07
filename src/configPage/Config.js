@@ -21,19 +21,32 @@ import salesType from "../assets/choices/salesType";
 import auctionSelection from "../assets/choices/auctionSelection";
 import auctionOperator from "../assets/choices/auctionOperator";
 
-export const EditAuctions = props => {
-  return (
+export const EditConfig = props => {
+
+  if(props.id === "auction")  return (
     <Edit {...props}>
       <TabbedForm submitOnEnter={false}>
         {offerTypes.map(offerType => (
-          <Tab {...props} offerType={offerType.id} />
+          <Auction {...props} offerType={offerType.id} />
         ))}
       </TabbedForm>
     </Edit>
   );
+
+  if(props.id === "documentFilters")  return (
+    <Edit {...props}>
+      <TabbedForm submitOnEnter={false}>
+        {offerTypes.map(offerType => (
+          <DocumentFilters {...props} offerType={offerType.id} />
+        ))}
+      </TabbedForm>
+    </Edit>
+  );
+
+  return null
 };
 
-const Tab = props => {
+const Auction = props => {
   const { offerType } = props;
   console.log("offerType", offerType);
   return (
@@ -72,6 +85,30 @@ const Tab = props => {
           <SelectInput source="operator" choices={auctionOperator} />
           <NumberInput source="value" />
           <BooleanInput source="required" />
+        </SimpleFormIterator>
+      </ArrayInput>
+    </FormTab>
+  );
+};
+
+
+const DocumentFilters = props => {
+  const { offerType } = props;
+  return (
+    <FormTab {...props} label={offerType} key={offerType}>
+        <ArrayInput label="documents" source={`${offerType}.documents`}>
+        <SimpleFormIterator>
+          <TextInput label="id" source="id" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <ArrayInput label="pictures" source={`${offerType}.pictures`}>
+        <SimpleFormIterator>
+          <TextInput label="id" source="id" />
+        </SimpleFormIterator>
+      </ArrayInput>
+      <ArrayInput label="damages" source={`${offerType}.damages`}>
+        <SimpleFormIterator>
+          <TextInput label="id" source="id" />
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>
