@@ -79,6 +79,10 @@ const Auction = props => {
         source={`${offerType}.selection`}
         choices={auctionSelection}
       />
+      <NumberInput
+        label="step price"
+        source={`${offerType}.stepPrice`}
+      />
       <ArrayInput label="values" source={`${offerType}.values`}>
         <SimpleFormIterator>
           <TextInput label="path" source="path" />
