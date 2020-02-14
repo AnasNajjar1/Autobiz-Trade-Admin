@@ -1,15 +1,10 @@
 import React from "react";
 import {
-  Create,
   Edit,
-  SimpleForm,
   TextInput,
   SelectInput,
   BooleanInput,
-  ReferenceInput,
-  FormDataConsumer,
   NumberInput,
-  required,
   TabbedForm,
   SimpleFormIterator,
   ArrayInput,
@@ -20,30 +15,39 @@ import auctionDateChoices from "../assets/choices/auctionDateChoices";
 import salesType from "../assets/choices/salesType";
 import auctionSelection from "../assets/choices/auctionSelection";
 import auctionOperator from "../assets/choices/auctionOperator";
+import frequencies from "../assets/choices/frequencies";
 
 export const EditConfig = props => {
+  if (props.id === "auction")
+    return (
+      <Edit {...props}>
+        <TabbedForm submitOnEnter={false}>
+          {offerTypes.map(offerType => (
+            <Auction {...props} offerType={offerType.id} />
+          ))}
+        </TabbedForm>
+      </Edit>
+    );
 
-  if(props.id === "auction")  return (
-    <Edit {...props}>
-      <TabbedForm submitOnEnter={false}>
-        {offerTypes.map(offerType => (
-          <Auction {...props} offerType={offerType.id} />
-        ))}
-      </TabbedForm>
-    </Edit>
-  );
+  if (props.id === "documentFilters")
+    return (
+      <Edit {...props}>
+        <TabbedForm submitOnEnter={false}>
+          {offerTypes.map(offerType => (
+            <DocumentFilters {...props} offerType={offerType.id} />
+          ))}
+        </TabbedForm>
+      </Edit>
+    );
 
-  if(props.id === "documentFilters")  return (
-    <Edit {...props}>
-      <TabbedForm submitOnEnter={false}>
-        {offerTypes.map(offerType => (
-          <DocumentFilters {...props} offerType={offerType.id} />
-        ))}
-      </TabbedForm>
-    </Edit>
-  );
+  if (props.id === "mailingList")
+    return (
+      <Edit {...props}>
+        <MailingList {...props} />
+      </Edit>
+    );
 
-  return null
+  return null;
 };
 
 const Auction = props => {
@@ -79,10 +83,7 @@ const Auction = props => {
         source={`${offerType}.selection`}
         choices={auctionSelection}
       />
-      <NumberInput
-        label="step price"
-        source={`${offerType}.stepPrice`}
-      />
+      <NumberInput label="step price" source={`${offerType}.stepPrice`} />
       <ArrayInput label="values" source={`${offerType}.values`}>
         <SimpleFormIterator>
           <TextInput label="path" source="path" />
@@ -95,12 +96,11 @@ const Auction = props => {
   );
 };
 
-
 const DocumentFilters = props => {
   const { offerType } = props;
   return (
     <FormTab {...props} label={offerType} key={offerType}>
-        <ArrayInput label="documents" source={`${offerType}.documents`}>
+      <ArrayInput label="documents" source={`${offerType}.documents`}>
         <SimpleFormIterator>
           <TextInput label="id" source="id" />
         </SimpleFormIterator>
@@ -116,5 +116,38 @@ const DocumentFilters = props => {
         </SimpleFormIterator>
       </ArrayInput>
     </FormTab>
+  );
+};
+
+const MailingList = props => {
+  return (
+    <Edit {...props}>
+      <TabbedForm submitOnEnter={false} frequencies>
+        <FormTab {...props} label="userToRemove" key="userToRemove">
+          <ArrayInput
+            label="users that shouldn't receive email"
+            source={`userToRemove.users`}
+          >
+            <SimpleFormIterator>
+              <TextInput label="user id" source="id" />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </FormTab>
+
+        <FormTab {...props} label="userOfferToPrivate" key="userOfferToPrivate">
+          <ArrayInput label="users" source={`userOfferToPrivate.users`}>
+            <SimpleFormIterator>
+              <TextInput label="email" source="email" />
+              <TextInput label="name" source="name" />
+              <SelectInput
+                label="Frequency"
+                source="frequency"
+                choices={frequencies}
+              />
+            </SimpleFormIterator>
+          </ArrayInput>
+        </FormTab>
+      </TabbedForm>
+    </Edit>
   );
 };
