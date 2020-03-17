@@ -3,6 +3,7 @@ import {
   Create,
   AutocompleteInput,
   Edit,
+  List,
   TextInput,
   ImageField,
   DisabledInput,
@@ -20,8 +21,22 @@ import {
   minValue,
   number,
   regex,
+  TabbedShowLayout,
+  Tab,
+  TextField,
+  Show,
+  DateField,
+  NumberField,
+  Datagrid,
+  EditButton,
+  Button,
+  ReferenceManyField,
+  ChipField,
+  CreateButton
 } from "react-admin";
-import { KeyboardDateInput, KeyboardTimeInput } from './CustomInput';
+
+import { Link } from "react-router-dom";
+import { KeyboardDateInput, KeyboardTimeInput } from "./CustomInput";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
@@ -316,9 +331,13 @@ const commonForm = type => {
       <FormTab label="damages">
         <ArrayInput label="damages" source="damages">
           <SimpleFormIterator>
-            <SelectInput label="is_custom" source="is_custom" choices={boolOrNullChoices} />
+            <SelectInput
+              label="is_custom"
+              source="is_custom"
+              choices={boolOrNullChoices}
+            />
             <TextInput source="custom_damage" />
-            <SelectInput source="zone" choices={zone}/>
+            <SelectInput source="zone" choices={zone} />
             <TextInput source="element" />
             <TextInput source="damage" />
             <TextInput source="damage_picture" validate={validateURL} />
@@ -440,10 +459,7 @@ const commonForm = type => {
           options={{ format: "DD/MM/YYYY", clearable: true }}
         />
 
-        <TextInput
-          source="registration"
-          label="registration"
-        />
+        <TextInput source="registration" label="registration" />
 
         <SelectInput
           label="firstHand"
@@ -478,7 +494,11 @@ const commonForm = type => {
         />
 
         <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
-        <SelectInput label="imported" source="imported" choices={boolOrNullChoices} />
+        <SelectInput
+          label="imported"
+          source="imported"
+          choices={boolOrNullChoices}
+        />
       </FormTab>
 
       <FormTab label="servicing">
@@ -552,5 +572,78 @@ const commonForm = type => {
         />
       </FormTab>
     </TabbedForm>
+  );
+};
+
+export const ShowVehicle = props => {
+  return (
+    <Show {...props}>
+      <TabbedShowLayout>
+        <Tab label="vehicle">
+          <TextField label="registration" source="registration" />
+          <TextField source="brandLabel" />
+          <TextField source="modelLabel" />
+          <TextField source="versionLabel" />
+          <DateField source="firstRegistrationDate" />
+          <NumberField source="mileage" />
+        </Tab>
+        <Tab label="Partner requests" path="requests">
+          <ReferenceManyField reference="partnerRequests" target="vehicleId">
+            {/* target="post_id" addLabel={false}> */}
+            <Datagrid rowClick="expand" expand={<Offers />}>
+              <TextField source="partnerName" label="Partner" />
+              <TextField source="comment" />
+              <DateField source="createdAt" showTime />
+              <DateField
+                label="Last offer received at"
+                source="lastOfferCreatedAt"
+                showTime
+              />
+              <NumberField
+                source="value"
+                label="last offer"
+                locales="fr-FR"
+                options={{ style: "currency", currency: "EUR" }}
+              />
+              <ChipField source="status" />
+            </Datagrid>
+          </ReferenceManyField>
+          <AddRequestButton />
+        </Tab>
+      </TabbedShowLayout>
+    </Show>
+  );
+};
+
+const AddRequestButton = ({ classes, record }) => (
+  <CreateButton
+    component={Link}
+    to={`/partnerRequests/create?vehicleId=${record.id}`}
+  ></CreateButton>
+);
+
+const Offers = props => {
+  return (
+    <ReferenceManyField
+      {...props}
+      basePath="partnerOffers"
+      target="partnerRequestId"
+      reference="partnerOffers"
+    >
+      <Datagrid>
+        <TextField label="id" source="id" />
+        <TextField label="comment" source="comment" />
+        <NumberField
+          source="value"
+          options={{
+            minimumFractionDigits: 0,
+            style: "currency",
+            currency: "EUR"
+          }}
+        />
+        <NumberField label="partnerRequestId" source="partnerRequestId" />
+        <DateField label="createdAt" source="createdAt" showTime />
+      </Datagrid>
+    </ReferenceManyField>
   );
 };

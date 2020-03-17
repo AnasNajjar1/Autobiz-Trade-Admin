@@ -140,7 +140,7 @@ const VehicleFilter = props => (
 
 export const Vehicles = props => (
   <List {...props} filters={<VehicleFilter />} perPage={25}>
-    <Datagrid>
+    <Datagrid rowClick="show">
       <TextField label="ID" source="id" />
 
       <TextField label="REF" source="fileNumber" sortable={false} />

@@ -38,25 +38,30 @@ export default async (type, resource, params) => {
     case "facadeBrand":
     case "facadeModel":
     case "facadeUser":
-    case "facadeCarcheck":{
-      resource = resource.replace('facade', '')
+    case "facadeCarcheck": {
+      resource = resource.replace("facade", "");
       return restProvider(type, "admin/facade/" + resource, params);
     }
+    case "partnerRequests":
+      return restProvider(type, "admin/partner/requests", params);
+    case "partnerOffers":
+      return restProvider(type, "admin/partner/offers", params);
     case "pointOfSale":
     case "offer":
     case "status":
     case "vehicle":
     case "config":
-    case "auction":{
+    case "partner":
+    case "auction": {
       return restProvider(type, "admin/" + resource, params);
     }
-    case "offline": 
-    case "onSale" : 
-    case "auctionFinished": 
-    case "auctionFailed": 
-    case "purchasedImmediately": 
+    case "offline":
+    case "onSale":
+    case "auctionFinished":
+    case "auctionFailed":
+    case "purchasedImmediately":
     case "sold": {
-      return restProvider(type, "admin/" + 'vehicle', params);
+      return restProvider(type, "admin/" + "vehicle", params);
     }
     case "users": {
       return getUserData(type, resource, params);
