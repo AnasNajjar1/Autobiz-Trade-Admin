@@ -24,7 +24,12 @@ const VehicleFilter = props => (
 
 export const Offers = props => {
   return (
-    <List {...props} filters={<VehicleFilter />} perPage={25}>
+    <List
+      {...props}
+      filters={<VehicleFilter />}
+      perPage={25}
+      sort={{ field: "id", order: "DESC" }}
+    >
       <Datagrid>
         <TextField label="fileNumber" source="fileNumber" />
         <TextField label="brandLabel" source="brandLabel" />

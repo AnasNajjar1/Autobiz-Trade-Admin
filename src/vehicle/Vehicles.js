@@ -7,19 +7,26 @@ import {
   TextField,
   DateField,
   AutocompleteInput,
-  CheckboxGroupInput,
   NumberField,
   BooleanInput,
   Filter,
   TextInput,
   SelectInput,
   EditButton,
-  ReferenceInput
+  ReferenceInput,
+  SimpleShowLayout,
+  Show
 } from "react-admin";
+import { BulkDeleteButton } from "react-admin";
+
+import UpdateStatus from "./UpdateStatus";
+import { ChangeEndDateTime } from "./UpdateStatus";
 
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
 import salesTypeChoices from "../assets/choices/salesType";
+import status from "../assets/choices/status";
+
 import { TRADE_URL } from "../config";
 
 const VehicleFilter = props => (
@@ -43,15 +50,7 @@ const VehicleFilter = props => (
       <SelectInput source="name" resettable />
     </ReferenceInput> */}
 
-    <CheckboxGroupInput
-      source="statusId"
-      choices={[
-        { id: "1", name: "Offline" },
-        { id: "2", name: "Online" },
-        { id: "3", name: "Sold" }
-      ]}
-      alwaysOn
-    />
+    <SelectInput source="statusId" choices={status} alwaysOn />
 
     <SelectInput
       label="offerType"
@@ -139,10 +138,15 @@ const VehicleFilter = props => (
 );
 
 export const Vehicles = props => (
-  <List {...props} filters={<VehicleFilter />} perPage={25}>
-    <Datagrid rowClick="show">
+  <List
+    {...props}
+    filters={<VehicleFilter />}
+    perPage={25}
+    bulkActionButtons={<VehicleBulkActionButtons />}
+    sort={{ field: "id", order: "DESC" }}
+  >
+    <Datagrid rowClick="show" rowClick="show">
       <TextField label="ID" source="id" />
-
       <TextField label="REF" source="fileNumber" sortable={false} />
       <TextField label="REGISTRATION" source="registration" sortable={false} />
       <TextField label="STATUS" source="statusName" />
@@ -221,3 +225,11 @@ const LinkRecord = ({ record }) => {
     );
   return null;
 };
+
+const VehicleBulkActionButtons = props => (
+  <>
+    {/* <UpdateStatus label="Update status" {...props} />
+    <ChangeEndDateTime label="Update Sales end" {...props} /> API not ready yet */}
+    <BulkDeleteButton {...props} />
+  </>
+);

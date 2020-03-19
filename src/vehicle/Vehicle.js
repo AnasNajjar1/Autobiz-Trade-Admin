@@ -3,10 +3,8 @@ import {
   Create,
   AutocompleteInput,
   Edit,
-  List,
   TextInput,
   ImageField,
-  DisabledInput,
   NumberInput,
   TabbedForm,
   FormTab,
@@ -14,7 +12,6 @@ import {
   SimpleFormIterator,
   SelectInput,
   SelectArrayInput,
-  LongTextInput,
   ReferenceInput,
   FormDataConsumer,
   required,
@@ -28,8 +25,6 @@ import {
   DateField,
   NumberField,
   Datagrid,
-  EditButton,
-  Button,
   ReferenceManyField,
   ChipField,
   CreateButton
@@ -106,8 +101,8 @@ const commonForm = type => {
   return (
     <TabbedForm submitOnEnter={false} defaultValue={vehicleDefaultValue}>
       <FormTab label="record" key="record">
-        {type === "edit" && <DisabledInput source="id" />}
-        {type === "edit" && <DisabledInput source="uuid" />}
+        {type === "edit" && <TextInput disabled source="id" />}
+        {type === "edit" && <TextInput disabled source="uuid" />}
 
         <TextInput
           label="fileNumber"
@@ -140,10 +135,7 @@ const commonForm = type => {
           choices={offerTypeChoices}
         />
 
-        <LongTextInput
-          label="salesComment"
-          source="salesComment"
-        ></LongTextInput>
+        <TextInput label="salesComment" source="salesComment"></TextInput>
 
         <SelectInput
           label="salesType"

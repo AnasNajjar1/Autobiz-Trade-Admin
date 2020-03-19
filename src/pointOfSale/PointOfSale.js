@@ -8,7 +8,6 @@ import {
   NumberInput,
   required,
   regex,
-  LongTextInput,
   SelectInput,
   ReferenceInput,
   ImageField,
@@ -16,6 +15,7 @@ import {
   ArrayInput,
   FormDataConsumer
 } from "react-admin";
+import RichTextInput from "ra-input-rich-text";
 
 import countryChoices from "../assets/choices/country";
 
@@ -114,12 +114,12 @@ export const EditPointOfSale = props => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <DisabledInput source="id" />
-        <DisabledInput source="uuid" />
+        <TextInput source="id" disabled />
+        <TextInput source="uuid" disabled />
         <TextInput label="name" source="name"></TextInput>
         <ImageField source="picture" />
         <TextInput label="picture" source="picture"></TextInput>
-        <LongTextInput label="info" source="info"></LongTextInput>
+        <RichTextInput label="info" source="info"></RichTextInput>
         <TextInput label="zipCode" source="zipCode"></TextInput>
         <TextInput label="city" source="city"></TextInput>
         <TextInput label="latitude" source="latitude"></TextInput>
@@ -131,7 +131,7 @@ export const EditPointOfSale = props => {
           <SimpleFormIterator>
             <TextInput source="title" />
             <TextInput source="pdf" validate={validateURL} />
-            <LongTextInput source="text" />
+            <RichTextInput source="text" />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>

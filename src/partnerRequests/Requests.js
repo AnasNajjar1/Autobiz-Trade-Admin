@@ -4,7 +4,7 @@ import { List, Datagrid, TextField, NumberField, DateField } from "react-admin";
 
 export const Requests = props => {
   return (
-    <List {...props} perPage={25}>
+    <List {...props} perPage={25} sort={{ field: "id", order: "DESC" }}>
       <Datagrid>
         <TextField label="id" source="id" />
         <TextField label="uuid" source="uuid" />

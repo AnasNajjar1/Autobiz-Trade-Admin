@@ -8,7 +8,6 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import DirectionsCar from "@material-ui/icons/DirectionsCar";
 
 const SubMenuLayout = ({ resources, onMenuClick }) => {
-  console.log("ressources", resources);
   const [open, setOpen] = useState(false);
   const subMenu = [
     "offline",

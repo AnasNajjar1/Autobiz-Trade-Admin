@@ -2,25 +2,35 @@ import React from "react";
 import {
   Create,
   SimpleForm,
-  TextField,
+  NumberInput,
   ReferenceInput,
   SelectInput
 } from "react-admin";
+import { parse } from "query-string";
 
-export const CreateRequest = props => (
-  <Create {...props} title="Create a new request">
-    <SimpleForm redirect={redirect}>
-      <TextField source="vehicleId" />
-      <ReferenceInput
-        source="partnerId"
-        reference="partner"
-        sort={{ field: "name", order: "ASC" }}
-      >
-        <SelectInput optionText="name" />
-      </ReferenceInput>
-    </SimpleForm>
-  </Create>
-);
+export const CreateRequest = props => {
+  const { vehicleId: vehicleIdString } = parse(props.location.search);
+  const vehicleId = vehicleIdString ? parseInt(vehicleIdString, 10) : null;
+
+  return (
+    <Create {...props} title="Create a new request">
+      <SimpleForm redirect={redirect} {...props}>
+        <NumberInput
+          source="vehicleId"
+          disabled={vehicleId !== null}
+          defaultValue={vehicleId}
+        />
+        <ReferenceInput
+          source="partnerId"
+          reference="partner"
+          sort={{ field: "name", order: "ASC" }}
+        >
+          <SelectInput optionText="name" />
+        </ReferenceInput>
+      </SimpleForm>
+    </Create>
+  );
+};
 
 const redirect = (basePath, id, data) =>
   `/vehicle/${data.vehicleId}/show/requests`;
