@@ -28,6 +28,14 @@ import salesTypeChoices from "../assets/choices/salesType";
 import status from "../assets/choices/status";
 
 import { TRADE_URL } from "../config";
+import { withStyles } from "@material-ui/core/styles";
+
+const styles = {
+  link: {
+    color: "#9097ac",
+    fontWeight: "bold"
+  }
+};
 
 const VehicleFilter = props => (
   <Filter {...props}>
@@ -212,19 +220,20 @@ export const PurchasedImmediately = props => (
 
 export const Sold = props => <Vehicles {...props} filter={{ statusId: [3] }} />;
 
-const LinkRecord = ({ record }) => {
+const LinkRecord = withStyles(styles)(({ classes, record }) => {
   if (["online", "sold"].includes(record.statusName))
     return (
       <a
         href={`${TRADE_URL}/records/${record.uuid}`}
         rel="noopener"
         target="_blank"
+        className={classes.link}
       >
         Link
       </a>
     );
   return null;
-};
+});
 
 const VehicleBulkActionButtons = props => (
   <>

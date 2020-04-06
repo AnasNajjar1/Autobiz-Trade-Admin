@@ -25,7 +25,7 @@ import Amplify, { Auth, API } from "aws-amplify";
 import { withAuthenticator } from "aws-amplify-react";
 import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
-import MyLayout from "./Menu/CustomLayout";
+import MyLayout from "./Layout/MyLayout";
 import {
   Home,
   Computer,
