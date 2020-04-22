@@ -27,7 +27,7 @@ import {
   Datagrid,
   ReferenceManyField,
   ChipField,
-  CreateButton
+  CreateButton,
 } from "react-admin";
 
 import { Link } from "react-router-dom";
@@ -54,7 +54,7 @@ import salesTypeChoices from "../assets/choices/salesType";
 import distributionBeltChoices from "../assets/choices/distributionBelt";
 import zone from "../assets/choices/zone";
 
-export const CreateVehicle = props => {
+export const CreateVehicle = (props) => {
   const form = commonForm("create");
   return <Create {...props}>{form}</Create>;
 };
@@ -94,10 +94,10 @@ const validateAuctionDates = [required(), auctionDatesValidation];
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const vehicleDefaultValue = {
   statusId: 1,
-  auction: { startDateTime: new Date(), salesType: "auction" }
+  auction: { startDateTime: new Date(), salesType: "auction" },
 };
 
-const commonForm = type => {
+const commonForm = (type) => {
   return (
     <TabbedForm submitOnEnter={false} defaultValue={vehicleDefaultValue}>
       <FormTab label="record" key="record">
@@ -152,7 +152,7 @@ const commonForm = type => {
           options={{
             format: "DD/MM/YYYY",
             ampm: false,
-            clearable: true
+            clearable: true,
           }}
           validate={validateAuctionDates}
         />
@@ -165,7 +165,7 @@ const commonForm = type => {
           options={{
             format: "HH:mm",
             ampm: false,
-            clearable: true
+            clearable: true,
           }}
           validate={validateAuctionDates}
         />
@@ -177,7 +177,7 @@ const commonForm = type => {
           options={{
             format: "DD/MM/YYYY",
             ampm: false,
-            clearable: true
+            clearable: true,
           }}
           validate={validateAuctionDates}
         />
@@ -190,7 +190,7 @@ const commonForm = type => {
           options={{
             format: "HH:mm",
             ampm: false,
-            clearable: true
+            clearable: true,
           }}
           validate={validateAuctionDates}
         />
@@ -249,6 +249,12 @@ const commonForm = type => {
         <SelectInput
           label="profileCosts"
           source="profileCosts"
+          choices={profileCostsChoices}
+        />
+
+        <SelectInput
+          label="profileBodyCosts"
+          source="profileBodyCosts"
           choices={profileCostsChoices}
         />
       </FormTab>
@@ -567,7 +573,7 @@ const commonForm = type => {
   );
 };
 
-export const ShowVehicle = props => {
+export const ShowVehicle = (props) => {
   return (
     <Show {...props}>
       <TabbedShowLayout>
@@ -614,7 +620,7 @@ const AddRequestButton = ({ classes, record }) => (
   ></CreateButton>
 );
 
-const Offers = props => {
+const Offers = (props) => {
   return (
     <ReferenceManyField
       {...props}
@@ -630,7 +636,7 @@ const Offers = props => {
           options={{
             minimumFractionDigits: 0,
             style: "currency",
-            currency: "EUR"
+            currency: "EUR",
           }}
         />
         <NumberField label="partnerRequestId" source="partnerRequestId" />
