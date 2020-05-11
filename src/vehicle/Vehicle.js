@@ -17,6 +17,7 @@ import {
   required,
   minValue,
   number,
+  BooleanInput,
   regex,
   TabbedShowLayout,
   Tab,
@@ -53,6 +54,7 @@ import boolOrNullChoices from "../assets/choices/boolOrNull";
 import salesTypeChoices from "../assets/choices/salesType";
 import distributionBeltChoices from "../assets/choices/distributionBelt";
 import zone from "../assets/choices/zone";
+import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
 
 export const CreateVehicle = (props) => {
   const form = commonForm("create");
@@ -102,7 +104,7 @@ const commonForm = (type) => {
     <TabbedForm submitOnEnter={false} defaultValue={vehicleDefaultValue}>
       <FormTab label="record" key="record">
         {type === "edit" && <TextInput disabled source="id" />}
-        {type === "edit" && <TextInput disabled source="uuid" />}
+        {type === "edit" && <TextInput readOnly source="uuid" />}
 
         <TextInput
           label="fileNumber"
@@ -137,6 +139,7 @@ const commonForm = (type) => {
 
         <TextInput label="salesComment" source="salesComment"></TextInput>
 
+        {/* 
         <SelectInput
           label="salesType"
           source="auction.salesType"
@@ -144,9 +147,57 @@ const commonForm = (type) => {
           validate={[required()]}
         />
 
+*/}
+
+        <BooleanInput label="acceptAuction" source="sale.acceptAuction" />
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.sale &&
+            formData.sale.acceptAuction && (
+              <>
+                <div>
+                  <NumberInput
+                    label="Sale auctionStartPrice"
+                    source="sale.auctionStartPrice"
+                    validate={[number(), minValue(0), required()]}
+                  />
+                </div>
+                <div>
+                  <NumberInput
+                    label="Sale auctionStepPrice"
+                    source="sale.auctionStepPrice"
+                    validate={[number(), minValue(1), required()]}
+                  />
+                </div>
+              </>
+            )
+          }
+        </FormDataConsumer>
+
+        <BooleanInput
+          label="acceptImmediatePurchase"
+          source="sale.acceptImmediatePurchase"
+        />
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.sale &&
+            formData.sale.acceptImmediatePurchase && (
+              <NumberInput
+                label="sale immediatePurchasePrice"
+                source="sale.immediatePurchasePrice"
+                validate={[number(), minValue(1), required()]}
+              />
+            )
+          }
+        </FormDataConsumer>
+
+        <BooleanInput label="acceptSubmission" source="sale.acceptSubmission" />
+
         <KeyboardDateInput
           label="Sale startDate"
-          source="auction.startDateTime"
+          source="sale.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
           options={{
@@ -159,7 +210,7 @@ const commonForm = (type) => {
 
         <KeyboardTimeInput
           label="Sale startTime"
-          source="auction.startDateTime"
+          source="sale.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
           options={{
@@ -172,7 +223,7 @@ const commonForm = (type) => {
 
         <KeyboardDateInput
           label="Sale endDate"
-          source="auction.endDateTime"
+          source="sale.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           options={{
             format: "DD/MM/YYYY",
@@ -184,7 +235,7 @@ const commonForm = (type) => {
 
         <KeyboardTimeInput
           label="Sale endTime"
-          source="auction.endDateTime"
+          source="sale.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
           options={{
@@ -194,25 +245,6 @@ const commonForm = (type) => {
           }}
           validate={validateAuctionDates}
         />
-
-        <NumberInput
-          label="Sale minimalPrice"
-          source="auction.minimalPrice"
-          validate={[number(), minValue(0), required()]}
-        />
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.auction &&
-            formData.auction.salesType === "auction" && (
-              <NumberInput
-                label="auction stepPrice"
-                source="auction.stepPrice"
-                validate={[number(), minValue(1), required()]}
-              />
-            )
-          }
-        </FormDataConsumer>
       </FormTab>
 
       <FormTab label="vehicle" key="vehicle">
@@ -567,6 +599,14 @@ const commonForm = (type) => {
           label="standardMileage"
           source="standardMileage"
           validate={[number(), minValue(0)]}
+        />
+
+        <NumberInput label="dpaProAmt" source="dpaProAmt" />
+
+        <SelectInput
+          label="salesSpeedName"
+          source="salesSpeedName"
+          choices={salesSpeedNameChoices}
         />
       </FormTab>
     </TabbedForm>

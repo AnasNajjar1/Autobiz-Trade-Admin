@@ -4,18 +4,18 @@ import {
   List,
   Datagrid,
   DateInput,
+  BooleanInput,
   TextField,
   DateField,
   AutocompleteInput,
   NumberField,
-  BooleanInput,
   Filter,
   TextInput,
   SelectInput,
   EditButton,
   ReferenceInput,
   SimpleShowLayout,
-  Show
+  Show,
 } from "react-admin";
 import { BulkDeleteButton } from "react-admin";
 
@@ -33,11 +33,11 @@ import { withStyles } from "@material-ui/core/styles";
 const styles = {
   link: {
     color: "#9097ac",
-    fontWeight: "bold"
-  }
+    fontWeight: "bold",
+  },
 };
 
-const VehicleFilter = props => (
+const VehicleFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="REF"
@@ -66,12 +66,7 @@ const VehicleFilter = props => (
       choices={offerTypeChoices}
       resettable
     />
-    <SelectInput
-      label="sales Type"
-      source="salesType"
-      choices={salesTypeChoices}
-      resettable
-    />
+
     <ReferenceInput
       label="brand Label"
       source="brandLabel"
@@ -145,7 +140,7 @@ const VehicleFilter = props => (
   </Filter>
 );
 
-export const Vehicles = props => (
+export const Vehicles = (props) => (
   <List
     {...props}
     filters={<VehicleFilter />}
@@ -159,13 +154,13 @@ export const Vehicles = props => (
       <TextField label="REGISTRATION" source="registration" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
-      <TextField label="SALEs TYPE" source="salesType" />
+      <TextField label="AUCTION" source="acceptAuction" />
+      <TextField label="IMMEDIATE PURCHASE" source="acceptImmediatePurchase" />
+      <TextField label="SUBMISSION" source="acceptSubmission" />
       <DateField label="SALES START" source="startDateTime" />
       <DateField label="SALES END" source="endDateTime" />
-      <DateField label="EXPERTISE DATE" source="createdAt" />
       <TextField label="BRAND" source="brandLabel" />
       <TextField label="MODEL" source="modelLabel" />
-      <NumberField label="MILEAGE" source="mileage" />
       <TextField label="POINT OF SALE" source="pointOfSaleName" />
       <LinkRecord label="urlAds" source="uuid" />
       <LinkToRelatedOffers />
@@ -174,51 +169,51 @@ export const Vehicles = props => (
   </List>
 );
 
-export const Offline = props => (
+export const Offline = (props) => (
   <Vehicles {...props} filter={{ statusId: [1] }} />
 );
 
-export const Online = props => (
+export const Online = (props) => (
   <Vehicles {...props} filter={{ statusId: [2], minEndDateTime: new Date() }} />
 );
 
-export const AuctionFinished = props => (
+export const AuctionFinished = (props) => (
   <Vehicles
     {...props}
     filter={{
       withOffers: true,
       maxEndDateTime: new Date(),
-      salesType: "auction",
-      statusId: [1, 2]
+      statusId: [1, 2],
+      bestOfferType: ["submission", "auction"],
     }}
   />
 );
 
-export const AuctionFailed = props => (
+export const AuctionFailed = (props) => (
   <Vehicles
     {...props}
     filter={{
       withOffers: false,
       maxEndDateTime: new Date(),
-      salesType: "auction",
-      statusId: [1, 2]
+      statusId: [1, 2],
     }}
   />
 );
 
-export const PurchasedImmediately = props => (
+export const PurchasedImmediately = (props) => (
   <Vehicles
     {...props}
     filter={{
-      withOffers: true,
-      salesType: "immediatePurchase",
+      bestOfferType: ["immediatePurchase"],
       maxEndDateTime: new Date(),
-      statusId: [1, 2]
+      statusId: [1, 2],
     }}
   />
 );
 
-export const Sold = props => <Vehicles {...props} filter={{ statusId: [3] }} />;
+export const Sold = (props) => (
+  <Vehicles {...props} filter={{ statusId: [3] }} />
+);
 
 const LinkRecord = withStyles(styles)(({ classes, record }) => {
   if (["online", "sold"].includes(record.statusName))
@@ -235,7 +230,7 @@ const LinkRecord = withStyles(styles)(({ classes, record }) => {
   return null;
 });
 
-const VehicleBulkActionButtons = props => (
+const VehicleBulkActionButtons = (props) => (
   <>
     {/* <UpdateStatus label="Update status" {...props} />
     <ChangeEndDateTime label="Update Sales end" {...props} /> API not ready yet */}

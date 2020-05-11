@@ -8,10 +8,10 @@ import {
   TextField,
   ReferenceField,
   NumberField,
-  DateField
+  DateField,
 } from "react-admin";
 
-const VehicleFilter = props => (
+const VehicleFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="fileNumber"
@@ -22,7 +22,7 @@ const VehicleFilter = props => (
   </Filter>
 );
 
-export const Offers = props => {
+export const Offers = (props) => {
   return (
     <List
       {...props}
@@ -41,9 +41,10 @@ export const Offers = props => {
           options={{
             minimumFractionDigits: 0,
             style: "currency",
-            currency: "EUR"
+            currency: "EUR",
           }}
         />
+        <TextField label="saleType" source="saleType" />
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
 
