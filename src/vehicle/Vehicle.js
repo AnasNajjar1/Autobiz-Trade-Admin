@@ -76,8 +76,8 @@ const validateURL = regex(
   "Must be an URL"
 );
 
-const auctionDatesValidation = (value, allValues) => {
-  let { startDateTime, endDateTime } = allValues.auction;
+const saleDatesValidation = (value, allValues) => {
+  let { startDateTime, endDateTime } = allValues.sale;
 
   if (!moment.isMoment(startDateTime)) {
     startDateTime = moment.utc(startDateTime);
@@ -92,7 +92,7 @@ const auctionDatesValidation = (value, allValues) => {
   }
 };
 
-const validateAuctionDates = [required(), auctionDatesValidation];
+const validateSaleDates = [required(), saleDatesValidation];
 
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const vehicleDefaultValue = {
@@ -100,9 +100,30 @@ const vehicleDefaultValue = {
   auction: { startDateTime: new Date(), salesType: "auction" },
 };
 
+const validateVehicle = (values) => {
+  const errors = {};
+  if (
+    !values.sale.acceptAuction &&
+    !values.sale.acceptImmediatePurchase &&
+    !values.sale.acceptSubmission
+  ) {
+    errors.sale = {
+      acceptAuction: ["At least one type is mandatory"],
+      acceptImmediatePurchase: ["At least one type is mandatory"],
+      acceptSubmission: ["At least one type is mandatory"],
+    };
+  }
+
+  return errors;
+};
+
 const commonForm = (type) => {
   return (
-    <TabbedForm submitOnEnter={false} defaultValue={vehicleDefaultValue}>
+    <TabbedForm
+      submitOnEnter={false}
+      defaultValue={vehicleDefaultValue}
+      validate={validateVehicle}
+    >
       <FormTab label="record" key="record">
         {type === "edit" && <TextInput disabled source="id" />}
         {type === "edit" && <TextInput readOnly source="uuid" />}
@@ -139,16 +160,6 @@ const commonForm = (type) => {
         />
 
         <TextInput label="salesComment" source="salesComment"></TextInput>
-
-        {/* 
-        <SelectInput
-          label="salesType"
-          source="auction.salesType"
-          choices={salesTypeChoices}
-          validate={[required()]}
-        />
-
-*/}
 
         <BooleanInput label="acceptAuction" source="sale.acceptAuction" />
 
@@ -206,7 +217,7 @@ const commonForm = (type) => {
             ampm: false,
             clearable: true,
           }}
-          validate={validateAuctionDates}
+          validate={validateSaleDates}
         />
 
         <KeyboardTimeInput
@@ -219,7 +230,7 @@ const commonForm = (type) => {
             ampm: false,
             clearable: true,
           }}
-          validate={validateAuctionDates}
+          validate={validateSaleDates}
         />
 
         <KeyboardDateInput
@@ -231,7 +242,7 @@ const commonForm = (type) => {
             ampm: false,
             clearable: true,
           }}
-          validate={validateAuctionDates}
+          validate={validateSaleDates}
         />
 
         <KeyboardTimeInput
@@ -244,7 +255,7 @@ const commonForm = (type) => {
             ampm: false,
             clearable: true,
           }}
-          validate={validateAuctionDates}
+          validate={validateSaleDates}
         />
       </FormTab>
 

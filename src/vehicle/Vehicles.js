@@ -7,6 +7,7 @@ import {
   BooleanInput,
   TextField,
   DateField,
+  BooleanField,
   AutocompleteInput,
   NumberField,
   Filter,
@@ -154,9 +155,9 @@ export const Vehicles = (props) => (
       <TextField label="REGISTRATION" source="registration" sortable={false} />
       <TextField label="STATUS" source="statusName" />
       <TextField label="OFFER TYPE" source="offerType" />
-      <TextField label="AUCTION" source="acceptAuction" />
-      <TextField label="IMMEDIATE PURCHASE" source="acceptImmediatePurchase" />
-      <TextField label="SUBMISSION" source="acceptSubmission" />
+      <BooleanField source="acceptAuction" />
+      <BooleanField source="acceptImmediatePurchase" />
+      <BooleanField source="acceptSubmission" />
       <DateField label="SALES START" source="startDateTime" />
       <DateField label="SALES END" source="endDateTime" />
       <TextField label="BRAND" source="brandLabel" />
