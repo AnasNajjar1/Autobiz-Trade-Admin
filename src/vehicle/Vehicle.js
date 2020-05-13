@@ -29,6 +29,7 @@ import {
   ReferenceManyField,
   ChipField,
   CreateButton,
+  ReferenceField,
 } from "react-admin";
 
 import { Link } from "react-router-dom";
@@ -647,6 +648,44 @@ export const ShowVehicle = (props) => {
             </Datagrid>
           </ReferenceManyField>
           <AddRequestButton />
+        </Tab>
+        <Tab label="Offers" path="offer">
+          <ReferenceManyField reference="offer" target="vehicleId">
+            {/* target="post_id" addLabel={false}> */}
+            <Datagrid>
+              <TextField label="fileNumber" source="fileNumber" />
+              <TextField label="brandLabel" source="brandLabel" />
+              <TextField label="modelLabel" source="modelLabel" />
+              <DateField label="purchaseDate" source="purchaseDate" />
+              <TextField label="pointOfSaleName" source="pointOfSaleName" />
+              <NumberField
+                source="amount"
+                options={{
+                  minimumFractionDigits: 0,
+                  style: "currency",
+                  currency: "EUR",
+                }}
+              />
+              <TextField label="saleType" source="saleType" />
+              <DateField label="createdAt" source="createdAt" showTime />
+              <TextField label="userId" source="userId" />
+
+              <ReferenceField
+                label="User"
+                source="userId"
+                reference="facadeUser"
+              >
+                <TextField source="name" />
+              </ReferenceField>
+              <ReferenceField
+                label="User"
+                source="userId"
+                reference="facadeUser"
+              >
+                <TextField source="email" />
+              </ReferenceField>
+            </Datagrid>
+          </ReferenceManyField>
         </Tab>
       </TabbedShowLayout>
     </Show>
