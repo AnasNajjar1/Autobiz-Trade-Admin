@@ -185,7 +185,7 @@ export const AuctionFinished = (props) => (
       withOffers: true,
       maxEndDateTime: new Date(),
       statusId: [1, 2],
-      bestOfferType: ["submission", "auction"],
+      bestOfferType: ["auction"],
     }}
   />
 );
@@ -214,6 +214,17 @@ export const PurchasedImmediately = (props) => (
 
 export const Sold = (props) => (
   <Vehicles {...props} filter={{ statusId: [3] }} />
+);
+
+export const SubmissionsOnlyFinished = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      maxEndDateTime: new Date(),
+      bestOfferType: ["submission"],
+      statusId: [1, 2]
+    }}
+  />
 );
 
 const LinkRecord = withStyles(styles)(({ classes, record }) => {

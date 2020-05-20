@@ -15,6 +15,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "auctionFinished",
     "auctionFailed",
     "purchasedImmediately",
+    "submissionsOnlyFinished",
     "sold"
   ];
   const facadeList = [

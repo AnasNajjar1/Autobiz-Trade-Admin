@@ -9,7 +9,8 @@ import {
   AuctionFinished,
   AuctionFailed,
   PurchasedImmediately,
-  Sold
+  Sold,
+  SubmissionsOnlyFinished
 } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
@@ -71,6 +72,7 @@ const App = () => {
           icon={MonetizationOn}
         />,
         <Resource name="sold" {...vehicle} list={Sold} icon={SyncDisabled} />,
+        <Resource name="submissionsOnlyFinished" {...vehicle} list={SubmissionsOnlyFinished} icon={Gavel} />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
