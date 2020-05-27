@@ -103,6 +103,7 @@ const vehicleDefaultValue = {
 const validateVehicle = (values) => {
   const errors = {};
   if (
+    values.sale &&
     !values.sale.acceptAuction &&
     !values.sale.acceptImmediatePurchase &&
     !values.sale.acceptSubmission
