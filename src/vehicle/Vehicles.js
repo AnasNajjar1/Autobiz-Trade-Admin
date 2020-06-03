@@ -17,6 +17,7 @@ import {
   ReferenceInput,
   SimpleShowLayout,
   Show,
+  useTranslate,
 } from "react-admin";
 import { BulkDeleteButton } from "react-admin";
 
@@ -41,14 +42,14 @@ const styles = {
 const VehicleFilter = (props) => (
   <Filter {...props}>
     <TextInput
-      label="REF"
+      label="fileNumber"
       source="fileNumber"
       defaultValue=""
       alwaysOn
       resettable
     />
     <TextInput
-      label="REGISTRATION"
+      label="registration"
       source="registration"
       defaultValue=""
       alwaysOn
@@ -59,7 +60,7 @@ const VehicleFilter = (props) => (
       <SelectInput source="name" resettable />
     </ReferenceInput> */}
 
-    <SelectInput source="statusId" choices={status} alwaysOn />
+    <SelectInput label="status" source="statusId" choices={status} alwaysOn />
 
     <SelectInput
       label="offerType"
@@ -69,7 +70,7 @@ const VehicleFilter = (props) => (
     />
 
     <ReferenceInput
-      label="brand Label"
+      label="make"
       source="brandLabel"
       reference="facadeBrand"
       resettable
@@ -77,61 +78,57 @@ const VehicleFilter = (props) => (
       <SelectInput optionValue="id" optionText="name" resettable />
     </ReferenceInput>
 
-    <TextInput
-      label="modelLabel"
-      source="modelLabel"
-      defaultValue=""
-      resettable
-    />
+    <TextInput label="model" source="modelLabel" defaultValue="" resettable />
 
     <TextInput
-      label="mileage Min"
+      label="mileageMin"
       source="mileageMin"
       defaultValue=""
       resettable
     />
     <TextInput
-      label="mileage Max"
+      label="mileageMax"
       source="mileageMax"
       defaultValue=""
       resettable
     />
     <DateInput
-      label="Expertise date"
+      label="expertiseDate"
       source="createdAt"
       defaultValue=""
       resettable
     />
     <DateInput
-      label="MAX Sales end"
+      label="maxSalesEnd"
       source="maxEndDateTime"
       defaultValue=""
       resettable
       alwaysOn
     />
     <DateInput
-      label="MIN Sales end"
+      label="minSalesEnd"
       source="minEndDateTime"
       defaultValue=""
       resettable
     />
     <DateInput
-      label="Sales Start"
+      label="salesStart"
       source="startDateTime"
       defaultValue=""
       resettable
     />
 
     <DateInput
-      label="Sales end"
+      label="salesEnd"
       source="endDateTime"
       defaultValue=""
       resettable
     />
 
-    <BooleanInput label="with Offers" source="withOffers" />
+    <BooleanInput label="withOffers" source="withOffers" />
 
     <ReferenceInput
+      label="pointOfSale"
       source="pointOfSaleId"
       reference="pointOfSale"
       sort={{ field: "name", order: "ASC" }}
@@ -141,34 +138,45 @@ const VehicleFilter = (props) => (
   </Filter>
 );
 
-export const Vehicles = (props) => (
-  <List
-    {...props}
-    filters={<VehicleFilter />}
-    perPage={25}
-    bulkActionButtons={<VehicleBulkActionButtons />}
-    sort={{ field: "id", order: "DESC" }}
-  >
-    <Datagrid rowClick="show" rowClick="show">
-      <TextField label="ID" source="id" />
-      <TextField label="REF" source="fileNumber" sortable={false} />
-      <TextField label="REGISTRATION" source="registration" sortable={false} />
-      <TextField label="STATUS" source="statusName" />
-      <TextField label="OFFER TYPE" source="offerType" />
-      <BooleanField source="acceptAuction" />
-      <BooleanField source="acceptImmediatePurchase" />
-      <BooleanField source="acceptSubmission" />
-      <DateField label="SALES START" source="startDateTime" />
-      <DateField label="SALES END" source="endDateTime" />
-      <TextField label="BRAND" source="brandLabel" />
-      <TextField label="MODEL" source="modelLabel" />
-      <TextField label="POINT OF SALE" source="pointOfSaleName" />
-      <LinkRecord label="urlAds" source="uuid" />
-      <LinkToRelatedOffers />
-      <EditButton />
-    </Datagrid>
-  </List>
-);
+export const Vehicles = (props) => {
+  const translate = useTranslate();
+  return (
+    <List
+      {...props}
+      title={translate(props.resource)}
+      filters={<VehicleFilter />}
+      perPage={25}
+      bulkActionButtons={<VehicleBulkActionButtons />}
+      sort={{ field: "id", order: "DESC" }}
+    >
+      <Datagrid rowClick="show" rowClick="show">
+        <TextField label="id" source="id" />
+        <TextField label="ref" source="fileNumber" sortable={false} />
+        <TextField
+          label="registration"
+          source="registration"
+          sortable={false}
+        />
+        <TextField label="status" source="statusName" />
+        <TextField label="offerType" source="offerType" />
+        <BooleanField source="acceptAuction" label="acceptAuction" />
+        <BooleanField
+          source="acceptImmediatePurchase"
+          label="acceptImmediatePurchase"
+        />
+        <BooleanField source="acceptSubmission" label="acceptSubmission" />
+        <DateField label="salesStart" source="startDateTime" />
+        <DateField label="salesEnd" source="endDateTime" />
+        <TextField label="make" source="brandLabel" />
+        <TextField label="model" source="modelLabel" />
+        <TextField label="pointOfSale" source="pointOfSaleName" />
+        <LinkRecord label="urlAds" source="uuid" />
+        <LinkToRelatedOffers />
+        <EditButton />
+      </Datagrid>
+    </List>
+  );
+};
 
 export const Offline = (props) => (
   <Vehicles {...props} filter={{ statusId: [1] }} />
@@ -222,7 +230,7 @@ export const SubmissionsOnlyFinished = (props) => (
     filter={{
       maxEndDateTime: new Date(),
       bestOfferType: ["submission"],
-      statusId: [1, 2]
+      statusId: [1, 2],
     }}
   />
 );

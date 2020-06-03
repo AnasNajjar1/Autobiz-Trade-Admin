@@ -1,6 +1,5 @@
 // in src/App.js
-import React from "react";
-import { Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import {
@@ -10,7 +9,7 @@ import {
   AuctionFailed,
   PurchasedImmediately,
   Sold,
-  SubmissionsOnlyFinished
+  SubmissionsOnlyFinished,
 } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
@@ -33,12 +32,27 @@ import {
   Gavel,
   MonetizationOn,
   SyncDisabled,
-  ErrorOutline
+  ErrorOutline,
 } from "@material-ui/icons";
+import customRoutes from "./routes";
+import polyglotI18nProvider from "ra-i18n-polyglot";
+import frenchMessages from "ra-language-french";
 
 Amplify.configure(awsconfig);
 
 const MyLoginPage = () => <Login backgroundImage="/background.jpg" />;
+
+const i18nProvider = polyglotI18nProvider((locale) => {
+  const localTranslation = JSON.parse(
+    localStorage.getItem("translation_" + locale)
+  );
+
+  if (localTranslation) {
+    return localTranslation;
+  } else {
+    return frenchMessages;
+  }
+}, "fr");
 
 const App = () => {
   return (
@@ -46,10 +60,12 @@ const App = () => {
       theme={muiThemeOverrides}
       dataProvider={dataProvider}
       authProvider={authProvider}
+      customRoutes={customRoutes}
       loginPage={MyLoginPage}
       appLayout={MyLayout}
+      i18nProvider={i18nProvider}
     >
-      {permission => [
+      {(permission) => [
         //Restrict access to the edit and remove views to admin only
         <Resource name="offline" {...vehicle} list={Offline} icon={Home} />,
         <Resource name="onSale" {...vehicle} list={Online} icon={Computer} />,
@@ -72,7 +88,12 @@ const App = () => {
           icon={MonetizationOn}
         />,
         <Resource name="sold" {...vehicle} list={Sold} icon={SyncDisabled} />,
-        <Resource name="submissionsOnlyFinished" {...vehicle} list={SubmissionsOnlyFinished} icon={Gavel} />,
+        <Resource
+          name="submissionsOnlyFinished"
+          {...vehicle}
+          list={SubmissionsOnlyFinished}
+          icon={Gavel}
+        />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
@@ -86,7 +107,7 @@ const App = () => {
         <Resource name="status" />,
         <Resource name="facadeUser" />,
         <Resource name="carcheckImport" />,
-        <Resource name="config" {...configPage} />
+        <Resource name="config" {...configPage} />,
         // Only include the categories resource for admin users
         // permission === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />

@@ -4,16 +4,18 @@ import {
   SimpleForm,
   NumberInput,
   ReferenceInput,
-  SelectInput
+  SelectInput,
+  useTranslate,
 } from "react-admin";
 import { parse } from "query-string";
 
-export const CreateRequest = props => {
+export const CreateRequest = (props) => {
+  const translate = useTranslate();
   const { vehicleId: vehicleIdString } = parse(props.location.search);
   const vehicleId = vehicleIdString ? parseInt(vehicleIdString, 10) : null;
 
   return (
-    <Create {...props} title="Create a new request">
+    <Create {...props} title={translate("createANewRequest")}>
       <SimpleForm redirect={redirect} {...props}>
         <NumberInput
           source="vehicleId"

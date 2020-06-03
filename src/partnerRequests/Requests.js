@@ -1,10 +1,23 @@
 // in src/posts.js
 import React from "react";
-import { List, Datagrid, TextField, NumberField, DateField } from "react-admin";
+import {
+  List,
+  Datagrid,
+  TextField,
+  NumberField,
+  DateField,
+  useTranslate,
+} from "react-admin";
 
-export const Requests = props => {
+export const Requests = (props) => {
+  const translate = useTranslate();
   return (
-    <List {...props} perPage={25} sort={{ field: "id", order: "DESC" }}>
+    <List
+      {...props}
+      title={translate(props.resource)}
+      perPage={25}
+      sort={{ field: "id", order: "DESC" }}
+    >
       <Datagrid>
         <TextField label="id" source="id" />
         <TextField label="uuid" source="uuid" />
@@ -17,7 +30,7 @@ export const Requests = props => {
           options={{
             minimumFractionDigits: 0,
             style: "currency",
-            currency: "EUR"
+            currency: "EUR",
           }}
         />
         <DateField

@@ -9,6 +9,7 @@ import {
   ReferenceField,
   NumberField,
   DateField,
+  useTranslate,
 } from "react-admin";
 
 const VehicleFilter = (props) => (
@@ -23,20 +24,23 @@ const VehicleFilter = (props) => (
 );
 
 export const Offers = (props) => {
+  const translate = useTranslate();
   return (
     <List
       {...props}
+      title={translate(props.resource)}
       filters={<VehicleFilter />}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
     >
       <Datagrid>
         <TextField label="fileNumber" source="fileNumber" />
-        <TextField label="brandLabel" source="brandLabel" />
-        <TextField label="modelLabel" source="modelLabel" />
+        <TextField label="make" source="brandLabel" />
+        <TextField label="model" source="modelLabel" />
         <DateField label="purchaseDate" source="purchaseDate" />
         <TextField label="pointOfSaleName" source="pointOfSaleName" />
         <NumberField
+          label="amount"
           source="amount"
           options={{
             minimumFractionDigits: 0,
@@ -48,10 +52,14 @@ export const Offers = (props) => {
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
 
-        <ReferenceField label="User" source="userId" reference="facadeUser">
+        <ReferenceField label="userName" source="userId" reference="facadeUser">
           <TextField source="name" />
         </ReferenceField>
-        <ReferenceField label="User" source="userId" reference="facadeUser">
+        <ReferenceField
+          label="userEmail"
+          source="userId"
+          reference="facadeUser"
+        >
           <TextField source="email" />
         </ReferenceField>
       </Datagrid>

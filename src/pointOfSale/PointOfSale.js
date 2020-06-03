@@ -13,17 +13,20 @@ import {
   ImageField,
   SimpleFormIterator,
   ArrayInput,
-  FormDataConsumer
+  FormDataConsumer,
+  useTranslate,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
 
 import countryChoices from "../assets/choices/country";
 
-export const CreatePointOfSale = props => {
+export const CreatePointOfSale = (props) => {
+  const translate = useTranslate();
   return (
-    <Create {...props}>
+    <Create title={translate("createAPointOfSale")} {...props}>
       <SimpleForm>
         <SelectInput
+          label="country"
           source="country"
           choices={countryChoices}
           validate={required()}
@@ -35,11 +38,11 @@ export const CreatePointOfSale = props => {
               <SelectInput
                 source="action"
                 choices={[
-                  { id: "create", name: "Create new Point of Sale" },
+                  { id: "create", name: "createNewPointOfSale" },
                   {
                     id: "import",
-                    name: "Import Point of sale from autobiz Database"
-                  }
+                    name: "Import Point of sale from autobiz Database",
+                  },
                 ]}
               ></SelectInput>
             )
@@ -50,7 +53,7 @@ export const CreatePointOfSale = props => {
           {({ formData, ...rest }) =>
             formData.action === "import" && (
               <NumberInput
-                label="Concession id"
+                label="concessionId"
                 source="concessionId"
                 validate={required()}
               ></NumberInput>
@@ -62,13 +65,13 @@ export const CreatePointOfSale = props => {
             formData.action === "import" &&
             formData.concessionId && (
               <ReferenceInput
-                label="From autobiz API"
+                label="fromAutobizApi"
                 source="autobizPosId"
                 reference="facadePointOfSale"
                 allowEmpty={true}
                 filter={{
                   country: formData.country,
-                  ids: [formData.concessionId]
+                  ids: [formData.concessionId],
                 }}
               >
                 <SelectInput optionValue="id" optionText="name" />
@@ -110,7 +113,7 @@ const validateURL = regex(
   "Must be an URL"
 );
 
-export const EditPointOfSale = props => {
+export const EditPointOfSale = (props) => {
   return (
     <Edit {...props}>
       <SimpleForm>

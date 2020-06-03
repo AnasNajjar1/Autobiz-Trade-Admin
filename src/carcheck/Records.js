@@ -21,47 +21,52 @@ import {
   RichTextField,
   SimpleShowLayout,
   Pagination,
-  ChipField
+  ChipField,
 } from "react-admin";
 import ButtonImport from "./ButtonImport";
 
-const RecordPagination = props => <div/>//remove pagination until it works on api
+const RecordPagination = (props) => <div />; //remove pagination until it works on api
 
-export const Records = props => (
+export const Records = (props) => (
   <List {...props} filters={<RecordFilter />} pagination={<RecordPagination />}>
     <Datagrid>
-      <TextField label="ID" source="id" sortable={false} />
-      <TextField label="REF" source="refHexaId" sortable={false} sortable={false}/>
-      <DateField label="EXPERTISE DATE" source="createdAt" sortable={false}/>
-      <TextField label="BRAND" source="brandName" sortable={false}/>
-      <TextField label="MODEL" source="modelName" sortable={false}/>
-      <TextField label="registration" source="registration" sortable={false}/>
-      <TextField label="vin" source="vin" sortable={false}/>
-      <TextField label="concessionId" source="concessionId" sortable={false}/>
-      <NumberField label="MILEAGE" source="mileage" sortable={false}/>
-      <ChipField source="sourceId" sortable={false}/>
-      <EditButton label="Open" sortable={false}/>
+      <TextField label="id" source="id" sortable={false} />
+      <TextField
+        label="ref"
+        source="refHexaId"
+        sortable={false}
+        sortable={false}
+      />
+      <DateField label="expertiseDate" source="createdAt" sortable={false} />
+      <TextField label="make" source="brandName" sortable={false} />
+      <TextField label="model" source="modelName" sortable={false} />
+      <TextField label="registration" source="registration" sortable={false} />
+      <TextField label="vin" source="vin" sortable={false} />
+      <TextField label="concessionId" source="concessionId" sortable={false} />
+      <NumberField label="mileage" source="mileage" sortable={false} />
+      <ChipField label="source" source="sourceId" sortable={false} />
+      <EditButton label="open" sortable={false} />
     </Datagrid>
   </List>
 );
 
-export const Record = props => (
+export const Record = (props) => (
   <Show {...props}>
     <SimpleShowLayout>
       <TextField source="id" />
-      <TextField source="fileNumber" />
-      <TextField label="BRAND" source="brandLabel" />
-      <TextField label="MODEL" source="modelLabel" />
-      <NumberField label="MILEAGE" source="mileage" />
-      <TextField label="Point of sale" source="pointOfSale.name" />
-      <TextField label="CITY" source="pointOfSale.city" />
+      <TextField label="ref" source="fileNumber" />
+      <TextField label="make" source="brandLabel" />
+      <TextField label="model" source="modelLabel" />
+      <NumberField label="mileage" source="mileage" />
+      <TextField label="pointOfSale" source="pointOfSale.name" />
+      <TextField label="city" source="pointOfSale.city" />
       <TextField label="zipCode" source="pointOfSale.zipCode" />
       <ButtonImport {...props} />
     </SimpleShowLayout>
   </Show>
 );
 
-const RecordFilter = props => (
+const RecordFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="REF"
@@ -78,7 +83,7 @@ const RecordFilter = props => (
       resettable
     />
 
-{/* 
+    {/* 
     <CheckboxGroupInput
       source="statusId"
       choices={[
@@ -108,6 +113,5 @@ const RecordFilter = props => (
       alwaysOn
     />
     <DateInput label="Max Expertise date" source="creationDateMax" resettable />
-
   </Filter>
 );

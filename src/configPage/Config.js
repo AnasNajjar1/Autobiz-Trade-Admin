@@ -8,7 +8,7 @@ import {
   TabbedForm,
   SimpleFormIterator,
   ArrayInput,
-  FormTab
+  FormTab,
 } from "react-admin";
 import offerTypes from "../assets/choices/offerType";
 import auctionDateChoices from "../assets/choices/auctionDateChoices";
@@ -17,12 +17,12 @@ import auctionSelection from "../assets/choices/auctionSelection";
 import auctionOperator from "../assets/choices/auctionOperator";
 import frequencies from "../assets/choices/frequencies";
 
-export const EditConfig = props => {
+export const EditConfig = (props) => {
   if (props.id === "auction")
     return (
       <Edit {...props}>
         <TabbedForm submitOnEnter={false}>
-          {offerTypes.map(offerType => (
+          {offerTypes.map((offerType) => (
             <Auction {...props} offerType={offerType.id} />
           ))}
         </TabbedForm>
@@ -33,7 +33,7 @@ export const EditConfig = props => {
     return (
       <Edit {...props}>
         <TabbedForm submitOnEnter={false}>
-          {offerTypes.map(offerType => (
+          {offerTypes.map((offerType) => (
             <DocumentFilters {...props} offerType={offerType.id} />
           ))}
         </TabbedForm>
@@ -50,7 +50,7 @@ export const EditConfig = props => {
   return null;
 };
 
-const Auction = props => {
+const Auction = (props) => {
   const { offerType } = props;
   console.log("offerType", offerType);
   return (
@@ -96,7 +96,7 @@ const Auction = props => {
   );
 };
 
-const DocumentFilters = props => {
+const DocumentFilters = (props) => {
   const { offerType } = props;
   return (
     <FormTab {...props} label={offerType} key={offerType}>
@@ -119,7 +119,7 @@ const DocumentFilters = props => {
   );
 };
 
-const MailingList = props => {
+const MailingList = (props) => {
   return (
     <Edit {...props}>
       <TabbedForm submitOnEnter={false} frequencies>

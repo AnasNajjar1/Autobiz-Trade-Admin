@@ -126,8 +126,8 @@ const commonForm = (type) => {
       validate={validateVehicle}
     >
       <FormTab label="record" key="record">
-        {type === "edit" && <TextInput disabled source="id" />}
-        {type === "edit" && <TextInput readOnly source="uuid" />}
+        {type === "edit" && <TextInput disabled source="id" label="id" />}
+        {type === "edit" && <TextInput readOnly source="uuid" label="uuid" />}
 
         <TextInput
           label="fileNumber"
@@ -149,6 +149,7 @@ const commonForm = (type) => {
         <ReferenceInput
           source="statusId"
           reference="status"
+          label="statut"
           validate={required()}
         >
           <SelectInput source="name" />
@@ -171,14 +172,14 @@ const commonForm = (type) => {
               <>
                 <div>
                   <NumberInput
-                    label="Sale auctionStartPrice"
+                    label="auctionStartPrice"
                     source="sale.auctionStartPrice"
                     validate={[number(), minValue(0), required()]}
                   />
                 </div>
                 <div>
                   <NumberInput
-                    label="Sale auctionStepPrice"
+                    label="auctionStepPrice"
                     source="sale.auctionStepPrice"
                     validate={[number(), minValue(1), required()]}
                   />
@@ -198,7 +199,7 @@ const commonForm = (type) => {
             formData.sale &&
             formData.sale.acceptImmediatePurchase && (
               <NumberInput
-                label="sale immediatePurchasePrice"
+                label="immediatePurchasePrice"
                 source="sale.immediatePurchasePrice"
                 validate={[number(), minValue(1), required()]}
               />
@@ -209,7 +210,7 @@ const commonForm = (type) => {
         <BooleanInput label="acceptSubmission" source="sale.acceptSubmission" />
 
         <KeyboardDateInput
-          label="Sale startDate"
+          label="saleStartDate"
           source="sale.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
@@ -222,7 +223,7 @@ const commonForm = (type) => {
         />
 
         <KeyboardTimeInput
-          label="Sale startTime"
+          label="saleStartTime"
           source="sale.startDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
@@ -235,7 +236,7 @@ const commonForm = (type) => {
         />
 
         <KeyboardDateInput
-          label="Sale endDate"
+          label="saleEndDate"
           source="sale.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           options={{
@@ -247,7 +248,7 @@ const commonForm = (type) => {
         />
 
         <KeyboardTimeInput
-          label="Sale endTime"
+          label="saleEndTime"
           source="sale.endDateTime"
           providerOptions={{ utils: MomentUtils }}
           disablePast
@@ -262,7 +263,7 @@ const commonForm = (type) => {
 
       <FormTab label="vehicle" key="vehicle">
         <ReferenceInput
-          label="brandLabel"
+          label="vehicule_brand"
           source="brandLabel"
           reference="facadeBrand"
         >
@@ -272,7 +273,7 @@ const commonForm = (type) => {
         <FormDataConsumer>
           {({ formData, ...rest }) => (
             <ReferenceInput
-              label="modelLabel"
+              label="vehicule_model"
               source="modelLabel"
               reference="facadeModel"
               filter={{ brandLabel: formData.brandLabel }}
@@ -282,7 +283,7 @@ const commonForm = (type) => {
           )}
         </FormDataConsumer>
 
-        <TextInput label="versionLabel" source="versionLabel" />
+        <TextInput label="version" source="versionLabel" />
 
         <KeyboardDateInput
           source="firstRegistrationDate"
@@ -305,61 +306,82 @@ const commonForm = (type) => {
       </FormTab>
 
       <FormTab label="carPictures">
-        <ImageField source="carPictures.three_quarters_front_picture" />
+        <ImageField
+          label="three_quarters_front_picture"
+          source="carPictures.three_quarters_front_picture"
+        />
         <TextInput
           label="three_quarters_front_picture"
           source="carPictures.three_quarters_front_picture"
         />
 
-        <ImageField source="carPictures.front_picture" />
+        <ImageField label="front_picture" source="carPictures.front_picture" />
         <TextInput label="front_picture" source="carPictures.front_picture" />
 
-        <ImageField source="carPictures.left_side_picture" />
+        <ImageField
+          label="left_side_picture"
+          source="carPictures.left_side_picture"
+        />
         <TextInput
           label="left_side_picture"
           source="carPictures.left_side_picture"
         />
 
-        <ImageField source="carPictures.right_side_picture" />
+        <ImageField
+          label="right_side_picture"
+          source="carPictures.right_side_picture"
+        />
         <TextInput
           label="right_side_picture"
           source="carPictures.right_side_picture"
         />
 
-        <ImageField source="carPictures.back_picture" />
+        <ImageField label="back_picture" source="carPictures.back_picture" />
         <TextInput label="back_picture" source="carPictures.back_picture" />
 
-        <ImageField source="carPictures.motor_picture" />
-        <TextInput label="motor_picture" source="carPictures.motor_picture" />
+        <ImageField label="motor_picture1" source="carPictures.motor_picture" />
+        <TextInput label="motor_picture1" source="carPictures.motor_picture" />
 
-        <ImageField source="carPictures.trunk_picture" />
+        <ImageField label="trunk_picture" source="carPictures.trunk_picture" />
         <TextInput label="trunk_picture" source="carPictures.trunk_picture" />
 
-        <ImageField source="carPictures.inside_front_picture" />
+        <ImageField
+          label="inside_front_picture"
+          source="carPictures.inside_front_picture"
+        />
         <TextInput
           label="inside_front_picture"
           source="carPictures.inside_front_picture"
         />
 
-        <ImageField source="carPictures.dashboard_picture" />
+        <ImageField
+          label="dashboard_picture"
+          source="carPictures.dashboard_picture"
+        />
         <TextInput
           label="dashboard_picture"
           source="carPictures.dashboard_picture"
         />
 
-        <ImageField source="carPictures.inside_back_picture" />
+        <ImageField
+          label="inside_back_picture"
+          source="carPictures.inside_back_picture"
+        />
         <TextInput
           label="inside_back_picture"
           source="carPictures.inside_back_picture"
         />
 
-        <ImageField source="carPictures.counter_picture" />
+        <ImageField
+          label="counter_picture"
+          source="carPictures.counter_picture"
+        />
         <TextInput
           label="counter_picture"
           source="carPictures.counter_picture"
         />
 
-        <ImageField source="carPictures.vin_picture" />
+        <ImageField label="vin_picture" source="carPictures.vin_picture" />
         <TextInput label="vin_picture" source="carPictures.vin_picture" />
 
         <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
@@ -389,8 +411,9 @@ const commonForm = (type) => {
         </ArrayInput>
       </FormTab>
 
-      <FormTab label="PointOfSale">
+      <FormTab label="pointOfSale">
         <ReferenceInput
+          label="pointOfSale"
           source="pointOfSaleId"
           reference="pointOfSale"
           sort={{ field: "name", order: "ASC" }}
@@ -411,8 +434,8 @@ const commonForm = (type) => {
       <FormTab label="documents">
         <ArrayInput label="documents" source="documents">
           <SimpleFormIterator>
-            <TextInput source="title" />
-            <TextInput source="link" validate={validateURL} />
+            <TextInput source="title" label="title" />
+            <TextInput source="link" label="link" validate={validateURL} />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
@@ -669,7 +692,7 @@ export const ShowVehicle = (props) => {
               <TextField label="brandLabel" source="brandLabel" />
               <TextField label="modelLabel" source="modelLabel" />
               <DateField label="purchaseDate" source="purchaseDate" />
-              <TextField label="pointOfSaleName" source="pointOfSaleName" />
+              <TextField label="PointOfSale" source="pointOfSaleName" />
               <NumberField
                 source="amount"
                 options={{

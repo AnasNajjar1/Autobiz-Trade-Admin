@@ -3,8 +3,10 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import { stringify } from "query-string";
 import Gavel from "@material-ui/icons/Gavel";
+import { useTranslate } from "react-admin";
 
 const LinkToRelatedOffers = ({ record }) => {
+  const translate = useTranslate();
   if (record.offersCount === 0) {
     return null;
   }
@@ -20,11 +22,11 @@ const LinkToRelatedOffers = ({ record }) => {
           perPage: 25,
           sort: "id",
           order: "DESC",
-          filter: JSON.stringify({ fileNumber: record.fileNumber })
-        })
+          filter: JSON.stringify({ fileNumber: record.fileNumber }),
+        }),
       }}
     >
-      <Gavel /> Offers ({record.offersCount})
+      <Gavel /> {translate("offers")} ({record.offersCount})
     </Button>
   );
 };

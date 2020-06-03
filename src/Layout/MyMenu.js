@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MenuItemLink } from "react-admin";
+import { MenuItemLink, useTranslate } from "react-admin";
 import { connect } from "react-redux";
 import { getResources } from "admin-on-rest";
 import Collapse from "@material-ui/core/Collapse";
@@ -9,6 +9,7 @@ import DirectionsCar from "@material-ui/icons/DirectionsCar";
 
 const SubMenuLayout = ({ resources, onMenuClick }) => {
   const [open, setOpen] = useState(false);
+  const translate = useTranslate();
   const subMenu = [
     "offline",
     "onSale",
@@ -16,7 +17,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "auctionFailed",
     "purchasedImmediately",
     "submissionsOnlyFinished",
-    "sold"
+    "sold",
   ];
   const facadeList = [
     "vehicle",
@@ -27,7 +28,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "facadeUser",
     "carcheckImport",
     "partner",
-    "partnerOffers"
+    "partnerOffers",
   ];
 
   const handleClick = () => {
@@ -41,7 +42,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
         to="/vehicle"
         primaryText={
           <>
-            <span style={{ flex: 1 }}>vehicle</span>
+            <span style={{ flex: 1 }}>{translate("vehicles")}</span>
             {open ? <ExpandLess /> : <ExpandMore />}
           </>
         }
@@ -49,37 +50,39 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
         onClick={handleClick}
       />
       <Collapse in={open} timeout="auto" style={{ paddingLeft: 15 }}>
-        {resources.map(item => {
+        {resources.map((item) => {
           if (subMenu.includes(item.name) && !facadeList.includes(item.name)) {
-            return menuLayout(item, onMenuClick);
+            return menuLayout(item, translate(item.name), onMenuClick);
           }
         })}
       </Collapse>
-      {resources.map(item => {
+      {resources.map((item) => {
         if (
           !subMenu.includes(item.name) &&
           item.name !== "vehicles" &&
           !facadeList.includes(item.name)
         ) {
-          return menuLayout(item, onMenuClick);
+          return menuLayout(item, translate(item.name), onMenuClick);
         }
       })}
     </div>
   );
 };
 
-const menuLayout = (item, onMenuClick) => (
-  <MenuItemLink
-    key={item.name}
-    to={`/${item.name}`}
-    primaryText={item.name}
-    leftIcon={<item.icon />}
-    onClick={onMenuClick}
-  />
-);
+const menuLayout = (item, translation, onMenuClick) => {
+  return (
+    <MenuItemLink
+      key={item.name}
+      to={`/${item.name}`}
+      primaryText={translation}
+      leftIcon={<item.icon />}
+      onClick={onMenuClick}
+    />
+  );
+};
 
-const mapStateToProps = state => ({
-  resources: getResources(state)
+const mapStateToProps = (state) => ({
+  resources: getResources(state),
 });
 
 export default connect(mapStateToProps)(SubMenuLayout);

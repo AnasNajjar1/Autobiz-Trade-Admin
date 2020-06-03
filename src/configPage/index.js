@@ -6,5 +6,5 @@ import { EditConfig } from "./Config";
 export default {
   list: Configs,
   edit: EditConfig,
-  icon: Settings
+  icon: Settings,
 };
