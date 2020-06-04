@@ -27,6 +27,7 @@
     "ra-language-spanish": "^1.0.0",
     "react": "^16.9.0",
     "react-admin": "^3.2.0",
+    "react-admin-import-csv": "^0.2.15",
     "react-dom": "^16.9.0",
     "react-redux": "^7.2.0",
     "react-router": "^5.1.2",

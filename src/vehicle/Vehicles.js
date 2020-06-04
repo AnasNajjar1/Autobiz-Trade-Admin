@@ -28,10 +28,10 @@ import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
 import salesTypeChoices from "../assets/choices/salesType";
 import status from "../assets/choices/status";
-
+import { ImportButton } from "react-admin-import-csv";
 import { TRADE_URL } from "../config";
 import { withStyles } from "@material-ui/core/styles";
-
+import { CreateButton } from "ra-ui-materialui";
 const styles = {
   link: {
     color: "#9097ac",
@@ -147,6 +147,7 @@ export const Vehicles = (props) => {
       filters={<VehicleFilter />}
       perPage={25}
       bulkActionButtons={<VehicleBulkActionButtons />}
+      actions={<VehicleActions />}
       sort={{ field: "id", order: "DESC" }}
     >
       <Datagrid rowClick="show" rowClick="show">
@@ -180,6 +181,10 @@ export const Vehicles = (props) => {
 
 export const Offline = (props) => (
   <Vehicles {...props} filter={{ statusId: [1] }} />
+);
+
+export const Pending = (props) => (
+  <Vehicles {...props} filter={{ statusId: [4] }} />
 );
 
 export const Online = (props) => (
@@ -236,7 +241,7 @@ export const SubmissionsOnlyFinished = (props) => (
 );
 
 const LinkRecord = withStyles(styles)(({ classes, record }) => {
-  if (["online", "sold"].includes(record.statusName))
+  if (["online", "sold", "pending"].includes(record.statusName))
     return (
       <a
         href={`${TRADE_URL}/records/${record.uuid}`}
@@ -257,3 +262,13 @@ const VehicleBulkActionButtons = (props) => (
     <BulkDeleteButton {...props} />
   </>
 );
+
+const VehicleActions = (props) => {
+  const { className, basePath } = props;
+  return (
+    <>
+      <ImportButton {...props} />
+      <CreateButton basePath={basePath} />
+    </>
+  );
+};

@@ -12,6 +12,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
   const translate = useTranslate();
   const subMenu = [
     "offline",
+    "pending",
     "onSale",
     "auctionFinished",
     "auctionFailed",

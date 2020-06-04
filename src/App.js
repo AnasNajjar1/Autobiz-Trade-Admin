@@ -9,6 +9,7 @@ import {
   AuctionFailed,
   PurchasedImmediately,
   Sold,
+  Pending,
   SubmissionsOnlyFinished,
 } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
@@ -33,6 +34,7 @@ import {
   MonetizationOn,
   SyncDisabled,
   ErrorOutline,
+  AvTimer,
 } from "@material-ui/icons";
 import customRoutes from "./routes";
 import polyglotI18nProvider from "ra-i18n-polyglot";
@@ -68,6 +70,7 @@ const App = () => {
       {(permission) => [
         //Restrict access to the edit and remove views to admin only
         <Resource name="offline" {...vehicle} list={Offline} icon={Home} />,
+        <Resource name="pending" {...vehicle} list={Pending} icon={AvTimer} />,
         <Resource name="onSale" {...vehicle} list={Online} icon={Computer} />,
         <Resource
           name="auctionFinished"
@@ -87,7 +90,9 @@ const App = () => {
           list={PurchasedImmediately}
           icon={MonetizationOn}
         />,
+
         <Resource name="sold" {...vehicle} list={Sold} icon={SyncDisabled} />,
+
         <Resource
           name="submissionsOnlyFinished"
           {...vehicle}
