@@ -37,8 +37,26 @@ export const Offers = (props) => {
         <TextField label="fileNumber" source="fileNumber" />
         <TextField label="make" source="brandLabel" />
         <TextField label="model" source="modelLabel" />
-        <DateField label="purchaseDate" source="purchaseDate" />
         <TextField label="pointOfSaleName" source="pointOfSaleName" />
+
+        <NumberField
+          label="auctionStartPrice"
+          source="auctionStartPrice"
+          options={{
+            minimumFractionDigits: 0,
+            style: "currency",
+            currency: "EUR",
+          }}
+        />
+        <NumberField
+          label="immediatePurchasePrice"
+          source="immediatePurchasePrice"
+          options={{
+            minimumFractionDigits: 0,
+            style: "currency",
+            currency: "EUR",
+          }}
+        />
         <NumberField
           label="amount"
           source="amount"

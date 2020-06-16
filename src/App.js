@@ -111,6 +111,7 @@ const App = () => {
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
         <Resource name="facadeUser" />,
+        <Resource name="facadeCompany" />,
         <Resource name="carcheckImport" />,
         <Resource name="config" {...configPage} />,
         // Only include the categories resource for admin users

@@ -27,6 +27,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "facadePointOfSale",
     "status",
     "facadeUser",
+    "facadeCompany",
     "carcheckImport",
     "partner",
     "partnerOffers",

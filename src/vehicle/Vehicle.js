@@ -660,6 +660,7 @@ export const ShowVehicle = (props) => {
           <TextField source="versionLabel" />
           <DateField source="firstRegistrationDate" />
           <NumberField source="mileage" />
+          <TextField source="pointOfSaleName" />
         </Tab>
         <Tab label="Partner requests" path="requests">
           <ReferenceManyField reference="partnerRequests" target="vehicleId">
@@ -688,11 +689,8 @@ export const ShowVehicle = (props) => {
           <ReferenceManyField reference="offer" target="vehicleId">
             {/* target="post_id" addLabel={false}> */}
             <Datagrid>
-              <TextField label="fileNumber" source="fileNumber" />
-              <TextField label="brandLabel" source="brandLabel" />
-              <TextField label="modelLabel" source="modelLabel" />
-              <DateField label="purchaseDate" source="purchaseDate" />
-              <TextField label="PointOfSale" source="pointOfSaleName" />
+              <TextField label="auctionId" source="auctionId" />
+              <TextField label="offerId" source="offerId" />
               <NumberField
                 source="amount"
                 options={{
@@ -713,11 +711,41 @@ export const ShowVehicle = (props) => {
                 <TextField source="name" />
               </ReferenceField>
               <ReferenceField
-                label="User"
+                label="Email"
                 source="userId"
                 reference="facadeUser"
               >
                 <TextField source="email" />
+              </ReferenceField>
+
+              <ReferenceField
+                label="CompanyName"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyName" />
+                </ReferenceField>
+              </ReferenceField>
+
+              <ReferenceField
+                label="CompanyCity"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyCity" />
+                </ReferenceField>
+              </ReferenceField>
+
+              <ReferenceField
+                label="companyZipcode"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyZipcode" />
+                </ReferenceField>
               </ReferenceField>
             </Datagrid>
           </ReferenceManyField>
