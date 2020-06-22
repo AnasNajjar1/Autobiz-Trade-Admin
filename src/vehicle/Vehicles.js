@@ -265,9 +265,16 @@ const VehicleBulkActionButtons = (props) => (
 
 const VehicleActions = (props) => {
   const { className, basePath } = props;
+
+  const config = {
+    parseConfig: {
+      delimiter: ";",
+    },
+  };
+
   return (
     <>
-      <ImportButton {...props} />
+      <ImportButton {...props} {...config} />
       <CreateButton basePath={basePath} />
     </>
   );
