@@ -4,7 +4,7 @@ import {
   useUpdateMany,
   useRefresh,
   useNotify,
-  useUnselectAll
+  useUnselectAll,
 } from "react-admin";
 import Select from "@material-ui/core/Select";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -20,21 +20,22 @@ const ResetViewsButton = ({ selectedIds }) => {
   const [statusId, setStatusId] = useState(1);
   const refresh = useRefresh();
   const notify = useNotify();
+  const updateOnlyStatus = true;
   const unselectAll = useUnselectAll();
   const [updateMany, { loading }] = useUpdateMany(
     "vehicle",
     selectedIds,
-    { statusId },
+    { statusId, updateOnlyStatus },
     {
       onSuccess: () => {
         refresh();
         notify("Vehicle updated");
         unselectAll("vehicle");
       },
-      onFailure: error => notify("Error: posts not updated", "warning")
+      onFailure: (error) => notify("Error: posts not updated", "warning"),
     }
   );
-  const handleClick = e => {
+  const handleClick = (e) => {
     setStatusId(e.target.value);
     setOpen(true);
   };
@@ -48,7 +49,7 @@ const ResetViewsButton = ({ selectedIds }) => {
   return (
     <Fragment>
       <Select value={statusId} onChange={handleClick}>
-        {status.map(status => (
+        {status.map((status) => (
           <MenuItem value={status.id}>{status.name}</MenuItem>
         ))}
       </Select>
@@ -57,7 +58,7 @@ const ResetViewsButton = ({ selectedIds }) => {
         loading={loading}
         title="Update vehicle status"
         content={`Are you sure you want to set the status for these vehicles to ${
-          _.find(status, o => o.id === statusId).name
+          _.find(status, (o) => o.id === statusId).name
         } ?`}
         onConfirm={handleConfirm}
         onClose={handleDialogClose}
@@ -84,10 +85,10 @@ export const ChangeEndDateTime = ({ selectedIds }) => {
         notify("Vehicle updated");
         unselectAll("vehicle");
       },
-      onFailure: error => notify("Error: posts not updated", "warning")
+      onFailure: (error) => notify("Error: posts not updated", "warning"),
     }
   );
-  const handleClick = e => {
+  const handleClick = (e) => {
     setEndDateTime(moment(e.target.value).format());
     setOpen(true);
   };
@@ -106,7 +107,7 @@ export const ChangeEndDateTime = ({ selectedIds }) => {
         type="datetime-local"
         defaultValue={moment().format("YYYY-MM-DDTHH:mm")}
         InputLabelProps={{
-          shrink: true
+          shrink: true,
         }}
         onChange={handleClick}
       />

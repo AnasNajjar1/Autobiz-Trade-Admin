@@ -257,8 +257,8 @@ const LinkRecord = withStyles(styles)(({ classes, record }) => {
 
 const VehicleBulkActionButtons = (props) => (
   <>
-    {/* <UpdateStatus label="Update status" {...props} />
-    <ChangeEndDateTime label="Update Sales end" {...props} /> API not ready yet */}
+    <UpdateStatus label="Update status" {...props} />
+    {/* <ChangeEndDateTime label="Update Sales end" {...props} /> API not ready yet */}
     <BulkDeleteButton {...props} />
   </>
 );
