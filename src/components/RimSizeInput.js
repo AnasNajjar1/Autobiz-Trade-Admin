@@ -4,10 +4,10 @@ import { Labeled, SelectInput } from "react-admin";
 import {
   widthChoices,
   heightChoices,
-  diameterChoices
-} from "../../assets/choices/rimSize";
+  diameterChoices,
+} from "../assets/choices/rimSize";
 
-const RimSizeInput = props => {
+const RimSizeInput = (props) => {
   return (
     <Labeled label={props.label}>
       <span>

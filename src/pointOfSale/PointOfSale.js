@@ -3,20 +3,19 @@ import {
   Create,
   Edit,
   SimpleForm,
-  DisabledInput,
   TextInput,
   NumberInput,
   required,
   regex,
   SelectInput,
   ReferenceInput,
-  ImageField,
   SimpleFormIterator,
   ArrayInput,
   FormDataConsumer,
   useTranslate,
 } from "react-admin";
 import RichTextInput from "ra-input-rich-text";
+import S3CustomUploader from "../components/S3CustomUploader";
 
 import countryChoices from "../assets/choices/country";
 
@@ -120,8 +119,7 @@ export const EditPointOfSale = (props) => {
         <TextInput source="id" disabled />
         <TextInput source="uuid" disabled />
         <TextInput label="name" source="name"></TextInput>
-        <ImageField source="picture" />
-        <TextInput label="picture" source="picture"></TextInput>
+        <S3CustomUploader label="picture" source="picture" />
         <RichTextInput label="info" source="info"></RichTextInput>
         <TextInput label="zipCode" source="zipCode"></TextInput>
         <TextInput label="city" source="city"></TextInput>

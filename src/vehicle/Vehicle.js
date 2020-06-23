@@ -32,12 +32,14 @@ import {
   ReferenceField,
 } from "react-admin";
 
+import S3CustomUploader from "../components/S3CustomUploader";
+
 import { Link } from "react-router-dom";
 import { KeyboardDateInput, KeyboardTimeInput } from "./CustomInput";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
-import RimSizeInput from "./components/RimSizeInput";
+import RimSizeInput from "../components/RimSizeInput";
 
 import keyPointsChoices from "../assets/choices/keyPoints";
 import fuelChoices from "../assets/choices/fuel";
@@ -306,84 +308,55 @@ const commonForm = (type) => {
       </FormTab>
 
       <FormTab label="carPictures">
-        <ImageField
+        <S3CustomUploader
           label="three_quarters_front_picture"
           source="carPictures.three_quarters_front_picture"
         />
-        <TextInput
-          label="three_quarters_front_picture"
-          source="carPictures.three_quarters_front_picture"
+        <S3CustomUploader
+          label="front_picture"
+          source="carPictures.front_picture"
         />
-
-        <ImageField label="front_picture" source="carPictures.front_picture" />
-        <TextInput label="front_picture" source="carPictures.front_picture" />
-
-        <ImageField
+        <S3CustomUploader
           label="left_side_picture"
           source="carPictures.left_side_picture"
         />
-        <TextInput
-          label="left_side_picture"
-          source="carPictures.left_side_picture"
-        />
-
-        <ImageField
+        <S3CustomUploader
           label="right_side_picture"
           source="carPictures.right_side_picture"
         />
-        <TextInput
-          label="right_side_picture"
-          source="carPictures.right_side_picture"
+        <S3CustomUploader
+          label="back_picture"
+          source="carPictures.back_picture"
+        />
+        <S3CustomUploader
+          label="motor_picture1"
+          source="carPictures.motor_picture"
+        />
+        <S3CustomUploader
+          label="trunk_picture"
+          source="carPictures.trunk_picture"
         />
 
-        <ImageField label="back_picture" source="carPictures.back_picture" />
-        <TextInput label="back_picture" source="carPictures.back_picture" />
-
-        <ImageField label="motor_picture1" source="carPictures.motor_picture" />
-        <TextInput label="motor_picture1" source="carPictures.motor_picture" />
-
-        <ImageField label="trunk_picture" source="carPictures.trunk_picture" />
-        <TextInput label="trunk_picture" source="carPictures.trunk_picture" />
-
-        <ImageField
+        <S3CustomUploader
           label="inside_front_picture"
           source="carPictures.inside_front_picture"
         />
-        <TextInput
-          label="inside_front_picture"
-          source="carPictures.inside_front_picture"
-        />
-
-        <ImageField
+        <S3CustomUploader
           label="dashboard_picture"
           source="carPictures.dashboard_picture"
         />
-        <TextInput
-          label="dashboard_picture"
-          source="carPictures.dashboard_picture"
-        />
-
-        <ImageField
+        <S3CustomUploader
           label="inside_back_picture"
           source="carPictures.inside_back_picture"
         />
-        <TextInput
-          label="inside_back_picture"
-          source="carPictures.inside_back_picture"
-        />
-
-        <ImageField
+        <S3CustomUploader
           label="counter_picture"
           source="carPictures.counter_picture"
         />
-        <TextInput
-          label="counter_picture"
-          source="carPictures.counter_picture"
+        <S3CustomUploader
+          label="vin_picture"
+          source="carPictures.vin_picture"
         />
-
-        <ImageField label="vin_picture" source="carPictures.vin_picture" />
-        <TextInput label="vin_picture" source="carPictures.vin_picture" />
-
         <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
           <SimpleFormIterator>
             <TextInput source="dommage" label="description" />
