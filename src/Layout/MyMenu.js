@@ -8,20 +8,35 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import DirectionsCar from "@material-ui/icons/DirectionsCar";
 
 const SubMenuLayout = ({ resources, onMenuClick }) => {
-  const [open, setOpen] = useState(false);
+  const [openOffertoprivate, setOpenOffertoprivate] = useState(false);
+  const [openStock, setOpenStock] = useState(false);
   const translate = useTranslate();
-  const subMenu = [
-    "offline",
-    "pending",
-    "onSale",
-    "auctionFinished",
-    "auctionFailed",
-    "purchasedImmediately",
-    "submissionsOnlyFinished",
-    "sold",
+  const subMenuOffertoprivate = [
+    "offertoprivateOffline",
+    "offertoprivatePending",
+    "offertoprivateOnSale",
+    "offertoprivateAuctionFinished",
+    "offertoprivateAuctionFailed",
+    "offertoprivatePurchasedImmediately",
+    "offertoprivateSubmissionsOnlyFinished",
+    "offertoprivateSold",
   ];
+
+  const subMenuStock = [
+    "stockOffline",
+    "stockPending",
+    "stockOnSale",
+    "stockAuctionFinished",
+    "stockAuctionFailed",
+    "stockPurchasedImmediately",
+    "stockSubmissionsOnlyFinished",
+    "stockSold",
+  ];
+
   const facadeList = [
     "vehicle",
+    "stock",
+    "offertoprivate",
     "facadeBrand",
     "facadeModel",
     "facadePointOfSale",
@@ -33,34 +48,71 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "partnerOffers",
   ];
 
-  const handleClick = () => {
-    setOpen(!open);
+  const handleOpenOffertoprivate = () => {
+    setOpenOffertoprivate(!openOffertoprivate);
+  };
+
+  const handleOpenStock = () => {
+    setOpenStock(!openStock);
   };
 
   return (
     <div>
       <MenuItemLink
-        key="vehicle"
-        to="/vehicle"
+        key="offertoprivate"
+        to="/offertoprivate"
         primaryText={
           <>
-            <span style={{ flex: 1 }}>{translate("vehicles")}</span>
-            {open ? <ExpandLess /> : <ExpandMore />}
+            <span style={{ flex: 1 }}>{translate("offerToPrivate")}</span>
+            {openOffertoprivate ? <ExpandLess /> : <ExpandMore />}
           </>
         }
         leftIcon={<DirectionsCar />}
-        onClick={handleClick}
+        onClick={handleOpenOffertoprivate}
       />
-      <Collapse in={open} timeout="auto" style={{ paddingLeft: 15 }}>
+
+      <Collapse
+        in={openOffertoprivate}
+        timeout="auto"
+        style={{ paddingLeft: 15 }}
+      >
         {resources.map((item) => {
-          if (subMenu.includes(item.name) && !facadeList.includes(item.name)) {
+          if (
+            subMenuOffertoprivate.includes(item.name) &&
+            !facadeList.includes(item.name)
+          ) {
             return menuLayout(item, translate(item.name), onMenuClick);
           }
         })}
       </Collapse>
+
+      <MenuItemLink
+        key="stock"
+        to="/stock"
+        primaryText={
+          <>
+            <span style={{ flex: 1 }}>{translate("stock")}</span>
+            {openStock ? <ExpandLess /> : <ExpandMore />}
+          </>
+        }
+        leftIcon={<DirectionsCar />}
+        onClick={handleOpenStock}
+      />
+      <Collapse in={openStock} timeout="auto" style={{ paddingLeft: 15 }}>
+        {resources.map((item) => {
+          if (
+            subMenuStock.includes(item.name) &&
+            !facadeList.includes(item.name)
+          ) {
+            return menuLayout(item, translate(item.name), onMenuClick);
+          }
+        })}
+      </Collapse>
+
       {resources.map((item) => {
         if (
-          !subMenu.includes(item.name) &&
+          !subMenuOffertoprivate.includes(item.name) &&
+          !subMenuStock.includes(item.name) &&
           item.name !== "vehicles" &&
           !facadeList.includes(item.name)
         ) {

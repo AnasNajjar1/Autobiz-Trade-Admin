@@ -3,14 +3,24 @@ import React, { useState, useEffect } from "react";
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import {
-  Offline,
-  Online,
-  AuctionFinished,
-  AuctionFailed,
-  PurchasedImmediately,
-  Sold,
-  Pending,
-  SubmissionsOnlyFinished,
+  OfferToPrivate,
+  OffertoprivateOffline,
+  OffertoprivateOnSale,
+  OffertoprivateAuctionFinished,
+  OffertoprivateAuctionFailed,
+  OffertoprivatePurchasedImmediately,
+  OffertoprivateSold,
+  OffertoprivatePending,
+  OffertoprivateSubmissionsOnlyFinished,
+  Stock,
+  StockOffline,
+  StockPending,
+  StockOnSale,
+  StockAuctionFinished,
+  StockAuctionFailed,
+  StockPurchasedImmediately,
+  StockSubmissionsOnlyFinished,
+  StockSold,
 } from "./vehicle/Vehicles";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
@@ -18,12 +28,9 @@ import facadeCarcheck from "./carcheck";
 import offer from "./offer";
 import partnerRequests from "./partnerRequests";
 import partnerOffers from "./partnerOffers";
-import { Users } from "./users/Users";
-import User from "./users/User";
 import dataProvider from "./dataprovider";
 import authProvider from "./authProvider";
-import Amplify, { Auth, API } from "aws-amplify";
-import { withAuthenticator } from "aws-amplify-react";
+import Amplify from "aws-amplify";
 import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
 import MyLayout from "./Layout/MyLayout";
@@ -69,37 +76,114 @@ const App = () => {
     >
       {(permission) => [
         //Restrict access to the edit and remove views to admin only
-        <Resource name="offline" {...vehicle} list={Offline} icon={Home} />,
-        <Resource name="pending" {...vehicle} list={Pending} icon={AvTimer} />,
-        <Resource name="onSale" {...vehicle} list={Online} icon={Computer} />,
         <Resource
-          name="auctionFinished"
+          name="offertoprivateOffline"
           {...vehicle}
-          list={AuctionFinished}
+          list={OffertoprivateOffline}
+          icon={Home}
+        />,
+        <Resource
+          name="stockOffline"
+          {...vehicle}
+          list={StockOffline}
+          icon={Home}
+        />,
+        <Resource
+          name="offertoprivatePending"
+          {...vehicle}
+          list={OffertoprivatePending}
+          icon={AvTimer}
+        />,
+        <Resource
+          name="stockPending"
+          {...vehicle}
+          list={StockPending}
+          icon={AvTimer}
+        />,
+
+        <Resource
+          name="offertoprivateOnSale"
+          {...vehicle}
+          list={OffertoprivateOnSale}
+          icon={Computer}
+        />,
+        <Resource
+          name="stockOnSale"
+          {...vehicle}
+          list={StockOnSale}
+          icon={Computer}
+        />,
+        <Resource
+          name="offertoprivateAuctionFinished"
+          {...vehicle}
+          list={OffertoprivateAuctionFinished}
           icon={Gavel}
         />,
         <Resource
-          name="auctionFailed"
+          name="stockAuctionFinished"
           {...vehicle}
-          list={AuctionFailed}
+          list={StockAuctionFinished}
+          icon={Gavel}
+        />,
+
+        <Resource
+          name="offertoprivateAuctionFailed"
+          {...vehicle}
+          list={OffertoprivateAuctionFailed}
           icon={ErrorOutline}
         />,
         <Resource
-          name="purchasedImmediately"
+          name="stockAuctionFailed"
           {...vehicle}
-          list={PurchasedImmediately}
+          list={StockAuctionFailed}
+          icon={ErrorOutline}
+        />,
+
+        <Resource
+          name="offertoprivatePurchasedImmediately"
+          {...vehicle}
+          list={OffertoprivatePurchasedImmediately}
+          icon={MonetizationOn}
+        />,
+        <Resource
+          name="stockPurchasedImmediately"
+          {...vehicle}
+          list={StockPurchasedImmediately}
           icon={MonetizationOn}
         />,
 
-        <Resource name="sold" {...vehicle} list={Sold} icon={SyncDisabled} />,
+        <Resource
+          name="offertoprivateSold"
+          {...vehicle}
+          list={OffertoprivateSold}
+          icon={SyncDisabled}
+        />,
+        <Resource
+          name="stockSold"
+          {...vehicle}
+          list={StockSold}
+          icon={SyncDisabled}
+        />,
 
         <Resource
-          name="submissionsOnlyFinished"
+          name="offertoprivateSubmissionsOnlyFinished"
           {...vehicle}
-          list={SubmissionsOnlyFinished}
+          list={OffertoprivateSubmissionsOnlyFinished}
           icon={Gavel}
         />,
+
+        <Resource
+          name="stockSubmissionsOnlyFinished"
+          {...vehicle}
+          list={StockSubmissionsOnlyFinished}
+          icon={Gavel}
+        />,
+
+        ,
         <Resource name="vehicle" {...vehicle} />,
+
+        <Resource name="stock" {...vehicle} list={Stock} />,
+        <Resource name="offertoprivate" {...vehicle} list={OfferToPrivate} />,
         <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="offer" {...offer} />,
         <Resource name="partnerRequests" {...partnerRequests} />,

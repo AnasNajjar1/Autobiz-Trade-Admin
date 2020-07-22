@@ -159,7 +159,6 @@ export const Vehicles = (props) => {
           sortable={false}
         />
         <TextField label="status" source="statusName" />
-        <TextField label="offerType" source="offerType" />
         <BooleanField source="acceptAuction" label="acceptAuction" />
         <BooleanField
           source="acceptImmediatePurchase"
@@ -179,19 +178,59 @@ export const Vehicles = (props) => {
   );
 };
 
-export const Offline = (props) => (
-  <Vehicles {...props} filter={{ statusId: [1] }} />
+export const Stock = (props) => (
+  <Vehicles {...props} filter={{ offerType: ["stock"] }} />
 );
 
-export const Pending = (props) => (
-  <Vehicles {...props} filter={{ statusId: [4] }} />
+export const OfferToPrivate = (props) => (
+  <Vehicles {...props} filter={{ offerType: ["offerToPrivate"] }} />
 );
 
-export const Online = (props) => (
-  <Vehicles {...props} filter={{ statusId: [2], minEndDateTime: new Date() }} />
+export const Offertoprivate = (props) => (
+  <Vehicles {...props} filter={{ offerType: ["offerToPrivate"] }} />
 );
 
-export const AuctionFinished = (props) => (
+export const OffertoprivateOffline = (props) => (
+  <Vehicles
+    {...props}
+    filter={{ statusId: [1], offerType: ["offerToPrivate"] }}
+  />
+);
+
+export const StockOffline = (props) => (
+  <Vehicles {...props} filter={{ statusId: [1], offerType: ["stock"] }} />
+);
+
+export const OffertoprivatePending = (props) => (
+  <Vehicles
+    {...props}
+    filter={{ statusId: [4], offerType: ["offerToPrivate"] }}
+  />
+);
+
+export const StockPending = (props) => (
+  <Vehicles {...props} filter={{ statusId: [4], offerType: ["stock"] }} />
+);
+
+export const OffertoprivateOnSale = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      statusId: [2],
+      minEndDateTime: new Date(),
+      offerType: ["offerToPrivate"],
+    }}
+  />
+);
+
+export const StockOnSale = (props) => (
+  <Vehicles
+    {...props}
+    filter={{ statusId: [2], minEndDateTime: new Date(), offerType: ["stock"] }}
+  />
+);
+
+export const OffertoprivateAuctionFinished = (props) => (
   <Vehicles
     {...props}
     filter={{
@@ -199,43 +238,103 @@ export const AuctionFinished = (props) => (
       maxEndDateTime: new Date(),
       statusId: [1, 2],
       bestOfferType: ["auction"],
+      offerType: ["offerToPrivate"],
     }}
   />
 );
 
-export const AuctionFailed = (props) => (
+export const StockAuctionFinished = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      withOffers: true,
+      maxEndDateTime: new Date(),
+      statusId: [1, 2],
+      bestOfferType: ["auction"],
+      offerType: ["stock"],
+    }}
+  />
+);
+
+export const OffertoprivateAuctionFailed = (props) => (
   <Vehicles
     {...props}
     filter={{
       withOffers: false,
       maxEndDateTime: new Date(),
       statusId: [1, 2],
+      offerType: ["offerToPrivate"],
     }}
   />
 );
 
-export const PurchasedImmediately = (props) => (
+export const StockAuctionFailed = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      withOffers: false,
+      maxEndDateTime: new Date(),
+      statusId: [1, 2],
+      offerType: ["stock"],
+    }}
+  />
+);
+
+export const OffertoprivatePurchasedImmediately = (props) => (
   <Vehicles
     {...props}
     filter={{
       bestOfferType: ["immediatePurchase"],
       maxEndDateTime: new Date(),
       statusId: [1, 2],
+      offerType: ["offerToPrivate"],
     }}
   />
 );
 
-export const Sold = (props) => (
-  <Vehicles {...props} filter={{ statusId: [3] }} />
+export const StockPurchasedImmediately = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      bestOfferType: ["immediatePurchase"],
+      maxEndDateTime: new Date(),
+      statusId: [1, 2],
+      offerType: ["stock"],
+    }}
+  />
 );
 
-export const SubmissionsOnlyFinished = (props) => (
+export const OffertoprivateSold = (props) => (
+  <Vehicles
+    {...props}
+    filter={{ statusId: [3], offerType: ["offerToPrivate"] }}
+  />
+);
+
+export const StockSold = (props) => (
+  <Vehicles {...props} filter={{ statusId: [3], offerType: ["stock"] }} />
+);
+
+export const OffertoprivateSubmissionsOnlyFinished = (props) => (
   <Vehicles
     {...props}
     filter={{
       maxEndDateTime: new Date(),
       bestOfferType: ["submission"],
       statusId: [1, 2],
+      offerType: ["offerToPrivate"],
+    }}
+  />
+);
+
+export const StockSubmissionsOnlyFinished = (props) => (
+  <Vehicles
+    {...props}
+    filter={{
+      maxEndDateTime: new Date(),
+      bestOfferType: ["submission"],
+      statusId: [1, 2],
+      offerType: ["stock"],
     }}
   />
 );

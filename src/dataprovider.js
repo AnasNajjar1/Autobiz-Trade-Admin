@@ -57,14 +57,28 @@ export default async (type, resource, params) => {
     case "auction": {
       return restProvider(type, "admin/" + resource, params);
     }
-    case "offline":
-    case "onSale":
-    case "pending":
-    case "auctionFinished":
-    case "submissionsOnlyFinished":
-    case "auctionFailed":
-    case "purchasedImmediately":
-    case "sold": {
+
+    case "stock":
+
+    case "stockOffline":
+    case "stockPending":
+    case "stockOnSale":
+    case "stockAuctionFinished":
+    case "stockAuctionFailed":
+    case "stockPurchasedImmediately":
+    case "stockSubmissionsOnlyFinished":
+    case "stockSold":
+
+    case "offertoprivate":
+
+    case "offertoprivateOffline":
+    case "offertoprivateOnSale":
+    case "offertoprivatePending":
+    case "offertoprivateAuctionFinished":
+    case "offertoprivateAubmissionsOnlyFinished":
+    case "offertoprivateAuctionFailed":
+    case "offertoprivatePurchasedImmediately":
+    case "offertoprivateSold": {
       return restProvider(type, "admin/" + "vehicle", params);
     }
     case "users": {

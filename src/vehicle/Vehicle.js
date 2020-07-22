@@ -157,10 +157,13 @@ const commonForm = (type) => {
           <SelectInput source="name" />
         </ReferenceInput>
 
+        <BooleanInput label="privateSale" source="privateSale" />
+
         <SelectInput
           label="offerType"
           source="offerType"
           choices={offerTypeChoices}
+          validate={[required()]}
         />
 
         <TextInput label="salesComment" source="salesComment"></TextInput>
