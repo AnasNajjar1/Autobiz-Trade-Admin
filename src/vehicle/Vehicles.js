@@ -150,7 +150,7 @@ export const Vehicles = (props) => {
       actions={<VehicleActions />}
       sort={{ field: "id", order: "DESC" }}
     >
-      <Datagrid rowClick="show" rowClick="show">
+      <Datagrid rowClick="show">
         <TextField label="id" source="id" />
         <TextField label="ref" source="fileNumber" sortable={false} />
         <TextField

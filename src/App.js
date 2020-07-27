@@ -1,5 +1,5 @@
 // in src/App.js
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Admin, Resource, Login } from "react-admin";
 import vehicle from "./vehicle";
 import {
@@ -22,6 +22,8 @@ import {
   StockSubmissionsOnlyFinished,
   StockSold,
 } from "./vehicle/Vehicles";
+import group from "./group";
+import groupUser from "./groupUser";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
 import facadeCarcheck from "./carcheck";
@@ -198,6 +200,8 @@ const App = () => {
         <Resource name="facadeCompany" />,
         <Resource name="carcheckImport" />,
         <Resource name="config" {...configPage} />,
+        <Resource name="group" {...group} />,
+        <Resource name="groupUser" {...groupUser} />,
         // Only include the categories resource for admin users
         // permission === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />

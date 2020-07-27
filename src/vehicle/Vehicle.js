@@ -157,7 +157,32 @@ const commonForm = (type) => {
           <SelectInput source="name" />
         </ReferenceInput>
 
-        <BooleanInput label="privateSale" source="privateSale" />
+        <ReferenceInput
+          label="owner"
+          source="ownerId"
+          reference="groupUser"
+          allowEmpty
+        >
+          <SelectInput optionValue="id" optionText="autobizUserId" />
+        </ReferenceInput>
+
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.ownerId && (
+              <>
+                <ReferenceInput
+                  label="group"
+                  source="groupId"
+                  reference="group"
+                  filter={{ owner: formData.ownerId }}
+                  allowEmpty
+                >
+                  <SelectInput optionValue="id" optionText="name" />
+                </ReferenceInput>
+              </>
+            )
+          }
+        </FormDataConsumer>
 
         <SelectInput
           label="offerType"
