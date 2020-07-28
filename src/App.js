@@ -24,6 +24,7 @@ import {
 } from "./vehicle/Vehicles";
 import group from "./group";
 import groupUser from "./groupUser";
+import facadeUsers from "./facadeUsers";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
 import facadeCarcheck from "./carcheck";
@@ -196,7 +197,7 @@ const App = () => {
         <Resource name="facadeModel" />,
         <Resource name="facadePointOfSale" />,
         <Resource name="status" />,
-        <Resource name="facadeUser" />,
+        <Resource name="facadeUser" {...facadeUsers} />,
         <Resource name="facadeCompany" />,
         <Resource name="carcheckImport" />,
         <Resource name="config" {...configPage} />,
