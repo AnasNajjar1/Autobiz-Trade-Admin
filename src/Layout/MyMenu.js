@@ -41,11 +41,11 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "facadeModel",
     "facadePointOfSale",
     "status",
-    "facadeUser",
     "facadeCompany",
     "carcheckImport",
     "partner",
     "partnerOffers",
+    "groupUser",
   ];
 
   const handleOpenOffertoprivate = () => {
