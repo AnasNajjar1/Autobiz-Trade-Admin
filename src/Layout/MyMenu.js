@@ -45,6 +45,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "carcheckImport",
     "partner",
     "partnerOffers",
+    "groupUser",
   ];
 
   const handleOpenOffertoprivate = () => {
