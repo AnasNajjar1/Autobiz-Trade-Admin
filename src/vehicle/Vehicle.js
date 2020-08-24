@@ -175,6 +175,16 @@ const commonForm = (type) => {
           <SelectInput optionValue="id" optionText="name" />
         </ReferenceInput>
 
+        <ReferenceInput
+          label="list"
+          source="listId"
+          reference="list"
+          perPage="50"
+          allowEmpty
+        >
+          <SelectInput optionValue="id" optionText="name" />
+        </ReferenceInput>
+
         <SelectInput
           label="offerType"
           source="offerType"
