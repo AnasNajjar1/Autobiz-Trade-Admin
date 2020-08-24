@@ -9,24 +9,19 @@ import {
   DateField,
   BooleanField,
   AutocompleteInput,
-  NumberField,
   Filter,
   TextInput,
   SelectInput,
   EditButton,
   ReferenceInput,
-  SimpleShowLayout,
-  Show,
   useTranslate,
 } from "react-admin";
 import { BulkDeleteButton } from "react-admin";
 
 import UpdateStatus from "./UpdateStatus";
-import { ChangeEndDateTime } from "./UpdateStatus";
 
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
 import offerTypeChoices from "../assets/choices/offerType";
-import salesTypeChoices from "../assets/choices/salesType";
 import status from "../assets/choices/status";
 import { ImportButton } from "react-admin-import-csv";
 import { TRADE_URL } from "../config";
@@ -55,10 +50,9 @@ const VehicleFilter = (props) => (
       alwaysOn
       resettable
     />
-    {/* 
-    <ReferenceInput source="statusId" reference="status">
+    <ReferenceInput source="listId" reference="list" alwaysOn>
       <SelectInput source="name" resettable />
-    </ReferenceInput> */}
+    </ReferenceInput>
 
     <SelectInput label="status" source="statusId" choices={status} alwaysOn />
 
@@ -357,6 +351,7 @@ const LinkRecord = withStyles(styles)(({ classes, record }) => {
 const VehicleBulkActionButtons = (props) => (
   <>
     <UpdateStatus label="Update status" {...props} />
+
     {/* <ChangeEndDateTime label="Update Sales end" {...props} /> API not ready yet */}
     <BulkDeleteButton {...props} />
   </>

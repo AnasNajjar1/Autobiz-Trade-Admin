@@ -24,6 +24,7 @@ import {
 } from "./vehicle/Vehicles";
 import group from "./group";
 import groupUser from "./groupUser";
+import list from "./list";
 import facadeUsers from "./facadeUsers";
 import pointOfSale from "./pointOfSale";
 import configPage from "./configPage";
@@ -203,6 +204,7 @@ const App = () => {
         <Resource name="config" {...configPage} />,
         <Resource name="group" {...group} />,
         <Resource name="groupUser" {...groupUser} />,
+        <Resource name="list" {...list} />,
         // Only include the categories resource for admin users
         // permission === "admin" ? (
         //   <Resource name="users" list={Users} edit={User} icon={VisitorIcon} />

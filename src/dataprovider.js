@@ -54,6 +54,7 @@ export default async (type, resource, params) => {
     case "vehicle":
     case "group":
     case "groupUser":
+    case "list":
     case "config":
     case "partner":
     case "auction": {

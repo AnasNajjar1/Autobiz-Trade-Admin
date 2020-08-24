@@ -54,7 +54,6 @@ import originChoices from "../assets/choices/origin";
 import servicingHistoryChoices from "../assets/choices/servicingHistory";
 import gearBoxChoices from "../assets/choices/gearBox";
 import boolOrNullChoices from "../assets/choices/boolOrNull";
-import salesTypeChoices from "../assets/choices/salesType";
 import distributionBeltChoices from "../assets/choices/distributionBelt";
 import zone from "../assets/choices/zone";
 import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
