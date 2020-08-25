@@ -20,12 +20,11 @@ const ResetViewsButton = ({ selectedIds }) => {
   const [statusId, setStatusId] = useState(1);
   const refresh = useRefresh();
   const notify = useNotify();
-  const updateOnlyStatus = true;
   const unselectAll = useUnselectAll();
   const [updateMany, { loading }] = useUpdateMany(
     "vehicle",
     selectedIds,
-    { statusId, updateOnlyStatus },
+    { statusId },
     {
       onSuccess: () => {
         refresh();
