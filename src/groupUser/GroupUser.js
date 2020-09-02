@@ -14,6 +14,12 @@ import {
   ReferenceField,
 } from "react-admin";
 
+const validateOnlyOneGroup = (value, allValues) => {
+  if (allValues.hasGroups.length > 1) {
+    return "User must have only one group";
+  }
+};
+
 export const CreateGroupUser = (props) => {
   const translate = useTranslate();
   return (
@@ -42,7 +48,11 @@ export const EditGroupUser = (props) => {
           <TextField source="name" />
         </ReferenceField>
 
-        <ArrayInput label="hasGroups" source="hasGroups">
+        <ArrayInput
+          label="hasGroups"
+          source="hasGroups"
+          validate={validateOnlyOneGroup}
+        >
           <SimpleFormIterator>
             <ReferenceInput
               label="group"
