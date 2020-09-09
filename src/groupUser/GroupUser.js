@@ -15,7 +15,7 @@ import {
 } from "react-admin";
 
 const validateOnlyOneGroup = (value, allValues) => {
-  if (allValues.hasGroups.length > 1) {
+  if (allValues.hasGroups && allValues.hasGroups.length > 1) {
     return "User must have only one group";
   }
 };
