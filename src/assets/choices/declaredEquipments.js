@@ -4,5 +4,6 @@ export default [
   { id: "gps", name: "gps" },
   { id: "speed_regulator", name: "speed_regulator" },
   { id: "parking_assistance", name: "parking_assistance" },
-  { id: "auto_ac", name: "auto_ac" }
+  { id: "auto_ac", name: "auto_ac" },
+  { id: "bluetooth", name: "bluetooth" },
 ];
