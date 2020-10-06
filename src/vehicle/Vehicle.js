@@ -95,6 +95,22 @@ const saleDatesValidation = (value, allValues) => {
 
 const validateSaleDates = [required(), saleDatesValidation];
 
+const validateAuctionPrice = (value, allValues) => {
+  let { auctionStartPrice, auctionReservePrice } = allValues.sale;
+  const errors = {};
+
+  errors.sale = {
+    auctionStartPrice: [
+      "auctionStartPrice should be greater than auctionReservePrice",
+    ],
+    auctionReservePrice: [
+      "auctionReservePrice should be lower than auctionStartPrice",
+    ],
+  };
+
+  return errors;
+};
+
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const vehicleDefaultValue = {
   statusId: 1,
@@ -114,6 +130,23 @@ const validateVehicle = (values) => {
       acceptImmediatePurchase: ["At least one type is mandatory"],
       acceptSubmission: ["At least one type is mandatory"],
     };
+  }
+
+  if (
+    values.sale &&
+    values.sale.acceptAuction &&
+    values.sale.auctionReservePrice > 0
+  ) {
+    if (values.sale.auctionReservePrice <= values.sale.auctionStartPrice) {
+      errors.sale = {
+        auctionStartPrice: [
+          "auctionStartPrice should be greater than auctionReservePrice",
+        ],
+        auctionReservePrice: [
+          "auctionReservePrice should be less than auctionStartPrice",
+        ],
+      };
+    }
   }
 
   return errors;
@@ -213,6 +246,13 @@ const commonForm = (type) => {
                     label="auctionStepPrice"
                     source="sale.auctionStepPrice"
                     validate={[number(), minValue(1), required()]}
+                  />
+                </div>
+                <div>
+                  <NumberInput
+                    label="auctionReservePrice"
+                    source="sale.auctionReservePrice"
+                    validate={[number()]}
                   />
                 </div>
               </>
