@@ -23,6 +23,9 @@ export const muiThemeOverrides = createMuiTheme({
   overrides: {
     MuiTab: {
       root: {
+        padding: "5px",
+        textTransform:"capitalize",
+        fontSize:"0.75rem",
         minWidth: 0,
         "@media (min-width: 0px)": {
           minWidth: 0
