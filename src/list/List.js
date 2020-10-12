@@ -24,6 +24,7 @@ import {
 } from "react-admin";
 import Button from "@material-ui/core/Button";
 import MomentUtils from "@date-io/moment";
+import S3CustomUploader from "../components/S3CustomUploader";
 import { KeyboardDateInput, KeyboardTimeInput } from "../vehicle/CustomInput";
 
 export const CreateList = (props) => {
@@ -32,6 +33,7 @@ export const CreateList = (props) => {
     <Create title={translate("createGroup")} {...props}>
       <SimpleForm>
         <TextInput label="name" source="name" validate={required()}></TextInput>
+        <S3CustomUploader label="picture" source="picture" />
         <ReferenceInput
           label="group"
           source="groupId"
@@ -103,6 +105,7 @@ export const EditList = (props) => {
       <SimpleForm>
         <TextInput source="id" disabled />
         <TextInput label="name" source="name" validate={required()}></TextInput>
+        <S3CustomUploader label="picture" source="picture" />
 
         <ReferenceInput
           label="group"
