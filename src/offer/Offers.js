@@ -51,12 +51,14 @@ export const Offers = (props) => {
         <NumberField
           label="auctionReservePrice"
           source="auctionReservePrice"
+          emptyText="-"
           options={{
             minimumFractionDigits: 0,
             style: "currency",
             currency: "EUR",
           }}
         />
+
         <NumberField
           label="immediatePurchasePrice"
           source="immediatePurchasePrice"

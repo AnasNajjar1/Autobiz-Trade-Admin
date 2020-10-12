@@ -51,7 +51,7 @@ export const muiThemeOverrides = createMuiTheme({
         fontSize: "0.75rem",
       },
       sizeSmall: {
-        padding: "5px",
+        padding: "10px",
       },
     },
     MuiButton: {
