@@ -731,7 +731,7 @@ export const ShowVehicle = (props) => {
           <ReferenceManyField reference="offer" target="vehicleId">
             {/* target="post_id" addLabel={false}> */}
             <Datagrid>
-              <TextField label="auctionId" source="auctionId" />
+              <TextField label="saleId" source="saleId" />
               <TextField label="offerId" source="offerId" />
               <NumberField
                 source="amount"
