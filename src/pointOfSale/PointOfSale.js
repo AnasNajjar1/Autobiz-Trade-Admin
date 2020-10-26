@@ -145,11 +145,11 @@ export const EditPointOfSale = (props) => {
         <SelectInput source="country" choices={countryChoices}></SelectInput>
 
         <RichTextInput
-          label="paymentDeadline"
+          label="payment_deadline"
           source="paymentDeadline"
         ></RichTextInput>
         <RichTextInput
-          label="pickupDeadline"
+          label="pickup_deadline"
           source="pickupDeadline"
         ></RichTextInput>
         <RichTextInput label="comments" source="comments"></RichTextInput>
