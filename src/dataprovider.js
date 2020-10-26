@@ -1,4 +1,5 @@
 import { getUserData } from "./users/dataproviderUsers";
+import { HttpError } from "react-admin";
 import simpleRestProvider from "ra-data-simple-rest";
 import _ from "lodash";
 import { API } from "aws-amplify";
@@ -19,20 +20,27 @@ const httpClientAWS = async (path, options) => {
     method = _.toLower(method);
     delete options.method;
   }
-  const response = await API[method]("b2bPlateform", path, options);
-  const json = response.data;
-  var myHeaders = new Headers();
-  Object.entries(response.headers).forEach(([key, value]) => {
-    myHeaders.append(key, value);
-  });
+  try {
+    const response = await API[method]("b2bPlateform", path, options);
+    const json = response.data;
+    var myHeaders = new Headers();
+    Object.entries(response.headers).forEach(([key, value]) => {
+      myHeaders.append(key, value);
+    });
 
-  return { headers: myHeaders, json };
+    return { headers: myHeaders, json };
+  } catch (e) {
+    if (e.response && e.response.data) {
+      return Promise.reject(new HttpError(e.response.data));
+    } else {
+      throw new Error(e);
+    }
+  }
 };
 
 const restProvider = simpleRestProvider("", httpClientAWS);
 
 export default async (type, resource, params) => {
-  console.log(resource);
   switch (resource) {
     default:
     case "facadePointOfSale":

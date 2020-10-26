@@ -6,6 +6,9 @@ import {
   TextInput,
   NumberInput,
   required,
+  minValue,
+  maxValue,
+  number,
   regex,
   SelectInput,
   ReferenceInput,
@@ -36,6 +39,7 @@ export const CreatePointOfSale = (props) => {
             formData.country && (
               <SelectInput
                 source="action"
+                validate={required()}
                 choices={[
                   { id: "create", name: "createNewPointOfSale" },
                   {
@@ -66,6 +70,7 @@ export const CreatePointOfSale = (props) => {
               <ReferenceInput
                 label="fromAutobizApi"
                 source="autobizPosId"
+                validate={required()}
                 reference="facadePointOfSale"
                 allowEmpty={true}
                 filter={{
@@ -82,7 +87,11 @@ export const CreatePointOfSale = (props) => {
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.action === "create" && (
-              <TextInput label="name" source="name"></TextInput>
+              <TextInput
+                label="name"
+                source="name"
+                validate={required()}
+              ></TextInput>
             )
           }
         </FormDataConsumer>
@@ -114,19 +123,36 @@ const validateURL = regex(
 
 export const EditPointOfSale = (props) => {
   return (
-    <Edit {...props}>
+    <Edit undoable={false} {...props}>
       <SimpleForm>
         <TextInput source="id" disabled />
         <TextInput source="uuid" disabled />
-        <TextInput label="name" source="name"></TextInput>
+        <TextInput label="name" source="name" validate={required()}></TextInput>
         <S3CustomUploader label="picture" source="picture" />
         <RichTextInput label="info" source="info"></RichTextInput>
         <TextInput label="zipCode" source="zipCode"></TextInput>
-        <TextInput label="city" source="city"></TextInput>
-        <TextInput label="latitude" source="latitude"></TextInput>
-        <TextInput label="longitude" source="longitude"></TextInput>
+        <TextInput
+          label="latitude"
+          source="latitude"
+          validate={[number(), minValue(-90), maxValue(90)]}
+        ></TextInput>
+        <TextInput
+          label="longitude"
+          source="longitude"
+          validate={[number(), minValue(-180), maxValue(180)]}
+        ></TextInput>
         <TextInput label="city" source="city"></TextInput>
         <SelectInput source="country" choices={countryChoices}></SelectInput>
+
+        <RichTextInput
+          label="paymentDeadline"
+          source="paymentDeadline"
+        ></RichTextInput>
+        <RichTextInput
+          label="pickupDeadline"
+          source="pickupDeadline"
+        ></RichTextInput>
+        <RichTextInput label="comments" source="comments"></RichTextInput>
 
         <ArrayInput label="documentation" source="documentation">
           <SimpleFormIterator>

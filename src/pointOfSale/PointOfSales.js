@@ -30,6 +30,7 @@ export const PointOfSales = (props) => {
       title={translate("pointOfSale")}
       filters={<PointOfSaleFilter />}
       perPage={25}
+      sort={{ field: "id", order: "DESC" }}
     >
       <Datagrid rowClick="edit">
         <TextField label="pointOfSaleId" source="id" />
