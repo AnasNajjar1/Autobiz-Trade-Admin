@@ -7,6 +7,7 @@ import {
   TextInput,
   useTranslate,
   TextField,
+  BooleanInput,
   ArrayInput,
   SimpleFormIterator,
   ReferenceInput,
