@@ -13,7 +13,6 @@ import {
   ReferenceInput,
   SelectInput,
   ReferenceField,
-  BooleanInput,
 } from "react-admin";
 
 const validateOnlyOneGroup = (value, allValues) => {
