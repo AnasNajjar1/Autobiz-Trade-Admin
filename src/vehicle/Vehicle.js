@@ -702,7 +702,7 @@ export const ShowVehicle = (props) => {
           <TextField source="versionLabel" />
           <DateField source="firstRegistrationDate" />
           <NumberField source="mileage" />
-          <TextField source="pointOfSaleName" />
+          <TextField source="pointOfSale.name" />
         </Tab>
         <Tab label="Partner requests" path="requests">
           <ReferenceManyField reference="partnerRequests" target="vehicleId">

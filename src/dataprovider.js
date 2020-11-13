@@ -89,6 +89,7 @@ export default async (type, resource, params) => {
     case "offertoprivateAubmissionsOnlyFinished":
     case "offertoprivateAuctionFailed":
     case "offertoprivatePurchasedImmediately":
+    case "offertoprivateSubmissionsOnlyFinished":
     case "offertoprivateSold": {
       return restProvider(type, "admin/" + "vehicle", params);
     }
