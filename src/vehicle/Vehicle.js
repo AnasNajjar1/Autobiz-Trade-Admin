@@ -1,4 +1,5 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
+import SetWinnerButton from "./SetWinnerButton";
 import {
   Create,
   AutocompleteInput,
@@ -13,6 +14,7 @@ import {
   SelectInput,
   SelectArrayInput,
   ReferenceInput,
+  ReferenceField,
   FormDataConsumer,
   required,
   minValue,
@@ -29,9 +31,7 @@ import {
   ReferenceManyField,
   ChipField,
   CreateButton,
-  ReferenceField,
 } from "react-admin";
-
 import S3CustomUploader from "../components/S3CustomUploader";
 
 import { Link } from "react-router-dom";
@@ -94,22 +94,6 @@ const saleDatesValidation = (value, allValues) => {
 };
 
 const validateSaleDates = [required(), saleDatesValidation];
-
-const validateAuctionPrice = (value, allValues) => {
-  let { auctionStartPrice, auctionReservePrice } = allValues.sale;
-  const errors = {};
-
-  errors.sale = {
-    auctionStartPrice: [
-      "auctionStartPrice should be greater than auctionReservePrice",
-    ],
-    auctionReservePrice: [
-      "auctionReservePrice should be lower than auctionStartPrice",
-    ],
-  };
-
-  return errors;
-};
 
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const vehicleDefaultValue = {
@@ -727,11 +711,13 @@ export const ShowVehicle = (props) => {
           </ReferenceManyField>
           <AddRequestButton />
         </Tab>
+
         <Tab label="Offers" path="offer">
+          <TextField label="winner" source="sale.winner" />
           <ReferenceManyField reference="offer" target="vehicleId">
-            {/* target="post_id" addLabel={false}> */}
             <Datagrid>
               <TextField label="saleId" source="saleId" />
+              <TextField label="winner" source="winner" />
               <TextField label="offerId" source="offerId" />
               <NumberField
                 source="amount"
@@ -789,6 +775,7 @@ export const ShowVehicle = (props) => {
                   <TextField source="companyZipcode" />
                 </ReferenceField>
               </ReferenceField>
+              <SetWinnerButton {...props} />
             </Datagrid>
           </ReferenceManyField>
         </Tab>

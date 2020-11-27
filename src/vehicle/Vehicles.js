@@ -17,6 +17,7 @@ import {
   useTranslate,
 } from "react-admin";
 import { BulkDeleteButton } from "react-admin";
+import Stars from "@material-ui/icons/Stars";
 
 import UpdateStatus from "./UpdateStatus";
 
@@ -164,6 +165,8 @@ export const Vehicles = (props) => {
         <TextField label="make" source="brandLabel" />
         <TextField label="model" source="modelLabel" />
         <TextField label="pointOfSale" source="pointOfSaleName" />
+        <BooleanField source="requestWinner" TrueIcon={Stars} />
+
         <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
         <EditButton />
