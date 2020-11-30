@@ -4,11 +4,9 @@ import {
   List,
   Datagrid,
   DateInput,
-  BooleanInput,
   TextField,
   DateField,
   BooleanField,
-  AutocompleteInput,
   Filter,
   TextInput,
   SelectInput,
@@ -22,7 +20,6 @@ import Stars from "@material-ui/icons/Stars";
 import UpdateStatus from "./UpdateStatus";
 
 import LinkToRelatedOffers from "./LinkToRelatedOffers";
-import offerTypeChoices from "../assets/choices/offerType";
 import status from "../assets/choices/status";
 import { ImportButton } from "react-admin-import-csv";
 import { TRADE_URL } from "../config";
@@ -39,14 +36,14 @@ const VehicleFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="fileNumber"
-      source="fileNumber"
+      source="fileNumberLike"
       defaultValue=""
       alwaysOn
       resettable
     />
     <TextInput
       label="registration"
-      source="registration"
+      source="registrationLike"
       defaultValue=""
       alwaysOn
       resettable
@@ -57,23 +54,23 @@ const VehicleFilter = (props) => (
 
     <SelectInput label="status" source="statusId" choices={status} alwaysOn />
 
-    <SelectInput
+    {/* <SelectInput
       label="offerType"
       source="offerType"
       choices={offerTypeChoices}
       resettable
-    />
+    /> */}
 
-    <ReferenceInput
+    {/* <ReferenceInput
       label="make"
       source="brandLabel"
       reference="facadeBrand"
       resettable
     >
       <SelectInput optionValue="id" optionText="name" resettable />
-    </ReferenceInput>
+    </ReferenceInput> */}
 
-    <TextInput label="model" source="modelLabel" defaultValue="" resettable />
+    {/* <TextInput label="model" source="modelLabel" defaultValue="" resettable />
 
     <TextInput
       label="mileageMin"
@@ -92,7 +89,7 @@ const VehicleFilter = (props) => (
       source="createdAt"
       defaultValue=""
       resettable
-    />
+    /> */}
     <DateInput
       label="maxSalesEnd"
       source="maxEndDateTime"
@@ -100,7 +97,7 @@ const VehicleFilter = (props) => (
       resettable
       alwaysOn
     />
-    <DateInput
+    {/* <DateInput
       label="minSalesEnd"
       source="minEndDateTime"
       defaultValue=""
@@ -118,9 +115,9 @@ const VehicleFilter = (props) => (
       source="endDateTime"
       defaultValue=""
       resettable
-    />
+    /> */}
 
-    <BooleanInput label="withOffers" source="withOffers" />
+    {/* <BooleanInput label="withOffers" source="withOffers" />
 
     <ReferenceInput
       label="pointOfSale"
@@ -129,7 +126,7 @@ const VehicleFilter = (props) => (
       sort={{ field: "name", order: "ASC" }}
     >
       <AutocompleteInput optionText="name" />
-    </ReferenceInput>
+    </ReferenceInput> */}
   </Filter>
 );
 
@@ -153,18 +150,19 @@ export const Vehicles = (props) => {
           source="registration"
           sortable={false}
         />
-        <TextField label="status" source="statusName" />
-        <BooleanField source="acceptAuction" label="acceptAuction" />
+        <TextField label="status" source="status.name" />
+        <BooleanField source="sale.acceptAuction" label="acceptAuction" />
         <BooleanField
-          source="acceptImmediatePurchase"
+          source="sale.acceptImmediatePurchase"
           label="acceptImmediatePurchase"
         />
-        <BooleanField source="acceptSubmission" label="acceptSubmission" />
-        <DateField label="salesStart" source="startDateTime" />
-        <DateField label="salesEnd" source="endDateTime" />
+        <BooleanField source="sale.acceptSubmission" label="acceptSubmission" />
+        <DateField label="salesStart" source="sale.startDateTime" />
+        <DateField label="salesEnd" source="sale.endDateTime" />
+        <TextField label="bestOfferType" source="sale.bestOfferType" />
         <TextField label="make" source="brandLabel" />
         <TextField label="model" source="modelLabel" />
-        <TextField label="pointOfSale" source="pointOfSaleName" />
+        <TextField label="pointOfSale" source="pointOfSale.name" />
         <BooleanField source="requestWinner" TrueIcon={Stars} />
 
         <LinkRecord label="urlAds" source="uuid" />
@@ -337,7 +335,7 @@ export const StockSubmissionsOnlyFinished = (props) => (
 );
 
 const LinkRecord = withStyles(styles)(({ classes, record }) => {
-  if (["online", "sold", "pending"].includes(record.statusName))
+  if (["online", "sold", "pending"].includes(record.status.name))
     return (
       <a
         href={`${TRADE_URL}/records/${record.uuid}`}
