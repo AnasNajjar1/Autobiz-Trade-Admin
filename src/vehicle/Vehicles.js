@@ -335,7 +335,10 @@ export const StockSubmissionsOnlyFinished = (props) => (
 );
 
 const LinkRecord = withStyles(styles)(({ classes, record }) => {
-  if (["online", "sold", "pending"].includes(record.status.name))
+  if (
+    record.status &&
+    ["online", "sold", "pending"].includes(record.status.name)
+  )
     return (
       <a
         href={`${TRADE_URL}/records/${record.uuid}`}
