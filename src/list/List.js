@@ -9,6 +9,7 @@ import {
   EditButton,
   required,
   Datagrid,
+  List,
   useRedirect,
   useDataProvider,
   useNotify,
@@ -18,6 +19,7 @@ import {
   SimpleForm,
   TextInput,
   useTranslate,
+  useListContext,
   ReferenceInput,
   SelectInput,
   ReferenceField,
@@ -163,13 +165,35 @@ export const EditList = (props) => {
           options={{
             format: "HH:mm",
             ampm: false,
-            clearable: true,
           }}
           validate={required()}
         />
       </SimpleForm>
     </Edit>
   );
+};
+
+const removeSaleFromList = () => {
+  console.log("A");
+  // dataProvider
+  // .updateMany("vehicle", {
+  //   ids: vehiclesIds,
+  //   data: {
+  //     groupId: data.groupId,
+  //     sale: {
+  //       startDateTime: data.startDateTime,
+  //       endDateTime: data.endDateTime,
+  //     },
+  //   },
+  // })
+  // .then((response) => {
+  //   redirect("/list");
+
+  //   notify("vehicles updated");
+  // })
+  // .catch((error) => {
+  //   notify(`vehicles approval error: ${error.message}`, "warning");
+  // });
 };
 
 const ListShowActions = ({ record, basePath, data }) => {
@@ -218,7 +242,54 @@ const ListShowActions = ({ record, basePath, data }) => {
   );
 };
 
+const SaleShowActions = ({ record, basePath, data }) => {
+  const notify = useNotify();
+  const redirect = useRedirect();
+  const dataProvider = useDataProvider();
+
+  let vehiclesIds = [];
+  if (data && data.Vehicles) {
+    vehiclesIds = data.Vehicles.map((a) => a.id);
+  }
+
+  const approve = () =>
+    dataProvider
+      .updateMany("vehicle", {
+        ids: vehiclesIds,
+        data: {
+          groupId: data.groupId,
+          sale: {
+            startDateTime: data.startDateTime,
+            endDateTime: data.endDateTime,
+          },
+        },
+      })
+      .then((response) => {
+        redirect("/list");
+
+        notify("vehicles updated");
+      })
+      .catch((error) => {
+        notify(`vehicles approval error: ${error.message}`, "warning");
+      });
+
+  return (
+    <TopToolbar>
+      <EditButton basePath={basePath} record={data} />
+      <Button
+        variant="contained"
+        color="primary"
+        size="small"
+        onClick={approve}
+      >
+        Apply to all vehicles
+      </Button>
+    </TopToolbar>
+  );
+};
+
 export const ShowList = (props) => {
+  console.log(props);
   const translate = useTranslate();
   return (
     <Show actions={<ListShowActions />} {...props}>
@@ -236,15 +307,29 @@ export const ShowList = (props) => {
         >
           <TextField source="name" />
         </ReferenceField>
-        {/*
-        <ReferenceManyField
-          label="vehicles"
-          reference="vehicle"
-          target="listId"
-        >
-          <Datagrid>
-            <TextField source="id" />
-            <TextField label="ref" source="fileNumber" sortable={false} />
+
+        <ReferenceManyField label="sale" reference="sale" target="listId">
+          <List actions={false} {...props}>
+            <Datagrid>
+              <TextField label="saleId" source="id" />
+              <TextField label="vehicleId" source="vehicle.id" />
+              <TextField label="fileNumber" source="vehicle.fileNumber" />
+              <TextField label="registration" source="vehicle.registration" />
+              <TextField label="validationStatus" source="validationStatus" />
+              <TextField label="status" source="status" />
+              <DateField label="salesStart" source="startDateTime" />
+              <DateField label="salesEnd" source="endDateTime" />
+              <TextField label="BrandLabel" source="vehicle.brandLabel" />
+              <TextField label="ModelLabel" source="vehicle.modelLabel" />
+              <Button
+                variant="contained"
+                color="primary"
+                size="small"
+                onClick={() => removeSaleFromList()}
+              >
+                {translate("removeFromList")}
+              </Button>
+              {/* <TextField label="ref" source="fileNumber" sortable={false} />
 
             <TextField
               label="registration"
@@ -261,9 +346,10 @@ export const ShowList = (props) => {
             />
             <BooleanField source="acceptSubmission" label="acceptSubmission" />
             <DateField label="salesStart" source="startDateTime" />
-            <DateField label="salesEnd" source="endDateTime" />
-          </Datagrid>
-        </ReferenceManyField> */}
+            <DateField label="salesEnd" source="endDateTime" /> */}
+            </Datagrid>
+          </List>
+        </ReferenceManyField>
       </SimpleShowLayout>
     </Show>
   );
