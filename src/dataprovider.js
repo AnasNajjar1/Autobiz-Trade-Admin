@@ -58,6 +58,7 @@ export default async (type, resource, params) => {
       return restProvider(type, "admin/partner/offers", params);
     case "pointOfSale":
     case "offer":
+    case "sale":
     case "status":
     case "vehicle":
     case "group":

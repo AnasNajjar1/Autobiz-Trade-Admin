@@ -236,7 +236,7 @@ export const ShowList = (props) => {
         >
           <TextField source="name" />
         </ReferenceField>
-
+        {/*
         <ReferenceManyField
           label="vehicles"
           reference="vehicle"
@@ -263,7 +263,7 @@ export const ShowList = (props) => {
             <DateField label="salesStart" source="startDateTime" />
             <DateField label="salesEnd" source="endDateTime" />
           </Datagrid>
-        </ReferenceManyField>
+        </ReferenceManyField> */}
       </SimpleShowLayout>
     </Show>
   );

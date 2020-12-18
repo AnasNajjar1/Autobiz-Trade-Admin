@@ -45,7 +45,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "carcheckImport",
     "partner",
     "partnerOffers",
-    "groupUser",
+    //"facadeUser",
   ];
 
   const handleOpenOffertoprivate = () => {
@@ -58,7 +58,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
 
   return (
     <div>
-      <MenuItemLink
+      {/* <MenuItemLink
         key="offertoprivate"
         to="/offertoprivate"
         primaryText={
@@ -108,7 +108,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
           }
         })}
       </Collapse>
-
+*/}
       {resources.map((item) => {
         if (
           !subMenuOffertoprivate.includes(item.name) &&
