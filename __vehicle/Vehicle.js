@@ -1,65 +1,73 @@
 import React, { Fragment, useState } from "react";
+import SetWinnerButton from "./SetWinnerButton";
 import {
+  Create,
+  AutocompleteInput,
+  Edit,
+  TextInput,
+  ImageField,
+  NumberInput,
+  TabbedForm,
+  FormTab,
+  ArrayInput,
+  SimpleFormIterator,
+  SelectInput,
+  SelectArrayInput,
+  ReferenceInput,
+  ReferenceField,
+  FormDataConsumer,
+  required,
+  minValue,
+  number,
+  BooleanInput,
+  regex,
   TabbedShowLayout,
   Tab,
   TextField,
   Show,
   DateField,
   NumberField,
-  ReferenceManyField,
   Datagrid,
-  Create,
-  Edit,
-  regex,
-  TabbedForm,
-  FormTab,
-  number,
-  TextInput,
-  required,
-  AutocompleteInput,
-  ReferenceInput,
-  SelectInput,
-  NumberInput,
-  minValue,
-  SelectArrayInput,
-  FormDataConsumer,
-  ArrayInput,
-  SimpleFormIterator,
-  ImageField,
+  ReferenceManyField,
+  ChipField,
+  CreateButton,
 } from "react-admin";
-import S3CustomUploader from "../components/S3CustomUploader";
+import S3CustomUploader from "../src/components/S3CustomUploader";
+
+import { Link } from "react-router-dom";
 import {
   KeyboardDateInput,
   KeyboardTimeInput,
-} from "../components/CustomInput";
+} from "../src/components/CustomInput";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 
-import RimSizeInput from "../components/RimSizeInput";
+import RimSizeInput from "../src/components/RimSizeInput";
 
-import keyPointsChoices from "../assets/choices/keyPoints";
-import fuelChoices from "../assets/choices/fuel";
-import declaredEquipmentsChoices from "../assets/choices/declaredEquipments";
-import constructorEquipmentsChoices from "../assets/choices/constructorEquipments";
-import rimTypeChoices from "../assets/choices/rimType";
-import profileCostsChoices from "../assets/choices/profileCosts";
-import wheelsTireBrandChoices from "../assets/choices/wheelsTireBrand";
-import vehicleTypeChoices from "../assets/choices/vehicleType";
-import originChoices from "../assets/choices/origin";
-import servicingHistoryChoices from "../assets/choices/servicingHistory";
-import gearBoxChoices from "../assets/choices/gearBox";
-import boolOrNullChoices from "../assets/choices/boolOrNull";
-import distributionBeltChoices from "../assets/choices/distributionBelt";
-import zone from "../assets/choices/zone";
-import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
+import keyPointsChoices from "../src/assets/choices/keyPoints";
+import fuelChoices from "../src/assets/choices/fuel";
+import declaredEquipmentsChoices from "../src/assets/choices/declaredEquipments";
+import constructorEquipmentsChoices from "../src/assets/choices/constructorEquipments";
+import rimTypeChoices from "../src/assets/choices/rimType";
+import profileCostsChoices from "../src/assets/choices/profileCosts";
+import offerTypeChoices from "../src/assets/choices/offerType";
+import wheelsTireBrandChoices from "../src/assets/choices/wheelsTireBrand";
+import vehicleTypeChoices from "../src/assets/choices/vehicleType";
+import originChoices from "../src/assets/choices/origin";
+import servicingHistoryChoices from "../src/assets/choices/servicingHistory";
+import gearBoxChoices from "../src/assets/choices/gearBox";
+import boolOrNullChoices from "../src/assets/choices/boolOrNull";
+import distributionBeltChoices from "../src/assets/choices/distributionBelt";
+import zone from "../src/assets/choices/zone";
+import salesSpeedNameChoices from "../src/assets/choices/salesSpeedName";
 
 export const CreateVehicle = (props) => {
-  const form = VehicleForm("create");
+  const form = commonForm("create");
   return <Create {...props}>{form}</Create>;
 };
 
 export const EditVehicle = (props, { basePath, data, resource }) => {
-  const form = VehicleForm("edit");
+  const form = commonForm("edit");
   return (
     <Edit {...props} undoable={false}>
       {form}
@@ -67,43 +75,77 @@ export const EditVehicle = (props, { basePath, data, resource }) => {
   );
 };
 
-export const ShowVehicle = (props) => {
-  return (
-    <Show {...props}>
-      <TabbedShowLayout>
-        <Tab label="vehicle">
-          <TextField source="registration" />
-          <TextField source="brandLabel" />
-          <TextField source="modelLabel" />
-          <TextField source="versionLabel" />
-          <DateField source="firstRegistrationDate" />
-          <NumberField source="mileage" />
-          <TextField source="gearBoxLabel" />
+const validateURL = regex(
+  new RegExp("^https*://.*\\.[a-z].{2,3}"),
+  "Must be an URL"
+);
 
-          <TextField label="pointOfSaleName" source="pointofsale.name" />
-          <TextField label="zipCode" source="pointofsale.zipCode" />
-          <TextField label="city" source="pointofsale.city" />
-        </Tab>
-        <Tab label="sales" path="sale">
-          <ReferenceManyField reference="sale" target="vehicleId">
-            <Datagrid>
-              <TextField label="saleId" source="id" />
-              <TextField label="validationStatus" source="validationStatus" />
-              <TextField label="status" source="status" />
-              <TextField label="supplyType" source="supplyType" />
-              <DateField label="salesStart" source="startDateTime" />
-              <DateField label="salesEnd" source="endDateTime" />
-            </Datagrid>
-          </ReferenceManyField>
-        </Tab>
-      </TabbedShowLayout>
-    </Show>
-  );
+const saleDatesValidation = (value, allValues) => {
+  let { startDateTime, endDateTime } = allValues.sale;
+
+  if (!moment.isMoment(startDateTime)) {
+    startDateTime = moment.utc(startDateTime);
+  }
+
+  if (!moment.isMoment(endDateTime)) {
+    endDateTime = moment.utc(endDateTime);
+  }
+
+  if (endDateTime.isBefore(startDateTime)) {
+    return "EndDateTime must be after StartDateTime";
+  }
 };
 
-const VehicleForm = (type) => {
+const validateSaleDates = [required(), saleDatesValidation];
+
+const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
+const vehicleDefaultValue = {
+  statusId: 1,
+  auction: { startDateTime: new Date(), salesType: "auction" },
+};
+
+const validateVehicle = (values) => {
+  const errors = {};
+  if (
+    values.sale &&
+    !values.sale.acceptAuction &&
+    !values.sale.acceptImmediatePurchase &&
+    !values.sale.acceptSubmission
+  ) {
+    errors.sale = {
+      acceptAuction: ["At least one type is mandatory"],
+      acceptImmediatePurchase: ["At least one type is mandatory"],
+      acceptSubmission: ["At least one type is mandatory"],
+    };
+  }
+
+  if (
+    values.sale &&
+    values.sale.acceptAuction &&
+    values.sale.auctionReservePrice > 0
+  ) {
+    if (values.sale.auctionReservePrice <= values.sale.auctionStartPrice) {
+      errors.sale = {
+        auctionStartPrice: [
+          "auctionStartPrice should be greater than auctionReservePrice",
+        ],
+        auctionReservePrice: [
+          "auctionReservePrice should be less than auctionStartPrice",
+        ],
+      };
+    }
+  }
+
+  return errors;
+};
+
+const commonForm = (type) => {
   return (
-    <TabbedForm submitOnEnter={false}>
+    <TabbedForm
+      submitOnEnter={false}
+      defaultValue={vehicleDefaultValue}
+      validate={validateVehicle}
+    >
       <FormTab label="record" key="record">
         {type === "edit" && <TextInput disabled source="id" label="id" />}
         {type === "edit" && <TextInput readOnly source="uuid" label="uuid" />}
@@ -117,7 +159,9 @@ const VehicleForm = (type) => {
         <TextInput label="userId" source="userId" placeholder="Ex: FR_1234" />
       </FormTab>
 
-      <FormTab label="infos" key="infos">
+      <FormTab label="salesInfo"></FormTab>
+
+      <FormTab label="vehicle" key="vehicle">
         <ReferenceInput
           label="vehicule_brand"
           source="brandLabel"
@@ -138,6 +182,7 @@ const VehicleForm = (type) => {
             </ReferenceInput>
           )}
         </FormDataConsumer>
+
         <TextInput label="version" source="versionLabel" />
 
         <KeyboardDateInput
@@ -240,10 +285,11 @@ const VehicleForm = (type) => {
       <FormTab label="pointOfSale">
         <ReferenceInput
           label="pointOfSale"
-          source="pointofsale.id"
+          source="pointOfSaleId"
           reference="pointOfSale"
           sort={{ field: "name", order: "ASC" }}
         >
+          {/* <SelectInput source="id" /> */}
           <AutocompleteInput optionText="name" />
         </ReferenceInput>
       </FormTab>
@@ -343,12 +389,6 @@ const VehicleForm = (type) => {
       </FormTab>
 
       <FormTab label="administrativeDetails">
-        <KeyboardDateInput
-          source="purchaseDate"
-          label="purchaseDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
-        />
         <KeyboardDateInput
           source="gcDate"
           label="gcDate"
@@ -480,9 +520,144 @@ const VehicleForm = (type) => {
   );
 };
 
-const validateURL = regex(
-  new RegExp("^https*://.*\\.[a-z].{2,3}"),
-  "Must be an URL"
+export const ShowVehicle = (props) => {
+  return (
+    <Show {...props}>
+      <TabbedShowLayout>
+        <Tab label="vehicle">
+          <TextField label="registration" source="registration" />
+          <TextField source="brandLabel" />
+          <TextField source="modelLabel" />
+          <TextField source="versionLabel" />
+          <DateField source="firstRegistrationDate" />
+          <NumberField source="mileage" />
+          <TextField source="pointOfSale.name" />
+        </Tab>
+        <Tab label="Partner requests" path="requests">
+          <ReferenceManyField reference="partnerRequests" target="vehicleId">
+            {/* target="post_id" addLabel={false}> */}
+            <Datagrid rowClick="expand" expand={<Offers />}>
+              <TextField source="partnerName" label="Partner" />
+              <TextField source="comment" />
+              <DateField source="createdAt" showTime />
+              <DateField
+                label="Last offer received at"
+                source="lastOfferCreatedAt"
+                showTime
+              />
+              <NumberField
+                source="value"
+                label="last offer"
+                locales="fr-FR"
+                options={{ style: "currency", currency: "EUR" }}
+              />
+              <ChipField source="status" />
+            </Datagrid>
+          </ReferenceManyField>
+          <AddRequestButton />
+        </Tab>
+
+        <Tab label="Offers" path="offer">
+          <TextField label="winner" source="sale.winner" />
+          <ReferenceManyField reference="offer" target="vehicleId">
+            <Datagrid>
+              <TextField label="saleId" source="saleId" />
+              <TextField label="winner" source="winner" />
+              <TextField label="offerId" source="offerId" />
+              <NumberField
+                source="amount"
+                options={{
+                  minimumFractionDigits: 0,
+                  style: "currency",
+                  currency: "EUR",
+                }}
+              />
+              <TextField label="saleType" source="saleType" />
+              <DateField label="createdAt" source="createdAt" showTime />
+              <TextField label="userId" source="userId" />
+
+              <ReferenceField
+                label="User"
+                source="userId"
+                reference="facadeUser"
+              >
+                <TextField source="name" />
+              </ReferenceField>
+              <ReferenceField
+                label="Email"
+                source="userId"
+                reference="facadeUser"
+              >
+                <TextField source="email" />
+              </ReferenceField>
+
+              <ReferenceField
+                label="CompanyName"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyName" />
+                </ReferenceField>
+              </ReferenceField>
+
+              <ReferenceField
+                label="CompanyCity"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyCity" />
+                </ReferenceField>
+              </ReferenceField>
+
+              <ReferenceField
+                label="companyZipcode"
+                source="userId"
+                reference="facadeUser"
+              >
+                <ReferenceField source="companyId" reference="facadeCompany">
+                  <TextField source="companyZipcode" />
+                </ReferenceField>
+              </ReferenceField>
+              <SetWinnerButton {...props} />
+            </Datagrid>
+          </ReferenceManyField>
+        </Tab>
+      </TabbedShowLayout>
+    </Show>
+  );
+};
+
+const AddRequestButton = ({ classes, record }) => (
+  <CreateButton
+    component={Link}
+    to={`/partnerRequests/create?vehicleId=${record.id}`}
+  ></CreateButton>
 );
 
-const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
+const Offers = (props) => {
+  return (
+    <ReferenceManyField
+      {...props}
+      basePath="partnerOffers"
+      target="partnerRequestId"
+      reference="partnerOffers"
+    >
+      <Datagrid>
+        <TextField label="id" source="id" />
+        <TextField label="comment" source="comment" />
+        <NumberField
+          source="value"
+          options={{
+            minimumFractionDigits: 0,
+            style: "currency",
+            currency: "EUR",
+          }}
+        />
+        <NumberField label="partnerRequestId" source="partnerRequestId" />
+        <DateField label="createdAt" source="createdAt" showTime />
+      </Datagrid>
+    </ReferenceManyField>
+  );
+};

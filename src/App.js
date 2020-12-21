@@ -1,27 +1,29 @@
 // in src/App.js
 import React from "react";
 import { Admin, Resource, Login } from "react-admin";
+// import vehicle from "../__vehicle";
+// import {
+//   OfferToPrivate,
+//   OffertoprivateOffline,
+//   OffertoprivateOnSale,
+//   OffertoprivateAuctionFinished,
+//   OffertoprivateAuctionFailed,
+//   OffertoprivatePurchasedImmediately,
+//   OffertoprivateSold,
+//   OffertoprivatePending,
+//   OffertoprivateSubmissionsOnlyFinished,
+//   Stock,
+//   StockOffline,
+//   StockPending,
+//   StockOnSale,
+//   StockAuctionFinished,
+//   StockAuctionFailed,
+//   StockPurchasedImmediately,
+//   StockSubmissionsOnlyFinished,
+//   StockSold,
+// } from "../__vehicle/Vehicles";
+
 import vehicle from "./vehicle";
-import {
-  OfferToPrivate,
-  OffertoprivateOffline,
-  OffertoprivateOnSale,
-  OffertoprivateAuctionFinished,
-  OffertoprivateAuctionFailed,
-  OffertoprivatePurchasedImmediately,
-  OffertoprivateSold,
-  OffertoprivatePending,
-  OffertoprivateSubmissionsOnlyFinished,
-  Stock,
-  StockOffline,
-  StockPending,
-  StockOnSale,
-  StockAuctionFinished,
-  StockAuctionFailed,
-  StockPurchasedImmediately,
-  StockSubmissionsOnlyFinished,
-  StockSold,
-} from "./vehicle/Vehicles";
 import group from "./group";
 import groupUser from "./groupUser";
 import list from "./list";
@@ -192,14 +194,15 @@ const App = () => {
         // <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         // <Resource name="partnerRequests" {...partnerRequests} />,
         // <Resource name="partnerOffers" {...partnerOffers} />,
-        // <Resource name="facadeBrand" />,
+        <Resource name="facadeBrand" />,
 
         // <Resource name="facadePointOfSale" />,
-        // <Resource name="facadeModel" />,
+        <Resource name="facadeModel" />,
         // <Resource name="status" />,
         // <Resource name="facadeCompany" />,
         // <Resource name="carcheckImport" />,
         //<Resource name="partner" />,
+        <Resource name="vehicle" {...vehicle} />,
         <Resource name="sale" {...sale} />,
         <Resource name="offer" {...offer} />,
         <Resource name="pointOfSale" {...pointOfSale} />,

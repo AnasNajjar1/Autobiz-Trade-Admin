@@ -70,30 +70,30 @@ export default async (type, resource, params) => {
       return restProvider(type, "admin/" + resource, params);
     }
 
-    case "stock":
+    // case "stock":
 
-    case "stockOffline":
-    case "stockPending":
-    case "stockOnSale":
-    case "stockAuctionFinished":
-    case "stockAuctionFailed":
-    case "stockPurchasedImmediately":
-    case "stockSubmissionsOnlyFinished":
-    case "stockSold":
+    // case "stockOffline":
+    // case "stockPending":
+    // case "stockOnSale":
+    // case "stockAuctionFinished":
+    // case "stockAuctionFailed":
+    // case "stockPurchasedImmediately":
+    // case "stockSubmissionsOnlyFinished":
+    // case "stockSold":
 
-    case "offertoprivate":
+    // case "offertoprivate":
 
-    case "offertoprivateOffline":
-    case "offertoprivateOnSale":
-    case "offertoprivatePending":
-    case "offertoprivateAuctionFinished":
-    case "offertoprivateAubmissionsOnlyFinished":
-    case "offertoprivateAuctionFailed":
-    case "offertoprivatePurchasedImmediately":
-    case "offertoprivateSubmissionsOnlyFinished":
-    case "offertoprivateSold": {
-      return restProvider(type, "admin/" + "vehicle", params);
-    }
+    // case "offertoprivateOffline":
+    // case "offertoprivateOnSale":
+    // case "offertoprivatePending":
+    // case "offertoprivateAuctionFinished":
+    // case "offertoprivateAubmissionsOnlyFinished":
+    // case "offertoprivateAuctionFailed":
+    // case "offertoprivatePurchasedImmediately":
+    // case "offertoprivateSubmissionsOnlyFinished":
+    // case "offertoprivateSold": {
+    //   return restProvider(type, "admin/" + "vehicle", params);
+    // }
     case "users": {
       return getUserData(type, resource, params);
     }

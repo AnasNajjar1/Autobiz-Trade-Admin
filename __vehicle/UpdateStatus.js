@@ -13,7 +13,7 @@ import moment from "moment";
 
 import _ from "lodash";
 
-import status from "../assets/choices/status";
+import status from "../src/assets/choices/status";
 
 const ResetViewsButton = ({ selectedIds }) => {
   const [open, setOpen] = useState(false);

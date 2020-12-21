@@ -55,7 +55,6 @@ async function checkPermission(bypassCache = false) {
   //console.log("role", role)
   role = role.split(":");
   if (role.includes("adminCarcheck")) {
-    console.log("user is admin");
     return "admin";
   }
   throw new Error("user not allowed");
