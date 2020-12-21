@@ -191,26 +191,26 @@ const App = () => {
 
         // <Resource name="stock" {...vehicle} list={Stock} />,
         // <Resource name="offertoprivate" {...vehicle} list={OfferToPrivate} />,
-        // <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         // <Resource name="partnerRequests" {...partnerRequests} />,
         // <Resource name="partnerOffers" {...partnerOffers} />,
-        <Resource name="facadeBrand" />,
 
         // <Resource name="facadePointOfSale" />,
-        <Resource name="facadeModel" />,
         // <Resource name="status" />,
         // <Resource name="facadeCompany" />,
         // <Resource name="carcheckImport" />,
         //<Resource name="partner" />,
+        <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="sale" {...sale} />,
         <Resource name="offer" {...offer} />,
         <Resource name="pointOfSale" {...pointOfSale} />,
-        <Resource name="facadeUser" {...facadeUsers} />,
         <Resource name="groupUser" {...groupUser} />,
         <Resource name="config" {...configPage} />,
         <Resource name="group" {...group} />,
         <Resource name="list" {...list} />,
+        <Resource name="facadeModel" />,
+        <Resource name="facadeBrand" />,
+        <Resource name="facadeUser" {...facadeUsers} />,
       ]}
     </Admin>
   );

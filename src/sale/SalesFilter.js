@@ -25,6 +25,15 @@ export const SalesFilter = (props) => (
     <ReferenceInput source="listId" reference="list" alwaysOn>
       <SelectInput source="name" resettable />
     </ReferenceInput>
+
+    <SelectInput
+      source="supplyType"
+      choices={[
+        { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
+        { id: "STOCK", name: "STOCK" },
+      ]}
+      alwaysOn
+    />
     <CheckboxGroupInput
       source="status"
       choices={[
@@ -34,15 +43,6 @@ export const SalesFilter = (props) => (
         { id: "CLOSED", name: "CLOSED" },
         { id: "FINISHED", name: "FINISHED" },
         { id: "ARCHIVED", name: "ARCHIVED" },
-      ]}
-      alwaysOn
-    />
-
-    <SelectInput
-      source="supplyType"
-      choices={[
-        { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
-        { id: "STOCK", name: "STOCK" },
       ]}
       alwaysOn
     />

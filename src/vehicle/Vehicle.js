@@ -24,8 +24,12 @@ import {
   SelectArrayInput,
   FormDataConsumer,
   ArrayInput,
+  EditButton,
   SimpleFormIterator,
   ImageField,
+  ShowButton,
+  useTranslate,
+  DeleteButton,
 } from "react-admin";
 import S3CustomUploader from "../components/S3CustomUploader";
 import {
@@ -34,6 +38,7 @@ import {
 } from "../components/CustomInput";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
+import ButtonChangeValidationStatus from "../components/ButtonChangeValidationStatus";
 
 import RimSizeInput from "../components/RimSizeInput";
 
@@ -93,6 +98,20 @@ export const ShowVehicle = (props) => {
               <TextField label="supplyType" source="supplyType" />
               <DateField label="salesStart" source="startDateTime" />
               <DateField label="salesEnd" source="endDateTime" />
+              <EditButton label="edit" sortable={false} />
+              <ShowButton label="show" sortable={false} />
+              <ButtonChangeValidationStatus {...props} />
+              {/* {(props.record.validationStatus === "CANCELED" && (
+                <DeleteButton label="delete" sortable={false} />
+              )) || <></>} */}
+              {/* <ButtonChangeValidationStatus
+                {...props}
+                newValidationStatus="CANCELED"
+                color="default"
+              /> */}
+              {/* <Button variant="contained" color="default" size="small">
+                cancel
+              </Button> */}
             </Datagrid>
           </ReferenceManyField>
         </Tab>
