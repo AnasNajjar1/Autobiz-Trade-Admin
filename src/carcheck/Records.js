@@ -58,9 +58,9 @@ export const Record = (props) => (
       <TextField label="make" source="brandLabel" />
       <TextField label="model" source="modelLabel" />
       <NumberField label="mileage" source="mileage" />
-      <TextField label="pointOfSale" source="pointOfSale.name" />
-      <TextField label="city" source="pointOfSale.city" />
-      <TextField label="zipCode" source="pointOfSale.zipCode" />
+      <TextField label="pointOfSale" source="pointofsale.name" />
+      <TextField label="city" source="pointofsale.city" />
+      <TextField label="zipCode" source="pointofsale.zipCode" />
       <ButtonImport {...props} />
     </SimpleShowLayout>
   </Show>
