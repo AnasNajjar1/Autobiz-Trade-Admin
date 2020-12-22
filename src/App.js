@@ -194,7 +194,6 @@ const App = () => {
         // <Resource name="partnerRequests" {...partnerRequests} />,
         // <Resource name="partnerOffers" {...partnerOffers} />,
 
-        // <Resource name="facadePointOfSale" />,
         // <Resource name="status" />,
         // <Resource name="facadeCompany" />,
         // <Resource name="carcheckImport" />,
@@ -211,6 +210,7 @@ const App = () => {
         <Resource name="facadeModel" />,
         <Resource name="facadeBrand" />,
         <Resource name="facadeUser" {...facadeUsers} />,
+        <Resource name="facadePointOfSale" />,
       ]}
     </Admin>
   );
