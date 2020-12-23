@@ -1,26 +1,17 @@
 // in src/posts.js
 import React from "react";
-import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
 import {
   List,
   Datagrid,
   DateInput,
   TextField,
   DateField,
-  AutocompleteInput,
-  CheckboxGroupInput,
   NumberField,
-  BooleanInput,
   Filter,
   TextInput,
-  SelectInput,
   EditButton,
-  ReferenceInput,
   Show,
-  RichTextField,
   SimpleShowLayout,
-  Pagination,
   ChipField,
 } from "react-admin";
 import ButtonImport from "./ButtonImport";
@@ -112,6 +103,11 @@ const RecordFilter = (props) => (
       resettable
       alwaysOn
     />
-    <DateInput label="Max Expertise date" source="creationDateMax" resettable />
+    <DateInput
+      label="Max Expertise date"
+      source="creationDateMax"
+      resettable
+      alwaysOn
+    />
   </Filter>
 );

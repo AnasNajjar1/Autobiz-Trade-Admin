@@ -7,18 +7,17 @@ import { showNotification } from "react-admin";
 import { push } from "react-router-redux";
 import { API } from "aws-amplify";
 
-const ButtonImport = props => {
+const ButtonImport = (props) => {
   const handleClick = async () => {
     const { push, record, showNotification } = props;
-    try{
-      const vehicle = await API.post(
+    try {
+      const sale = await API.post(
         "b2bPlateform",
         `/carcheckImport/${record.id}`
       );
-      showNotification(`Vehicle created ${vehicle.id}`);
-      push(`/vehicle/${vehicle.id}`);
-    }
-    catch(e){
+      showNotification(`Sale created ${sale.saleId}`);
+      push(`/vehicle/${sale.vehicleId}/show/sale`);
+    } catch (e) {
       showNotification(`ERROR ! ${e.message}`);
     }
   };
@@ -33,13 +32,10 @@ const ButtonImport = props => {
 ButtonImport.propTypes = {
   push: PropTypes.func,
   record: PropTypes.object,
-  showNotification: PropTypes.func
+  showNotification: PropTypes.func,
 };
 
-export default connect(
-  null,
-  {
-    showNotification,
-    push
-  }
-)(ButtonImport);
+export default connect(null, {
+  showNotification,
+  push,
+})(ButtonImport);
