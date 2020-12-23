@@ -6,14 +6,24 @@ import {
   TextField,
   DateField,
   useTranslate,
-  NumberField,
   ShowButton,
+  BooleanField,
   EditButton,
 } from "react-admin";
 import { SalesFilter } from "./SalesFilter";
 import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
-import { stringify } from "query-string";
+import { withStyles } from "@material-ui/core/styles";
+import { TRADE_URL } from "../config";
+import Stars from "@material-ui/icons/Stars";
+
+const styles = {
+  link: {
+    color: "#9097ac",
+    fontWeight: "bold",
+  },
+};
+
 export const Sales = (props) => {
   const translate = useTranslate();
 
@@ -39,9 +49,13 @@ export const Sales = (props) => {
         <TextField label="ModelLabel" source="vehicle.modelLabel" />
         <TextField label="ModelLabel" source="vehicle.modelLabel" />
         <TextField label="pointOfSale" source="vehicle.pointofsale.name" />
-        <a href={"url"} rel="noopener" target="_blank">
-          Link
-        </a>
+        <BooleanField
+          source="requestWinner"
+          TrueIcon={Stars}
+          sortable={false}
+        />
+
+        <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
         <ShowButton />
         <EditButton />
@@ -49,6 +63,25 @@ export const Sales = (props) => {
     </List>
   );
 };
+
+const LinkRecord = withStyles(styles)(({ classes, record }) => {
+  if (
+    record &&
+    record.status &&
+    ["LIVE", "CLOSED", "FINISHED"].includes(record.status)
+  )
+    return (
+      <a
+        href={`${TRADE_URL}/records/${record.uuid}`}
+        rel="noopener"
+        target="_blank"
+        className={classes.link}
+      >
+        Link
+      </a>
+    );
+  return null;
+});
 
 const LinkToRelatedOffers = ({ record }) => {
   const translate = useTranslate();
