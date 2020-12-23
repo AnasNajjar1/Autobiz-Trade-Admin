@@ -53,6 +53,10 @@ export const Sales = (props) => {
 const LinkToRelatedOffers = ({ record }) => {
   const translate = useTranslate();
 
+  if (!record) {
+    return null;
+  }
+
   if (record.countOffers === 0) {
     return null;
   }
