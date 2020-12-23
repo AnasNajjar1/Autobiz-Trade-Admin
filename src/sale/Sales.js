@@ -1,15 +1,22 @@
 import React from "react";
+import Gavel from "@material-ui/icons/Gavel";
 import {
   List,
   Datagrid,
   TextField,
   DateField,
   useTranslate,
+  NumberField,
+  ShowButton,
+  EditButton,
 } from "react-admin";
 import { SalesFilter } from "./SalesFilter";
-
+import Button from "@material-ui/core/Button";
+import { Link } from "react-router-dom";
+import { stringify } from "query-string";
 export const Sales = (props) => {
   const translate = useTranslate();
+
   return (
     <List
       {...props}
@@ -18,7 +25,7 @@ export const Sales = (props) => {
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
     >
-      <Datagrid rowClick="show">
+      <Datagrid>
         <TextField label="saleId" source="id" />
         <TextField label="vehicleId" source="vehicle.id" />
         <TextField label="fileNumber" source="vehicle.fileNumber" />
@@ -35,7 +42,30 @@ export const Sales = (props) => {
         <a href={"url"} rel="noopener" target="_blank">
           Link
         </a>
+        <LinkToRelatedOffers />
+        <ShowButton />
+        <EditButton />
       </Datagrid>
     </List>
+  );
+};
+
+const LinkToRelatedOffers = ({ record }) => {
+  const translate = useTranslate();
+
+  if (record.countOffers === 0) {
+    return null;
+  }
+  return (
+    <Button
+      component={Link}
+      size="small"
+      color="primary"
+      to={{
+        pathname: `/sale/${record.id}/show/offer`,
+      }}
+    >
+      <Gavel /> {translate("offers")} ({record.countOffers})
+    </Button>
   );
 };
