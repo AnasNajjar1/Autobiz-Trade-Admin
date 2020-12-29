@@ -2,6 +2,7 @@ import React from "react";
 import {
   TabbedShowLayout,
   Tab,
+  List,
   TextField,
   Show,
   useEditController,
@@ -31,10 +32,20 @@ import supplyTypeChoices from "../assets/choices/supplyType";
 import validationStatusChoices from "../assets/choices/validationStatus";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
+import SetWinnerButton from "./SetWinnerButton";
+import { withStyles } from "@material-ui/core/styles";
 import {
   KeyboardDateInput,
   KeyboardTimeInput,
 } from "../components/CustomInput";
+import { LogActionLabel } from "../components/LogActionLabel";
+import { LogPanel } from "../components/LogPanel";
+const styles = {
+  link: {
+    fontWeight: "bold",
+    fontFamily: "Arial",
+  },
+};
 
 export const EditSale = (props, { basePath, data, resource }) => {
   const form = SaleForm("edit");
@@ -215,6 +226,19 @@ const SaleForm = (type) => {
   );
 };
 
+const WinnerStatus = withStyles(styles)(({ classes, record }) => {
+  return (
+    <>
+      <p className={classes.link}>
+        {record.winner ? "" : "No"} Winner{" "}
+        {record.winner ? `: ${record.winner}` : ""}
+      </p>
+      <p className={classes.link}>
+        Request Winner : {record.requestWinner ? `YES` : "NO"}
+      </p>
+    </>
+  );
+});
 export const ShowSale = (props) => {
   const controllerProps = useEditController(props);
 
@@ -317,6 +341,7 @@ export const ShowSale = (props) => {
           )}
         </Tab>
         <Tab label="Offers" path="offer">
+          <WinnerStatus />
           <ReferenceManyField reference="offer" target="saleId">
             <Datagrid>
               <TextField label="offerId" source="id" />
@@ -345,6 +370,29 @@ export const ShowSale = (props) => {
                 reference="facadeUser"
               >
                 <TextField source="email" />
+              </ReferenceField>
+              <SetWinnerButton />
+            </Datagrid>
+          </ReferenceManyField>
+        </Tab>
+        <Tab label="Logs" path="logs">
+          <ReferenceManyField
+            reference="log"
+            filter={{
+              referenceTable: "sales",
+              referenceId: record && record.id,
+            }}
+          >
+            <Datagrid expand={<LogPanel />}>
+              <LogActionLabel label="label" />
+              <DateField label="date" source="createdAt" showTime />
+              <TextField label="userId" source="user" />
+              <ReferenceField
+                label="userName"
+                source="user"
+                reference="facadeUser"
+              >
+                <TextField source="name" />
               </ReferenceField>
             </Datagrid>
           </ReferenceManyField>

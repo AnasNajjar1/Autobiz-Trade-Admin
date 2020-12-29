@@ -15,6 +15,8 @@ const SetWinnerButton = (props) => {
   const refresh = useRefresh();
   const notify = useNotify();
 
+  console.log(props.record);
+
   const handleUpdate = async () => {
     const { record } = props;
 
@@ -40,8 +42,6 @@ const SetWinnerButton = (props) => {
 
     setOpen(false);
   };
-
-  console.log(props.record);
 
   if (props.record && props.record.requestWinner) {
     return (

@@ -59,6 +59,7 @@ export default async (type, resource, params) => {
     case "pointOfSale":
     case "offer":
     case "sale":
+    case "log":
     case "status":
     case "vehicle":
     case "group":

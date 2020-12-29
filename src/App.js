@@ -33,6 +33,7 @@ import configPage from "./configPage";
 import facadeCarcheck from "./carcheck";
 import sale from "./sale";
 import offer from "./offer";
+import log from "./log";
 import partnerRequests from "./partnerRequests";
 import partnerOffers from "./partnerOffers";
 import dataProvider from "./dataprovider";
@@ -211,6 +212,7 @@ const App = () => {
         <Resource name="facadeBrand" />,
         <Resource name="facadeUser" {...facadeUsers} />,
         <Resource name="facadePointOfSale" />,
+        <Resource name="log" {...log} />,
       ]}
     </Admin>
   );
