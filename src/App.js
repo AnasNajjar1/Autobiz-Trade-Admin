@@ -192,10 +192,8 @@ const App = () => {
 
         // <Resource name="stock" {...vehicle} list={Stock} />,
         // <Resource name="offertoprivate" {...vehicle} list={OfferToPrivate} />,
-        // <Resource name="partnerRequests" {...partnerRequests} />,
         // <Resource name="partnerOffers" {...partnerOffers} />,
 
-        // <Resource name="status" />,
         // <Resource name="facadeCompany" />,
         // <Resource name="carcheckImport" />,
         //<Resource name="partner" />,
@@ -203,6 +201,7 @@ const App = () => {
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="sale" {...sale} />,
         <Resource name="offer" {...offer} />,
+        <Resource name="partnerRequests" {...partnerRequests} />,
         <Resource name="pointOfSale" {...pointOfSale} />,
         <Resource name="groupUser" {...groupUser} />,
         <Resource name="config" {...configPage} />,

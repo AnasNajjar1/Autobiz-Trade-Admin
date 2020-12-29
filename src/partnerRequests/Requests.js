@@ -15,6 +15,7 @@ export const Requests = (props) => {
     <List
       {...props}
       title={translate(props.resource)}
+      bulkActionButtons={false}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
     >
@@ -24,7 +25,8 @@ export const Requests = (props) => {
         <TextField label="statusId" source="statusId" />
         <TextField label="vehicleId" source="vehicleId" />
         <TextField label="comment" source="comment" />
-        <TextField label="status" source="status" />
+        <TextField label="status" source="statusName" />
+        <TextField label="partner" source="partnerName" />
         <NumberField
           source="value"
           options={{
