@@ -28,10 +28,12 @@ import {
   SimpleFormIterator,
   ImageField,
   ShowButton,
-  useTranslate,
-  DeleteButton,
+  useEditController,
+  ReferenceField,
 } from "react-admin";
 import S3CustomUploader from "../components/S3CustomUploader";
+import { LogActionLabel } from "../components/LogActionLabel";
+import { LogPanel } from "../components/LogPanel";
 import {
   KeyboardDateInput,
   KeyboardTimeInput,
@@ -73,6 +75,9 @@ export const EditVehicle = (props, { basePath, data, resource }) => {
 };
 
 export const ShowVehicle = (props) => {
+  const controllerProps = useEditController(props);
+
+  const { record } = controllerProps;
   return (
     <Show {...props}>
       <TabbedShowLayout>
@@ -112,6 +117,28 @@ export const ShowVehicle = (props) => {
               {/* <Button variant="contained" color="default" size="small">
                 cancel
               </Button> */}
+            </Datagrid>
+          </ReferenceManyField>
+        </Tab>
+        <Tab label="Logs" path="logs">
+          <ReferenceManyField
+            reference="log"
+            filter={{
+              referenceTable: "vehicles",
+              referenceId: record && record.id,
+            }}
+          >
+            <Datagrid expand={<LogPanel />}>
+              <LogActionLabel label="label" />
+              <DateField label="date" source="createdAt" showTime />
+              <TextField label="userId" source="user" />
+              <ReferenceField
+                label="userName"
+                source="user"
+                reference="facadeUser"
+              >
+                <TextField source="name" />
+              </ReferenceField>
             </Datagrid>
           </ReferenceManyField>
         </Tab>

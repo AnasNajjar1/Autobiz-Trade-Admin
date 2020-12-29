@@ -2,7 +2,6 @@ import React from "react";
 import {
   TabbedShowLayout,
   Tab,
-  List,
   TextField,
   Show,
   useEditController,
