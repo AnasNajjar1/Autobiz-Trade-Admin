@@ -4,6 +4,7 @@ import {
   SelectInput,
   ReferenceInput,
   Filter,
+  DateInput,
   CheckboxGroupInput,
 } from "react-admin";
 export const SalesFilter = (props) => (
@@ -34,6 +35,20 @@ export const SalesFilter = (props) => (
       ]}
       alwaysOn
     />
+
+    <DateInput
+      label="startDateTimeMin"
+      source="startDateTimeMin"
+      resettable
+      alwaysOn
+    />
+    <DateInput
+      label="endDateTimeMax"
+      source="endDateTimeMax"
+      resettable
+      alwaysOn
+    />
+
     <CheckboxGroupInput
       source="status"
       choices={[
