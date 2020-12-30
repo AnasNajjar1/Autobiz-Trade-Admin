@@ -16,7 +16,7 @@ export const CreateRequest = (props) => {
 
   return (
     <Create {...props} title={translate("createANewRequest")}>
-      <SimpleForm redirect={redirect} {...props}>
+      <SimpleForm {...props}>
         <NumberInput
           source="vehicleId"
           disabled={vehicleId !== null}

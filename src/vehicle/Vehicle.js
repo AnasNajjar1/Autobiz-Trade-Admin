@@ -30,18 +30,17 @@ import {
   ShowButton,
   useEditController,
   ReferenceField,
+  ChipField,
+  CreateButton,
 } from "react-admin";
+import MomentUtils from "@date-io/moment";
+import { Link } from "react-router-dom";
+
 import S3CustomUploader from "../components/S3CustomUploader";
 import { LogActionLabel } from "../components/LogActionLabel";
 import { LogPanel } from "../components/LogPanel";
-import {
-  KeyboardDateInput,
-  KeyboardTimeInput,
-} from "../components/CustomInput";
-import moment from "moment";
-import MomentUtils from "@date-io/moment";
+import { KeyboardDateInput } from "../components/CustomInput";
 import ButtonChangeValidationStatus from "../components/ButtonChangeValidationStatus";
-
 import RimSizeInput from "../components/RimSizeInput";
 
 import keyPointsChoices from "../assets/choices/keyPoints";
@@ -119,6 +118,29 @@ export const ShowVehicle = (props) => {
               </Button> */}
             </Datagrid>
           </ReferenceManyField>
+        </Tab>
+        <Tab label="Partner requests" path="requests">
+          <ReferenceManyField reference="partnerRequests" target="vehicleId">
+            {/* target="post_id" addLabel={false}> */}
+            <Datagrid rowClick="expand" expand={<Offers />}>
+              <TextField source="partnerName" label="Partner" />
+              <TextField source="comment" />
+              <DateField source="createdAt" showTime />
+              <DateField
+                label="Last offer received at"
+                source="lastOfferCreatedAt"
+                showTime
+              />
+              <NumberField
+                source="value"
+                label="last offer"
+                locales="fr-FR"
+                options={{ style: "currency", currency: "EUR" }}
+              />
+              <ChipField source="status" />
+            </Datagrid>
+          </ReferenceManyField>
+          <AddRequestButton />
         </Tab>
         <Tab label="Logs" path="logs">
           <ReferenceManyField
@@ -523,6 +545,39 @@ const VehicleForm = (type) => {
         />
       </FormTab>
     </TabbedForm>
+  );
+};
+
+const AddRequestButton = ({ classes, record }) => (
+  <CreateButton
+    component={Link}
+    to={`/partnerRequests/create?vehicleId=${record.id}`}
+  ></CreateButton>
+);
+
+const Offers = (props) => {
+  return (
+    <ReferenceManyField
+      {...props}
+      basePath="partnerOffers"
+      target="partnerRequestId"
+      reference="partnerOffers"
+    >
+      <Datagrid>
+        <TextField label="id" source="id" />
+        <TextField label="comment" source="comment" />
+        <NumberField
+          source="value"
+          options={{
+            minimumFractionDigits: 0,
+            style: "currency",
+            currency: "EUR",
+          }}
+        />
+        <NumberField label="partnerRequestId" source="partnerRequestId" />
+        <DateField label="createdAt" source="createdAt" showTime />
+      </Datagrid>
+    </ReferenceManyField>
   );
 };
 
