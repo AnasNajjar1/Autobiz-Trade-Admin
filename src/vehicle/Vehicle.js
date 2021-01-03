@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+
 import {
   TabbedShowLayout,
   Tab,
@@ -32,10 +33,11 @@ import {
   ReferenceField,
   ChipField,
   CreateButton,
+  useTranslate,
 } from "react-admin";
 import MomentUtils from "@date-io/moment";
 import { Link } from "react-router-dom";
-
+import Button from "@material-ui/core/Button";
 import S3CustomUploader from "../components/S3CustomUploader";
 import { LogActionLabel } from "../components/LogActionLabel";
 import { LogPanel } from "../components/LogPanel";
@@ -75,8 +77,9 @@ export const EditVehicle = (props, { basePath, data, resource }) => {
 
 export const ShowVehicle = (props) => {
   const controllerProps = useEditController(props);
-
+  const translate = useTranslate();
   const { record } = controllerProps;
+
   return (
     <Show {...props}>
       <TabbedShowLayout>
@@ -94,6 +97,7 @@ export const ShowVehicle = (props) => {
           <TextField label="city" source="pointofsale.city" />
         </Tab>
         <Tab label="sales" path="sale">
+          <CreateSaleButton />
           <ReferenceManyField reference="sale" target="vehicleId">
             <Datagrid>
               <TextField label="saleId" source="id" />
@@ -105,17 +109,6 @@ export const ShowVehicle = (props) => {
               <EditButton label="edit" sortable={false} />
               <ShowButton label="show" sortable={false} />
               <ButtonChangeValidationStatus {...props} />
-              {/* {(props.record.validationStatus === "CANCELED" && (
-                <DeleteButton label="delete" sortable={false} />
-              )) || <></>} */}
-              {/* <ButtonChangeValidationStatus
-                {...props}
-                newValidationStatus="CANCELED"
-                color="default"
-              /> */}
-              {/* <Button variant="contained" color="default" size="small">
-                cancel
-              </Button> */}
             </Datagrid>
           </ReferenceManyField>
         </Tab>
@@ -547,6 +540,18 @@ const VehicleForm = (type) => {
     </TabbedForm>
   );
 };
+
+const CreateSaleButton = ({ classes, record }) => (
+  <Button
+    size="small"
+    color="primary"
+    variant="contained"
+    component={Link}
+    to={`/sale/create?vehicleId=${record.id}`}
+  >
+    Create Sale
+  </Button>
+);
 
 const AddRequestButton = ({ classes, record }) => (
   <CreateButton

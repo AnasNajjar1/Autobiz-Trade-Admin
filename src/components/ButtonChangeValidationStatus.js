@@ -24,7 +24,7 @@ const ButtonChangeValidationStatus = (props) => {
         showNotification(`Sale ${record.id} updated`, "info");
       });
     } catch (e) {
-      showNotification(`ERROR ! ${e.message}`, "error");
+      showNotification(`ERROR ! ${e.response.data}`, "error");
     }
   };
 

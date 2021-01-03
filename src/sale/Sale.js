@@ -27,6 +27,7 @@ import {
   number,
   minValue,
 } from "react-admin";
+import { parse } from "query-string";
 import supplyTypeChoices from "../assets/choices/supplyType";
 import validationStatusChoices from "../assets/choices/validationStatus";
 import moment from "moment";
@@ -47,7 +48,7 @@ const styles = {
 };
 
 export const EditSale = (props, { basePath, data, resource }) => {
-  const form = SaleForm("edit");
+  const form = SaleForm("edit", null);
   return (
     <Edit {...props} undoable={false}>
       {form}
@@ -56,11 +57,14 @@ export const EditSale = (props, { basePath, data, resource }) => {
 };
 
 export const CreateSale = (props) => {
-  const form = SaleForm("create");
+  const { vehicleId: vehicleIdString } = parse(props.location.search);
+  const vehicleId = vehicleIdString ? parseInt(vehicleIdString) : null;
+  const form = SaleForm("create", vehicleId);
+
   return <Create {...props}>{form}</Create>;
 };
 
-const SaleForm = (type) => {
+const SaleForm = (type, vehicleId) => {
   //const vehicleInfo = formData.vehicle && formData.vehicle.brandLabel;
   return (
     <SimpleForm
@@ -75,6 +79,7 @@ const SaleForm = (type) => {
         label="fileNumber"
         source="vehicle.id"
         reference="vehicle"
+        defaultValue={vehicleId}
         validate={[required()]}
       >
         <AutocompleteInput optionValue="id" optionText="fileNumber" />
