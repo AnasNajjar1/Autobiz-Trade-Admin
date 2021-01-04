@@ -76,13 +76,13 @@ const SaleForm = (type, vehicleId) => {
       {type === "edit" && <TextInput disabled source="status" label="status" />}
 
       <ReferenceInput
-        label="fileNumber"
+        label="registration"
         source="vehicle.id"
         reference="vehicle"
         defaultValue={vehicleId}
         validate={[required()]}
       >
-        <AutocompleteInput optionValue="id" optionText="fileNumber" />
+        <AutocompleteInput optionValue="id" optionText="registration" />
       </ReferenceInput>
 
       <SelectInput
@@ -305,6 +305,9 @@ export const ShowSale = (props) => {
               <TextField source="name" />
             </ReferenceField>
           )}
+
+          <BooleanField source="expressSale" label="expressSale" />
+          <BooleanField source="carcheckId" label="carcheckId" />
 
           <ReferenceField
             label="owner"

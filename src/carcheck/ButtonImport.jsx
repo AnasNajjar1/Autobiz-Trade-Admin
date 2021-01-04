@@ -18,7 +18,7 @@ const ButtonImport = (props) => {
       showNotification(`Sale created ${sale.saleId}`);
       push(`/vehicle/${sale.vehicleId}/show/sale`);
     } catch (e) {
-      showNotification(`ERROR ! ${e.message}`);
+      showNotification(`ERROR ! ${e.response.data}`, "error");
     }
   };
 

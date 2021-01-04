@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { TRADE_URL } from "../config";
 import Stars from "@material-ui/icons/Stars";
+import FlashOn from "@material-ui/icons/FlashOn";
 
 const styles = {
   link: {
@@ -47,13 +48,13 @@ export const Sales = (props) => {
         <DateField label="salesEnd" source="endDateTime" />
         <TextField label="BrandLabel" source="vehicle.brandLabel" />
         <TextField label="ModelLabel" source="vehicle.modelLabel" />
-        <TextField label="ModelLabel" source="vehicle.modelLabel" />
         <TextField label="pointOfSale" source="vehicle.pointofsale.name" />
         <BooleanField
           source="requestWinner"
           TrueIcon={Stars}
           sortable={false}
         />
+        <BooleanField source="expressSale" TrueIcon={FlashOn} />
 
         <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
