@@ -197,10 +197,10 @@ const App = () => {
         // <Resource name="facadeCompany" />,
         // <Resource name="carcheckImport" />,
 
-        <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="vehicle" {...vehicle} />,
         <Resource name="sale" {...sale} />,
         <Resource name="offer" {...offer} />,
+        <Resource name="facadeCarcheck" {...facadeCarcheck} />,
         <Resource name="partnerRequests" {...partnerRequests} />,
         <Resource name="partner" />,
         <Resource name="pointOfSale" {...pointOfSale} />,
