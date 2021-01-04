@@ -1,26 +1,17 @@
 // in src/posts.js
 import React from "react";
-import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
 import {
   List,
   Datagrid,
   DateInput,
   TextField,
   DateField,
-  AutocompleteInput,
-  CheckboxGroupInput,
   NumberField,
-  BooleanInput,
   Filter,
   TextInput,
-  SelectInput,
   EditButton,
-  ReferenceInput,
   Show,
-  RichTextField,
   SimpleShowLayout,
-  Pagination,
   ChipField,
 } from "react-admin";
 import ButtonImport from "./ButtonImport";
@@ -58,9 +49,9 @@ export const Record = (props) => (
       <TextField label="make" source="brandLabel" />
       <TextField label="model" source="modelLabel" />
       <NumberField label="mileage" source="mileage" />
-      <TextField label="pointOfSale" source="pointOfSale.name" />
-      <TextField label="city" source="pointOfSale.city" />
-      <TextField label="zipCode" source="pointOfSale.zipCode" />
+      <TextField label="pointOfSale" source="pointofsale.name" />
+      <TextField label="city" source="pointofsale.city" />
+      <TextField label="zipCode" source="pointofsale.zipCode" />
       <ButtonImport {...props} />
     </SimpleShowLayout>
   </Show>
@@ -112,6 +103,11 @@ const RecordFilter = (props) => (
       resettable
       alwaysOn
     />
-    <DateInput label="Max Expertise date" source="creationDateMax" resettable />
+    <DateInput
+      label="Max Expertise date"
+      source="creationDateMax"
+      resettable
+      alwaysOn
+    />
   </Filter>
 );

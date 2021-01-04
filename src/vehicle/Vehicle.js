@@ -1,44 +1,48 @@
 import React, { Fragment, useState } from "react";
-import SetWinnerButton from "./SetWinnerButton";
+
 import {
-  Create,
-  AutocompleteInput,
-  Edit,
-  TextInput,
-  ImageField,
-  NumberInput,
-  TabbedForm,
-  FormTab,
-  ArrayInput,
-  SimpleFormIterator,
-  SelectInput,
-  SelectArrayInput,
-  ReferenceInput,
-  ReferenceField,
-  FormDataConsumer,
-  required,
-  minValue,
-  number,
-  BooleanInput,
-  regex,
   TabbedShowLayout,
   Tab,
   TextField,
   Show,
   DateField,
   NumberField,
-  Datagrid,
   ReferenceManyField,
+  Datagrid,
+  Create,
+  Edit,
+  regex,
+  TabbedForm,
+  FormTab,
+  number,
+  TextInput,
+  required,
+  AutocompleteInput,
+  ReferenceInput,
+  SelectInput,
+  NumberInput,
+  minValue,
+  SelectArrayInput,
+  FormDataConsumer,
+  ArrayInput,
+  EditButton,
+  SimpleFormIterator,
+  ImageField,
+  ShowButton,
+  useEditController,
+  ReferenceField,
   ChipField,
   CreateButton,
+  useTranslate,
 } from "react-admin";
-import S3CustomUploader from "../components/S3CustomUploader";
-
-import { Link } from "react-router-dom";
-import { KeyboardDateInput, KeyboardTimeInput } from "./CustomInput";
-import moment from "moment";
 import MomentUtils from "@date-io/moment";
-
+import { Link } from "react-router-dom";
+import Button from "@material-ui/core/Button";
+import S3CustomUploader from "../components/S3CustomUploader";
+import { LogActionLabel } from "../components/LogActionLabel";
+import { LogPanel } from "../components/LogPanel";
+import { KeyboardDateInput } from "../components/CustomInput";
+import ButtonChangeValidationStatus from "../components/ButtonChangeValidationStatus";
 import RimSizeInput from "../components/RimSizeInput";
 
 import keyPointsChoices from "../assets/choices/keyPoints";
@@ -47,7 +51,6 @@ import declaredEquipmentsChoices from "../assets/choices/declaredEquipments";
 import constructorEquipmentsChoices from "../assets/choices/constructorEquipments";
 import rimTypeChoices from "../assets/choices/rimType";
 import profileCostsChoices from "../assets/choices/profileCosts";
-import offerTypeChoices from "../assets/choices/offerType";
 import wheelsTireBrandChoices from "../assets/choices/wheelsTireBrand";
 import vehicleTypeChoices from "../assets/choices/vehicleType";
 import originChoices from "../assets/choices/origin";
@@ -59,12 +62,12 @@ import zone from "../assets/choices/zone";
 import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
 
 export const CreateVehicle = (props) => {
-  const form = commonForm("create");
+  const form = VehicleForm("create");
   return <Create {...props}>{form}</Create>;
 };
 
 export const EditVehicle = (props, { basePath, data, resource }) => {
-  const form = commonForm("edit");
+  const form = VehicleForm("edit");
   return (
     <Edit {...props} undoable={false}>
       {form}
@@ -72,77 +75,96 @@ export const EditVehicle = (props, { basePath, data, resource }) => {
   );
 };
 
-const validateURL = regex(
-  new RegExp("^https*://.*\\.[a-z].{2,3}"),
-  "Must be an URL"
-);
+export const ShowVehicle = (props) => {
+  const controllerProps = useEditController(props);
+  const translate = useTranslate();
+  const { record } = controllerProps;
 
-const saleDatesValidation = (value, allValues) => {
-  let { startDateTime, endDateTime } = allValues.sale;
-
-  if (!moment.isMoment(startDateTime)) {
-    startDateTime = moment.utc(startDateTime);
-  }
-
-  if (!moment.isMoment(endDateTime)) {
-    endDateTime = moment.utc(endDateTime);
-  }
-
-  if (endDateTime.isBefore(startDateTime)) {
-    return "EndDateTime must be after StartDateTime";
-  }
-};
-
-const validateSaleDates = [required(), saleDatesValidation];
-
-const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
-const vehicleDefaultValue = {
-  statusId: 1,
-  auction: { startDateTime: new Date(), salesType: "auction" },
-};
-
-const validateVehicle = (values) => {
-  const errors = {};
-  if (
-    values.sale &&
-    !values.sale.acceptAuction &&
-    !values.sale.acceptImmediatePurchase &&
-    !values.sale.acceptSubmission
-  ) {
-    errors.sale = {
-      acceptAuction: ["At least one type is mandatory"],
-      acceptImmediatePurchase: ["At least one type is mandatory"],
-      acceptSubmission: ["At least one type is mandatory"],
-    };
-  }
-
-  if (
-    values.sale &&
-    values.sale.acceptAuction &&
-    values.sale.auctionReservePrice > 0
-  ) {
-    if (values.sale.auctionReservePrice <= values.sale.auctionStartPrice) {
-      errors.sale = {
-        auctionStartPrice: [
-          "auctionStartPrice should be greater than auctionReservePrice",
-        ],
-        auctionReservePrice: [
-          "auctionReservePrice should be less than auctionStartPrice",
-        ],
-      };
-    }
-  }
-
-  return errors;
-};
-
-const commonForm = (type) => {
   return (
-    <TabbedForm
-      submitOnEnter={false}
-      defaultValue={vehicleDefaultValue}
-      validate={validateVehicle}
-    >
+    <Show {...props}>
+      <TabbedShowLayout>
+        <Tab label="vehicle">
+          <TextField source="registration" />
+          <TextField source="brandLabel" />
+          <TextField source="modelLabel" />
+          <TextField source="versionLabel" />
+          <DateField source="firstRegistrationDate" />
+          <NumberField source="mileage" />
+          <TextField source="gearBoxLabel" />
+
+          <TextField label="pointOfSaleName" source="pointofsale.name" />
+          <TextField label="zipCode" source="pointofsale.zipCode" />
+          <TextField label="city" source="pointofsale.city" />
+        </Tab>
+        <Tab label="sales" path="sale">
+          <CreateSaleButton />
+          <ReferenceManyField reference="sale" target="vehicleId">
+            <Datagrid>
+              <TextField label="saleId" source="id" />
+              <TextField label="validationStatus" source="validationStatus" />
+              <TextField label="status" source="status" />
+              <TextField label="supplyType" source="supplyType" />
+              <DateField label="salesStart" source="startDateTime" />
+              <DateField label="salesEnd" source="endDateTime" />
+              <EditButton label="edit" sortable={false} />
+              <ShowButton label="show" sortable={false} />
+              <ButtonChangeValidationStatus {...props} />
+            </Datagrid>
+          </ReferenceManyField>
+        </Tab>
+        <Tab label="Partner requests" path="requests">
+          <ReferenceManyField reference="partnerRequests" target="vehicleId">
+            {/* target="post_id" addLabel={false}> */}
+            <Datagrid rowClick="expand" expand={<Offers />}>
+              <TextField source="partnerName" label="Partner" />
+              <TextField source="comment" />
+              <DateField source="createdAt" showTime />
+              <DateField
+                label="Last offer received at"
+                source="lastOfferCreatedAt"
+                showTime
+              />
+              <NumberField
+                source="value"
+                label="last offer"
+                locales="fr-FR"
+                options={{ style: "currency", currency: "EUR" }}
+              />
+              <ChipField source="status" />
+            </Datagrid>
+          </ReferenceManyField>
+          <AddRequestButton />
+        </Tab>
+        <Tab label="Logs" path="logs">
+          <ReferenceManyField
+            reference="log"
+            filter={{
+              referenceTable: "vehicles",
+              referenceId: record && record.id,
+            }}
+          >
+            <Datagrid expand={<LogPanel />}>
+              <LogActionLabel label="label" />
+              <DateField label="date" source="createdAt" showTime />
+              <TextField label="userId" source="user" />
+              <ReferenceField
+                label="userName"
+                source="user"
+                reference="facadeUser"
+              >
+                <TextField source="name" />
+              </ReferenceField>
+            </Datagrid>
+          </ReferenceManyField>
+        </Tab>
+      </TabbedShowLayout>
+    </Show>
+  );
+};
+
+const VehicleForm = (type) => {
+  return (
+    <TabbedForm submitOnEnter={false}>
       <FormTab label="record" key="record">
         {type === "edit" && <TextInput disabled source="id" label="id" />}
         {type === "edit" && <TextInput readOnly source="uuid" label="uuid" />}
@@ -156,167 +178,7 @@ const commonForm = (type) => {
         <TextInput label="userId" source="userId" placeholder="Ex: FR_1234" />
       </FormTab>
 
-      <FormTab label="salesInfo">
-        <KeyboardDateInput
-          source="purchaseDate"
-          label="purchaseDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
-        />
-
-        <ReferenceInput
-          source="statusId"
-          reference="status"
-          label="statut"
-          validate={required()}
-        >
-          <SelectInput source="name" />
-        </ReferenceInput>
-
-        <ReferenceInput
-          label="owner"
-          source="ownerId"
-          reference="groupUser"
-          allowEmpty
-        >
-          <SelectInput optionValue="id" optionText="autobizUserId" />
-        </ReferenceInput>
-
-        <ReferenceInput
-          label="group"
-          source="groupId"
-          reference="group"
-          perPage="50"
-          allowEmpty
-        >
-          <SelectInput optionValue="id" optionText="name" />
-        </ReferenceInput>
-
-        <ReferenceInput
-          label="list"
-          source="listId"
-          reference="list"
-          perPage="50"
-          allowEmpty
-        >
-          <SelectInput optionValue="id" optionText="name" />
-        </ReferenceInput>
-
-        <SelectInput
-          label="offerType"
-          source="offerType"
-          choices={offerTypeChoices}
-          validate={[required()]}
-        />
-
-        <TextInput label="salesComment" source="salesComment"></TextInput>
-
-        <BooleanInput label="acceptAuction" source="sale.acceptAuction" />
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.sale &&
-            formData.sale.acceptAuction && (
-              <>
-                <div>
-                  <NumberInput
-                    label="auctionStartPrice"
-                    source="sale.auctionStartPrice"
-                    validate={[number(), minValue(0), required()]}
-                  />
-                </div>
-                <div>
-                  <NumberInput
-                    label="auctionStepPrice"
-                    source="sale.auctionStepPrice"
-                    validate={[number(), minValue(1), required()]}
-                  />
-                </div>
-                <div>
-                  <NumberInput
-                    label="auctionReservePrice"
-                    source="sale.auctionReservePrice"
-                    validate={[number()]}
-                  />
-                </div>
-              </>
-            )
-          }
-        </FormDataConsumer>
-
-        <BooleanInput
-          label="acceptImmediatePurchase"
-          source="sale.acceptImmediatePurchase"
-        />
-
-        <FormDataConsumer>
-          {({ formData, ...rest }) =>
-            formData.sale &&
-            formData.sale.acceptImmediatePurchase && (
-              <NumberInput
-                label="immediatePurchasePrice"
-                source="sale.immediatePurchasePrice"
-                validate={[number(), minValue(1), required()]}
-              />
-            )
-          }
-        </FormDataConsumer>
-
-        <BooleanInput label="acceptSubmission" source="sale.acceptSubmission" />
-
-        <KeyboardDateInput
-          label="saleStartDate"
-          source="sale.startDateTime"
-          providerOptions={{ utils: MomentUtils }}
-          disablePast
-          options={{
-            format: "DD/MM/YYYY",
-            ampm: false,
-            clearable: true,
-          }}
-          validate={validateSaleDates}
-        />
-
-        <KeyboardTimeInput
-          label="saleStartTime"
-          source="sale.startDateTime"
-          providerOptions={{ utils: MomentUtils }}
-          disablePast
-          options={{
-            format: "HH:mm",
-            ampm: false,
-            clearable: true,
-          }}
-          validate={validateSaleDates}
-        />
-
-        <KeyboardDateInput
-          label="saleEndDate"
-          source="sale.endDateTime"
-          providerOptions={{ utils: MomentUtils }}
-          options={{
-            format: "DD/MM/YYYY",
-            ampm: false,
-            clearable: true,
-          }}
-          validate={validateSaleDates}
-        />
-
-        <KeyboardTimeInput
-          label="saleEndTime"
-          source="sale.endDateTime"
-          providerOptions={{ utils: MomentUtils }}
-          disablePast
-          options={{
-            format: "HH:mm",
-            ampm: false,
-            clearable: true,
-          }}
-          validate={validateSaleDates}
-        />
-      </FormTab>
-
-      <FormTab label="vehicle" key="vehicle">
+      <FormTab label="infos" key="infos">
         <ReferenceInput
           label="vehicule_brand"
           source="brandLabel"
@@ -337,7 +199,6 @@ const commonForm = (type) => {
             </ReferenceInput>
           )}
         </FormDataConsumer>
-
         <TextInput label="version" source="versionLabel" />
 
         <KeyboardDateInput
@@ -440,11 +301,10 @@ const commonForm = (type) => {
       <FormTab label="pointOfSale">
         <ReferenceInput
           label="pointOfSale"
-          source="pointOfSaleId"
+          source="pointofsale.id"
           reference="pointOfSale"
           sort={{ field: "name", order: "ASC" }}
         >
-          {/* <SelectInput source="id" /> */}
           <AutocompleteInput optionText="name" />
         </ReferenceInput>
       </FormTab>
@@ -544,6 +404,12 @@ const commonForm = (type) => {
       </FormTab>
 
       <FormTab label="administrativeDetails">
+        <KeyboardDateInput
+          source="purchaseDate"
+          label="purchaseDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
+        />
         <KeyboardDateInput
           source="gcDate"
           label="gcDate"
@@ -675,114 +541,17 @@ const commonForm = (type) => {
   );
 };
 
-export const ShowVehicle = (props) => {
-  return (
-    <Show {...props}>
-      <TabbedShowLayout>
-        <Tab label="vehicle">
-          <TextField label="registration" source="registration" />
-          <TextField source="brandLabel" />
-          <TextField source="modelLabel" />
-          <TextField source="versionLabel" />
-          <DateField source="firstRegistrationDate" />
-          <NumberField source="mileage" />
-          <TextField source="pointOfSaleName" />
-        </Tab>
-        <Tab label="Partner requests" path="requests">
-          <ReferenceManyField reference="partnerRequests" target="vehicleId">
-            {/* target="post_id" addLabel={false}> */}
-            <Datagrid rowClick="expand" expand={<Offers />}>
-              <TextField source="partnerName" label="Partner" />
-              <TextField source="comment" />
-              <DateField source="createdAt" showTime />
-              <DateField
-                label="Last offer received at"
-                source="lastOfferCreatedAt"
-                showTime
-              />
-              <NumberField
-                source="value"
-                label="last offer"
-                locales="fr-FR"
-                options={{ style: "currency", currency: "EUR" }}
-              />
-              <ChipField source="status" />
-            </Datagrid>
-          </ReferenceManyField>
-          <AddRequestButton />
-        </Tab>
-
-        <Tab label="Offers" path="offer">
-          <TextField label="winner" source="sale.winner" />
-          <ReferenceManyField reference="offer" target="vehicleId">
-            <Datagrid>
-              <TextField label="saleId" source="saleId" />
-              <TextField label="winner" source="winner" />
-              <TextField label="offerId" source="offerId" />
-              <NumberField
-                source="amount"
-                options={{
-                  minimumFractionDigits: 0,
-                  style: "currency",
-                  currency: "EUR",
-                }}
-              />
-              <TextField label="saleType" source="saleType" />
-              <DateField label="createdAt" source="createdAt" showTime />
-              <TextField label="userId" source="userId" />
-
-              <ReferenceField
-                label="User"
-                source="userId"
-                reference="facadeUser"
-              >
-                <TextField source="name" />
-              </ReferenceField>
-              <ReferenceField
-                label="Email"
-                source="userId"
-                reference="facadeUser"
-              >
-                <TextField source="email" />
-              </ReferenceField>
-
-              <ReferenceField
-                label="CompanyName"
-                source="userId"
-                reference="facadeUser"
-              >
-                <ReferenceField source="companyId" reference="facadeCompany">
-                  <TextField source="companyName" />
-                </ReferenceField>
-              </ReferenceField>
-
-              <ReferenceField
-                label="CompanyCity"
-                source="userId"
-                reference="facadeUser"
-              >
-                <ReferenceField source="companyId" reference="facadeCompany">
-                  <TextField source="companyCity" />
-                </ReferenceField>
-              </ReferenceField>
-
-              <ReferenceField
-                label="companyZipcode"
-                source="userId"
-                reference="facadeUser"
-              >
-                <ReferenceField source="companyId" reference="facadeCompany">
-                  <TextField source="companyZipcode" />
-                </ReferenceField>
-              </ReferenceField>
-              <SetWinnerButton {...props} />
-            </Datagrid>
-          </ReferenceManyField>
-        </Tab>
-      </TabbedShowLayout>
-    </Show>
-  );
-};
+const CreateSaleButton = ({ classes, record }) => (
+  <Button
+    size="small"
+    color="primary"
+    variant="contained"
+    component={Link}
+    to={`/sale/create?vehicleId=${record.id}`}
+  >
+    Create Sale
+  </Button>
+);
 
 const AddRequestButton = ({ classes, record }) => (
   <CreateButton
@@ -816,3 +585,10 @@ const Offers = (props) => {
     </ReferenceManyField>
   );
 };
+
+const validateURL = regex(
+  new RegExp("^https*://.*\\.[a-z].{2,3}"),
+  "Must be an URL"
+);
+
+const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");

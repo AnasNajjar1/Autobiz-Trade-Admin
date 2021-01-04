@@ -1,13 +1,11 @@
 import DirectionsCar from "@material-ui/icons/DirectionsCar";
-
 import { Vehicles } from "./Vehicles";
-
-import { CreateVehicle, EditVehicle, ShowVehicle } from "./Vehicle";
+import { ShowVehicle, EditVehicle, CreateVehicle } from "./Vehicle";
 
 export default {
-  create: CreateVehicle,
-  edit: EditVehicle,
   list: Vehicles,
-  icon: DirectionsCar,
   show: ShowVehicle,
+  edit: EditVehicle,
+  create: CreateVehicle,
+  icon: DirectionsCar,
 };

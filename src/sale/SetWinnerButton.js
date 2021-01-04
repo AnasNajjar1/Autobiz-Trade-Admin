@@ -19,10 +19,9 @@ const SetWinnerButton = (props) => {
     const { record } = props;
 
     try {
-      await API.post("b2bPlateform", `/admin/sale/winner`, {
+      await API.put("b2bPlateform", `/admin/sale/${record.saleId}`, {
         body: {
-          winner: record.userId,
-          saleId: record.saleId,
+          assignedWinner: record.userId,
         },
       });
     } catch (e) {
@@ -41,9 +40,7 @@ const SetWinnerButton = (props) => {
     setOpen(false);
   };
 
-  console.log(props.record);
-
-  if (props.record && props.record.requestWinner) {
+  if (props.record) {
     return (
       <Fragment>
         <Button label={translate("accept_submission")} onClick={handleClick}>

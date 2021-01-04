@@ -16,7 +16,7 @@ const VehicleFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="fileNumber"
-      source="fileNumber"
+      source="fileNumberLike"
       defaultValue=""
       alwaysOn
     />
@@ -34,14 +34,18 @@ export const Offers = (props) => {
       sort={{ field: "id", order: "DESC" }}
     >
       <Datagrid>
-        <TextField label="fileNumber" source="fileNumber" />
-        <TextField label="make" source="brandLabel" />
-        <TextField label="model" source="modelLabel" />
-        <TextField label="pointOfSaleName" source="pointOfSaleName" />
+        <TextField label="id" source="id" />
+        <TextField label="fileNumber" source="sale.vehicle.fileNumber" />
+        <TextField label="make" source="sale.vehicle.brandLabel" />
+        <TextField label="model" source="sale.vehicle.modelLabel" />
+        <TextField
+          label="pointOfSaleName"
+          source="sale.vehicle.pointofsale.name"
+        />
 
         <NumberField
           label="auctionStartPrice"
-          source="auctionStartPrice"
+          source="sale.auctionStartPrice"
           options={{
             minimumFractionDigits: 0,
             style: "currency",
@@ -50,7 +54,7 @@ export const Offers = (props) => {
         />
         <NumberField
           label="auctionReservePrice"
-          source="auctionReservePrice"
+          source="sale.auctionReservePrice"
           emptyText="-"
           options={{
             minimumFractionDigits: 0,
@@ -61,7 +65,7 @@ export const Offers = (props) => {
 
         <NumberField
           label="immediatePurchasePrice"
-          source="immediatePurchasePrice"
+          source="sale.immediatePurchasePrice"
           options={{
             minimumFractionDigits: 0,
             style: "currency",
@@ -77,17 +81,23 @@ export const Offers = (props) => {
             currency: "EUR",
           }}
         />
-        <TextField label="saleType" source="saleType" />
+        <TextField label="offerType" source="offerType" />
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
 
-        <ReferenceField label="userName" source="userId" reference="facadeUser">
+        <ReferenceField
+          label="userName"
+          source="userId"
+          reference="facadeUser"
+          sortable={false}
+        >
           <TextField source="name" />
         </ReferenceField>
         <ReferenceField
           label="userEmail"
           source="userId"
           reference="facadeUser"
+          sortable={false}
         >
           <TextField source="email" />
         </ReferenceField>

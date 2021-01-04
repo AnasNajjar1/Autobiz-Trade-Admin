@@ -37,11 +37,11 @@ export const muiThemeOverrides = createMuiTheme({
         textTransform: "capitalize",
       },
     },
-    MuiFormControl: {
-      root: {
-        width: "50% !important",
-      },
-    },
+    // MuiFormControl: {
+    //   root: {
+    //     width: "50% !important",
+    //   },
+    // },
     MuiToolbar: {
       backgroundColor: "red",
       minHeight: 130,

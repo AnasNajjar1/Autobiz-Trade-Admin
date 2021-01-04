@@ -24,7 +24,7 @@ const validateOnlyOneGroup = (value, allValues) => {
 export const CreateGroupUser = (props) => {
   const translate = useTranslate();
   return (
-    <Create title={translate("createGroup")} {...props}>
+    <Create undoable={false} title={translate("createGroup")} {...props}>
       <SimpleForm>
         <TextInput
           label="autobizUserId"
@@ -38,7 +38,7 @@ export const CreateGroupUser = (props) => {
 
 export const EditGroupUser = (props) => {
   return (
-    <Edit {...props}>
+    <Edit undoable={false} {...props}>
       <SimpleForm>
         <TextInput source="id" disabled />
         <ReferenceField

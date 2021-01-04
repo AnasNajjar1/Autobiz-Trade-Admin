@@ -9,6 +9,7 @@ import {
   Tab,
   TabbedShowLayout,
   TextField,
+  required,
   ReferenceManyField,
   ReferenceField,
   Datagrid,
@@ -19,9 +20,9 @@ import { Link } from "react-router-dom";
 export const CreateGroup = (props) => {
   const translate = useTranslate();
   return (
-    <Create title={translate("createGroup")} {...props}>
+    <Create undoable={false} title={translate("createGroup")} {...props}>
       <SimpleForm>
-        <TextInput label="name" source="name"></TextInput>
+        <TextInput label="name" source="name" validate={required()}></TextInput>
       </SimpleForm>
     </Create>
   );
@@ -29,10 +30,10 @@ export const CreateGroup = (props) => {
 
 export const EditGroup = (props) => {
   return (
-    <Edit {...props}>
+    <Edit undoable={false} {...props}>
       <SimpleForm>
         <TextInput source="id" disabled />
-        <TextInput label="name" source="name"></TextInput>
+        <TextInput label="name" source="name" validate={required()}></TextInput>
       </SimpleForm>
     </Edit>
   );

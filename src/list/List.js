@@ -25,7 +25,10 @@ import {
 import Button from "@material-ui/core/Button";
 import MomentUtils from "@date-io/moment";
 import S3CustomUploader from "../components/S3CustomUploader";
-import { KeyboardDateInput, KeyboardTimeInput } from "../vehicle/CustomInput";
+import {
+  KeyboardDateInput,
+  KeyboardTimeInput,
+} from "../components/CustomInput";
 
 export const CreateList = (props) => {
   const translate = useTranslate();
@@ -163,7 +166,6 @@ export const EditList = (props) => {
           options={{
             format: "HH:mm",
             ampm: false,
-            clearable: true,
           }}
           validate={required()}
         />
@@ -177,32 +179,29 @@ const ListShowActions = ({ record, basePath, data }) => {
   const redirect = useRedirect();
   const dataProvider = useDataProvider();
 
-  let vehiclesIds = [];
-  if (data && data.Vehicles) {
-    vehiclesIds = data.Vehicles.map((a) => a.id);
+  let saleIds = [];
+  if (data && data.sales) {
+    saleIds = data.sales.map((a) => a.id);
   }
 
-  const approve = () =>
+  const approve = () => {
     dataProvider
-      .updateMany("vehicle", {
-        ids: vehiclesIds,
+      .updateMany("sale", {
+        ids: saleIds,
         data: {
           groupId: data.groupId,
-          sale: {
-            startDateTime: data.startDateTime,
-            endDateTime: data.endDateTime,
-          },
+          startDateTime: data.startDateTime,
+          endDateTime: data.endDateTime,
         },
       })
       .then((response) => {
         redirect("/list");
-
         notify("vehicles updated");
       })
       .catch((error) => {
         notify(`vehicles approval error: ${error.message}`, "warning");
       });
-
+  };
   return (
     <TopToolbar>
       <EditButton basePath={basePath} record={data} />
@@ -210,16 +209,16 @@ const ListShowActions = ({ record, basePath, data }) => {
         variant="contained"
         color="primary"
         size="small"
-        onClick={approve}
+        onClick={() => approve()}
       >
-        Apply to all vehicles
+        Apply to all sales
       </Button>
     </TopToolbar>
   );
 };
 
 export const ShowList = (props) => {
-  const translate = useTranslate();
+  const listId = props.id;
   return (
     <Show actions={<ListShowActions />} {...props}>
       <SimpleShowLayout>
@@ -237,23 +236,14 @@ export const ShowList = (props) => {
           <TextField source="name" />
         </ReferenceField>
 
-        <ReferenceManyField
-          label="vehicles"
-          reference="vehicle"
-          target="listId"
-        >
+        <ReferenceManyField label="sales" reference="sale" target="listId">
           <Datagrid>
-            <TextField source="id" />
-            <TextField label="ref" source="fileNumber" sortable={false} />
-
-            <TextField
-              label="registration"
-              source="registration"
-              sortable={false}
-            />
-            <TextField label="make" source="brandLabel" />
-            <TextField label="model" source="modelLabel" />
-            <TextField label="status" source="statusName" />
+            <TextField label="saleId" source="id" />
+            <TextField label="vehicleId" source="vehicle.id" />
+            <TextField label="fileNumber" source="vehicle.fileNumber" />
+            <TextField label="registration" source="vehicle.registration" />
+            <TextField label="validationStatus" source="validationStatus" />
+            <TextField label="status" source="status" />
             <BooleanField source="acceptAuction" label="acceptAuction" />
             <BooleanField
               source="acceptImmediatePurchase"
@@ -262,6 +252,8 @@ export const ShowList = (props) => {
             <BooleanField source="acceptSubmission" label="acceptSubmission" />
             <DateField label="salesStart" source="startDateTime" />
             <DateField label="salesEnd" source="endDateTime" />
+            <TextField label="BrandLabel" source="vehicle.brandLabel" />
+            <TextField label="ModelLabel" source="vehicle.modelLabel" />
           </Datagrid>
         </ReferenceManyField>
       </SimpleShowLayout>
