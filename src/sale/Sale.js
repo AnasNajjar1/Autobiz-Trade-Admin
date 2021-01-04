@@ -367,7 +367,6 @@ export const ShowSale = (props) => {
               >
                 <TextField source="name" />
               </ReferenceField>
-
               <ReferenceField
                 label="Email"
                 source="userId"
@@ -375,7 +374,7 @@ export const ShowSale = (props) => {
               >
                 <TextField source="email" />
               </ReferenceField>
-              <SetWinnerButton />
+              *{record && record.requestWinner && <SetWinnerButton />}
             </Datagrid>
           </ReferenceManyField>
         </Tab>
