@@ -10,6 +10,7 @@ import {
   NumberField,
   DateField,
   useTranslate,
+  SelectInput,
 } from "react-admin";
 
 const VehicleFilter = (props) => (
@@ -18,6 +19,23 @@ const VehicleFilter = (props) => (
       label="fileNumber"
       source="fileNumberLike"
       defaultValue=""
+      alwaysOn
+    />
+    <SelectInput
+      source="offerType"
+      choices={[
+        { id: "submission", name: "submission" },
+        { id: "auction", name: "auction" },
+        { id: "immediatePurchase", name: "immediatePurchase" },
+      ]}
+      alwaysOn
+    />
+    <SelectInput
+      source="supplyType"
+      choices={[
+        { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
+        { id: "STOCK", name: "STOCK" },
+      ]}
       alwaysOn
     />
   </Filter>
