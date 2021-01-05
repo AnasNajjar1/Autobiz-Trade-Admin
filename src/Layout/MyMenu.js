@@ -41,6 +41,7 @@ const SubMenuLayout = ({ resources, onMenuClick }) => {
     "facadeModel",
     "facadePointOfSale",
     "status",
+    "groupUser",
     "facadeCompany",
     "carcheckImport",
     "partner",

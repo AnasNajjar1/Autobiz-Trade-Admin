@@ -340,6 +340,7 @@ export const ShowSale = (props) => {
             <Button
               component={Link}
               variant="contained"
+              color="default"
               to={{
                 pathname: `/vehicle/${vehicleId}`,
               }}
