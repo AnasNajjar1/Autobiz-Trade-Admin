@@ -52,7 +52,6 @@ export const EditConfig = (props) => {
 
 const Auction = (props) => {
   const { offerType } = props;
-  console.log("offerType", offerType);
   return (
     <FormTab {...props} label={offerType} key={offerType}>
       <SelectInput

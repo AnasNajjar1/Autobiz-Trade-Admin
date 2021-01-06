@@ -413,7 +413,7 @@ export const ShowSale = (props) => {
 };
 
 const saleDefaultValue = {
-  startDateTime: new Date(),
+  startDateTime: moment.utc().format(),
   validationStatus: "DRAFT",
   //--
   supplyType: "STOCK",

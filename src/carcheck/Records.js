@@ -98,13 +98,13 @@ const RecordFilter = (props) => (
     /> */}
 
     <DateInput
-      label="Min Expertise date"
+      label="MinExpertiseDate"
       source="creationDateMin"
       resettable
       alwaysOn
     />
     <DateInput
-      label="Max Expertise date"
+      label="MaxExpertiseDate"
       source="creationDateMax"
       resettable
       alwaysOn
