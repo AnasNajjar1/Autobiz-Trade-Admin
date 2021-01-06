@@ -49,9 +49,15 @@ export const EditGroupUser = (props) => {
           <TextField source="name" />
         </ReferenceField>
 
-        <BooleanInput source="notificationDaily" />
-        <BooleanInput source="notificationNewPush" />
-        <BooleanInput source="notificationAuction" />
+        <BooleanInput label="notificationDaily" source="notificationDaily" />
+        <BooleanInput
+          label="notificationNewPush"
+          source="notificationNewPush"
+        />
+        <BooleanInput
+          label="notificationAuction"
+          source="notificationAuction"
+        />
 
         <ArrayInput
           label="hasGroups"

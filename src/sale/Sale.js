@@ -27,6 +27,7 @@ import {
   number,
   EditButton,
   minValue,
+  useTranslate,
 } from "react-admin";
 import { parse } from "query-string";
 import supplyTypeChoices from "../assets/choices/supplyType";
@@ -76,16 +77,6 @@ const SaleForm = (type, vehicleId) => {
       {type === "edit" && <TextInput disabled source="id" label="saleId" />}
       {type === "edit" && <TextInput disabled source="status" label="status" />}
 
-      {/* <ReferenceInput
-        label="registration"
-        source="vehicle.id"
-        reference="vehicle"
-        defaultValue={vehicleId}
-        validate={[required()]}
-      >
-        <AutocompleteInput optionValue="id" optionText="registration" />
-      </ReferenceInput> */}
-
       <TextInput
         label="vehicleId"
         source="vehicleId"
@@ -94,7 +85,7 @@ const SaleForm = (type, vehicleId) => {
       ></TextInput>
 
       <SelectInput
-        label="offerType"
+        label="supplyType"
         source="supplyType"
         choices={supplyTypeChoices}
         validate={[required()]}
@@ -259,6 +250,8 @@ export const ShowSale = (props) => {
   const groupId = record && record.groupId;
   const listId = record && record.listId;
 
+  const translate = useTranslate();
+
   return (
     <Show {...props}>
       <TabbedShowLayout>
@@ -337,7 +330,7 @@ export const ShowSale = (props) => {
         </Tab>
         <Tab label="vehicle">
           <TextField label="registration" source="vehicle.registration" />
-          <TextField label="brand" source="vehicle.brandLabel" />
+          <TextField label="make" source="vehicle.brandLabel" />
           <TextField label="model" source="vehicle.modelLabel" />
           <TextField label="version" source="vehicle.versionLabel" />
           <DateField
@@ -354,11 +347,11 @@ export const ShowSale = (props) => {
               to={{
                 pathname: `/vehicle/${vehicleId}`,
               }}
-              label="Edit Vehicle"
-            ></Button>
+              label={translate("editVehicle")}
+            />
           )}
         </Tab>
-        <Tab label="Offers" path="offer">
+        <Tab label="offers" path="offer">
           <WinnerStatus />
           <ReferenceManyField reference="offer" target="saleId">
             <Datagrid>

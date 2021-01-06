@@ -23,6 +23,7 @@ const OffersFilter = (props) => (
       alwaysOn
     />
     <SelectInput
+      label="offerType"
       source="offerType"
       choices={[
         { id: "submission", name: "submission" },
@@ -32,6 +33,7 @@ const OffersFilter = (props) => (
       alwaysOn
     />
     <SelectInput
+      label="supplyType"
       source="supplyType"
       choices={[
         { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },

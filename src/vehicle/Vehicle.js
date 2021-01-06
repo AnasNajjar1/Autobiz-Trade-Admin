@@ -77,20 +77,22 @@ export const EditVehicle = (props, { basePath, data, resource }) => {
 
 export const ShowVehicle = (props) => {
   const controllerProps = useEditController(props);
-  const translate = useTranslate();
   const { record } = controllerProps;
 
   return (
     <Show {...props}>
       <TabbedShowLayout>
         <Tab label="vehicle">
-          <TextField source="registration" />
-          <TextField source="brandLabel" />
-          <TextField source="modelLabel" />
-          <TextField source="versionLabel" />
-          <DateField source="firstRegistrationDate" />
-          <NumberField source="mileage" />
-          <TextField source="gearBoxLabel" />
+          <TextField label="registration" source="registration" />
+          <TextField labe="make" source="brandLabel" />
+          <TextField label="model" source="modelLabel" />
+          <TextField label="version" source="versionLabel" />
+          <DateField
+            label="firstRegistrationDate"
+            source="firstRegistrationDate"
+          />
+          <NumberField label="mileage" source="mileage" />
+          <TextField label="gearBoxLabel" source="gearBoxLabel" />
 
           <TextField label="pointOfSaleName" source="pointofsale.name" />
           <TextField label="zipCode" source="pointofsale.zipCode" />
@@ -112,7 +114,7 @@ export const ShowVehicle = (props) => {
             </Datagrid>
           </ReferenceManyField>
         </Tab>
-        <Tab label="Partner requests" path="requests">
+        <Tab label="PartnerRequests" path="requests">
           <ReferenceManyField reference="partnerRequests" target="vehicleId">
             {/* target="post_id" addLabel={false}> */}
             <Datagrid rowClick="expand" expand={<Offers />}>
@@ -166,7 +168,9 @@ const VehicleForm = (type) => {
   return (
     <TabbedForm submitOnEnter={false}>
       <FormTab label="record" key="record">
-        {type === "edit" && <TextInput disabled source="id" label="id" />}
+        {type === "edit" && (
+          <TextInput disabled label="vehicleId" source="id" label="id" />
+        )}
         {type === "edit" && <TextInput readOnly source="uuid" label="uuid" />}
 
         <TextInput
@@ -541,17 +545,20 @@ const VehicleForm = (type) => {
   );
 };
 
-const CreateSaleButton = ({ classes, record }) => (
-  <Button
-    size="small"
-    color="primary"
-    variant="contained"
-    component={Link}
-    to={`/sale/create?vehicleId=${record.id}`}
-  >
-    Create Sale
-  </Button>
-);
+const CreateSaleButton = ({ record }) => {
+  const translate = useTranslate();
+  return (
+    <Button
+      size="small"
+      color="primary"
+      variant="contained"
+      component={Link}
+      to={`/sale/create?vehicleId=${record.id}`}
+    >
+      {translate("createSale")}
+    </Button>
+  );
+};
 
 const AddRequestButton = ({ classes, record }) => (
   <CreateButton

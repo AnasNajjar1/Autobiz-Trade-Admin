@@ -55,15 +55,20 @@ export const Sales = (props) => {
         <TextField label="supplyType" source="supplyType" />
         <DateField label="salesStart" source="startDateTime" />
         <DateField label="salesEnd" source="endDateTime" />
-        <TextField label="BrandLabel" source="vehicle.brandLabel" />
-        <TextField label="ModelLabel" source="vehicle.modelLabel" />
+        <TextField label="make" source="vehicle.brandLabel" />
+        <TextField label="model" source="vehicle.modelLabel" />
         <TextField label="pointOfSale" source="vehicle.pointofsale.name" />
         <BooleanField
+          label="requestWinner"
           source="requestWinner"
           TrueIcon={Stars}
           sortable={false}
         />
-        <BooleanField source="expressSale" TrueIcon={FlashOn} />
+        <BooleanField
+          label="expressSale"
+          source="expressSale"
+          TrueIcon={FlashOn}
+        />
 
         <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
