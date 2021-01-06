@@ -8,6 +8,8 @@ import {
   useTranslate,
   ShowButton,
   BooleanField,
+  CardActions,
+  ExportButton,
   EditButton,
 } from "react-admin";
 import { SalesFilter } from "./SalesFilter";
@@ -25,6 +27,12 @@ const styles = {
   },
 };
 
+const SalesActions = (props) => (
+  <CardActions>
+    <ExportButton />
+  </CardActions>
+);
+
 export const Sales = (props) => {
   const translate = useTranslate();
 
@@ -35,6 +43,7 @@ export const Sales = (props) => {
       filters={<SalesFilter />}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
+      actions={<SalesActions />}
     >
       <Datagrid>
         <TextField label="saleId" source="id" />
@@ -59,7 +68,7 @@ export const Sales = (props) => {
         <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
         <ShowButton />
-        <EditButton />
+        {/* <EditButton /> */}
       </Datagrid>
     </List>
   );

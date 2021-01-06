@@ -25,6 +25,7 @@ import {
   FormDataConsumer,
   NumberInput,
   number,
+  EditButton,
   minValue,
 } from "react-admin";
 import { parse } from "query-string";
@@ -75,7 +76,7 @@ const SaleForm = (type, vehicleId) => {
       {type === "edit" && <TextInput disabled source="id" label="saleId" />}
       {type === "edit" && <TextInput disabled source="status" label="status" />}
 
-      <ReferenceInput
+      {/* <ReferenceInput
         label="registration"
         source="vehicle.id"
         reference="vehicle"
@@ -83,7 +84,14 @@ const SaleForm = (type, vehicleId) => {
         validate={[required()]}
       >
         <AutocompleteInput optionValue="id" optionText="registration" />
-      </ReferenceInput>
+      </ReferenceInput> */}
+
+      <TextInput
+        label="vehicleId"
+        source="vehicleId"
+        defaultValue={vehicleId}
+        validate={[required()]}
+      ></TextInput>
 
       <SelectInput
         label="offerType"
@@ -324,6 +332,8 @@ export const ShowSale = (props) => {
               <TextField label="name" source="name" />
             </ReferenceField>
           </ReferenceField>
+
+          <EditButton />
         </Tab>
         <Tab label="vehicle">
           <TextField label="registration" source="vehicle.registration" />

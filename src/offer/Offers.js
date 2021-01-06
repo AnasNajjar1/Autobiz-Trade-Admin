@@ -12,8 +12,9 @@ import {
   useTranslate,
   SelectInput,
 } from "react-admin";
+import { countryChoices } from "../assets/choices/country";
 
-const VehicleFilter = (props) => (
+const OffersFilter = (props) => (
   <Filter {...props}>
     <TextInput
       label="fileNumber"
@@ -38,6 +39,12 @@ const VehicleFilter = (props) => (
       ]}
       alwaysOn
     />
+    <SelectInput
+      label="country"
+      source="country"
+      alwaysOn
+      choices={countryChoices}
+    />
   </Filter>
 );
 
@@ -47,7 +54,7 @@ export const Offers = (props) => {
     <List
       {...props}
       title={translate(props.resource)}
-      filters={<VehicleFilter />}
+      filters={<OffersFilter />}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
     >
