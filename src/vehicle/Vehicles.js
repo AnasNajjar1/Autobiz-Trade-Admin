@@ -19,12 +19,12 @@ export const Vehicles = (props) => {
       sort={{ field: "id", order: "DESC" }}
     >
       <Datagrid rowClick="show">
-        <TextField label="VehicleId" source="id" />
+        <TextField label="vehicleId" source="id" />
         <TextField label="fileNumber" source="fileNumber" />
         <TextField label="registration" source="registration" />
-        <TextField label="brandLabel" source="brandLabel" />
-        <TextField label="modelLabel" source="modelLabel" />
-        <TextField label="versionLabel" source="versionLabel" />
+        <TextField label="make" source="brandLabel" />
+        <TextField label="model" source="modelLabel" />
+        <TextField label="version" source="versionLabel" />
         <TextField label="fuelLabel" source="fuelLabel" />
         <TextField label="mileage" source="mileage" />
         <TextField

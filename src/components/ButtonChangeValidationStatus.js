@@ -39,7 +39,6 @@ const ButtonChangeValidationStatus = (props) => {
         }
       );
     } catch (e) {
-      console.log(e);
       showNotification(`Can't delete this sale`, "error");
     }
   };

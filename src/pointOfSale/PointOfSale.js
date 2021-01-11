@@ -142,7 +142,11 @@ export const EditPointOfSale = (props) => {
           validate={[number(), minValue(-180), maxValue(180)]}
         ></TextInput>
         <TextInput label="city" source="city"></TextInput>
-        <SelectInput source="country" choices={countryChoices}></SelectInput>
+        <SelectInput
+          label="country"
+          source="country"
+          choices={countryChoices}
+        ></SelectInput>
 
         <RichTextInput
           label="payment_deadline"

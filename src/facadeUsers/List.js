@@ -25,8 +25,8 @@ const FacadeUsers = (props) => {
     >
       <Datagrid>
         <TextField label="id" source="id" sortable={false} />
-        <TextField label="firstname" source="firstname" sortable={false} />
-        <TextField label="lastname" source="lastname" sortable={false} />
+        <TextField label="firstName" source="firstname" sortable={false} />
+        <TextField label="lastName" source="lastname" sortable={false} />
         <TextField label="username" source="username" sortable={false} />
         <TextField label="email" source="email" sortable={false} />
         <TextField label="groupUserId" source="groupUserId" sortable={false} />

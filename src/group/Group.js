@@ -42,7 +42,7 @@ export const EditGroup = (props) => {
 const AddOwnerButton = ({ classes, record }) => (
   <>
     <CreateButton
-      label="Add a new owner"
+      label="AddANewOwner"
       component={Link}
       to={`/groupUser`}
     ></CreateButton>
@@ -57,12 +57,12 @@ const AddOwnerButton = ({ classes, record }) => (
 const AddMemberButton = ({ classes, record }) => (
   <>
     <CreateButton
-      label="Add a new member"
+      label="AddANewMember"
       component={Link}
       to={`/groupUser`}
     ></CreateButton>
     <CreateButton
-      label="Create new member"
+      label="CreateNewMember"
       component={Link}
       to={`/groupUser/create`}
     ></CreateButton>
@@ -73,11 +73,11 @@ export const ShowGroup = (props) => {
   return (
     <Show {...props}>
       <TabbedShowLayout>
-        <Tab label="Group">
+        <Tab label="group">
           <TextField source="id" />
-          <TextField source="name" />
+          <TextField label="name" source="name" />
         </Tab>
-        <Tab label="Owners" path="owners">
+        <Tab label="owners" path="owners">
           <ReferenceManyField reference="groupUser" target="groupOwners">
             <Datagrid rowClick="expand">
               <TextField source="id" />
@@ -93,7 +93,7 @@ export const ShowGroup = (props) => {
           </ReferenceManyField>
           <AddOwnerButton />
         </Tab>
-        <Tab label="Members" path="members">
+        <Tab label="members" path="members">
           <ReferenceManyField reference="groupUser" target="groupMembers">
             <Datagrid rowClick="expand">
               <TextField source="id" />

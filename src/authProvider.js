@@ -52,7 +52,6 @@ async function checkPermission(bypassCache = false) {
     bypassCache: bypassCache,
   });
   let role = _.get(user, "rules", "");
-  //console.log("role", role)
   role = role.split(":");
   if (role.includes("adminCarcheck")) {
     return "admin";

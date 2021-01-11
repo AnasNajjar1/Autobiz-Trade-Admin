@@ -10,7 +10,7 @@ import {
 export const SalesFilter = (props) => (
   <Filter {...props}>
     <TextInput
-      label="fileNumberLike"
+      label="fileNumber"
       source="fileNumberLike"
       defaultValue=""
       alwaysOn
@@ -28,6 +28,7 @@ export const SalesFilter = (props) => (
     </ReferenceInput>
 
     <SelectInput
+      label="supplyType"
       source="supplyType"
       choices={[
         { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
@@ -37,13 +38,13 @@ export const SalesFilter = (props) => (
     />
 
     <DateInput
-      label="startDateTimeMin"
+      label="saleStartTime"
       source="startDateTimeMin"
       resettable
       alwaysOn
     />
     <DateInput
-      label="endDateTimeMax"
+      label="saleEndTime"
       source="endDateTimeMax"
       resettable
       alwaysOn

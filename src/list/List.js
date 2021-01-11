@@ -223,9 +223,9 @@ export const ShowList = (props) => {
     <Show actions={<ListShowActions />} {...props}>
       <SimpleShowLayout>
         <TextField source="id" />
-        <TextField source="name" />
-        <DateField source="startDateTime" showTime />
-        <DateField source="endDateTime" showTime />
+        <TextField label="name" source="name" />
+        <DateField label="startDateTime" source="startDateTime" showTime />
+        <DateField label="endDateTime" source="endDateTime" showTime />
 
         <ReferenceField
           label="group"
