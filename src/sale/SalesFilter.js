@@ -49,6 +49,16 @@ export const SalesFilter = (props) => (
       resettable
       alwaysOn
     />
+    <SelectInput
+      label="validationStatus"
+      source="validationStatus"
+      choices={[
+        { id: "DRAFT", name: "DRAFT" },
+        { id: "VALIDATED", name: "VALIDATED" },
+        { id: "CANCELED", name: "CANCELED" },
+      ]}
+      alwaysOn
+    />
 
     <CheckboxGroupInput
       source="status"

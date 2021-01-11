@@ -10,7 +10,6 @@ import {
   BooleanField,
   CardActions,
   ExportButton,
-  EditButton,
 } from "react-admin";
 import { SalesFilter } from "./SalesFilter";
 import Button from "@material-ui/core/Button";
@@ -41,6 +40,7 @@ export const Sales = (props) => {
       {...props}
       title={translate(props.resource)}
       filters={<SalesFilter />}
+      filterDefaultValues={{ validationStatus: "DRAFT" }}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<SalesActions />}
