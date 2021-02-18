@@ -25,6 +25,7 @@ export const Requests = (props) => {
         <TextField label="statusId" source="statusId" />
         <TextField label="vehicleId" source="vehicleId" />
         <TextField label="comment" source="comment" />
+        <TextField label="Sale Comment" source="saleComment" />
         <TextField label="status" source="statusName" />
         <TextField label="partner" source="partnerName" />
         <NumberField

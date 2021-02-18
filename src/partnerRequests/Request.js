@@ -6,6 +6,7 @@ import {
   ReferenceInput,
   SelectInput,
   useTranslate,
+  TextInput
 } from "react-admin";
 import { parse } from "query-string";
 
@@ -29,6 +30,7 @@ export const CreateRequest = (props) => {
         >
           <SelectInput optionText="name" />
         </ReferenceInput>
+        <TextInput multiline label="comment" source="comment"/>
       </SimpleForm>
     </Create>
   );
