@@ -17,10 +17,10 @@ const autobizTradeUlrs = {
 exports.TRADE_URL = autobizTradeUlrs[ENV];
 
 const translationBucket = {
-  dev: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-app",
-  staging: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-app",
-  ppr: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-app",
-  prod: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-app",
+  dev: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
+  staging: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
+  ppr: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-admin",
+  prod: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-admin",
 };
 
 exports.TRANSLATION_BUCKET = translationBucket[ENV];

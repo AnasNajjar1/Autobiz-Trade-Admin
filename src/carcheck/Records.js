@@ -13,33 +13,38 @@ import {
   Show,
   SimpleShowLayout,
   ChipField,
+  useTranslate
 } from "react-admin";
 import ButtonImport from "./ButtonImport";
 
 const RecordPagination = (props) => <div />; //remove pagination until it works on api
 
-export const Records = (props) => (
-  <List {...props} filters={<RecordFilter />} pagination={<RecordPagination />}>
-    <Datagrid>
-      <TextField label="id" source="id" sortable={false} />
-      <TextField
-        label="ref"
-        source="refHexaId"
-        sortable={false}
-        sortable={false}
-      />
-      <DateField label="expertiseDate" source="createdAt" sortable={false} />
-      <TextField label="make" source="brandName" sortable={false} />
-      <TextField label="model" source="modelName" sortable={false} />
-      <TextField label="registration" source="registration" sortable={false} />
-      <TextField label="vin" source="vin" sortable={false} />
-      <TextField label="concessionId" source="concessionId" sortable={false} />
-      <NumberField label="mileage" source="mileage" sortable={false} />
-      <ChipField label="source" source="sourceId" sortable={false} />
-      <EditButton label="open" sortable={false} />
-    </Datagrid>
-  </List>
-);
+export const Records = (props) => {
+  const translate = useTranslate();
+
+  return(
+    <List {...props} title={translate(props.resource)} filters={<RecordFilter />} pagination={<RecordPagination />}>
+      <Datagrid>
+        <TextField label="id" source="id" sortable={false} />
+        <TextField
+          label="ref"
+          source="refHexaId"
+          sortable={false}
+          sortable={false}
+        />
+        <DateField label="expertiseDate" source="createdAt" sortable={false} />
+        <TextField label="make" source="brandName" sortable={false} />
+        <TextField label="model" source="modelName" sortable={false} />
+        <TextField label="registration" source="registration" sortable={false} />
+        <TextField label="vin" source="vin" sortable={false} />
+        <TextField label="concessionId" source="concessionId" sortable={false} />
+        <NumberField label="mileage" source="mileage" sortable={false} />
+        <ChipField label="source" source="sourceId" sortable={false} />
+        <EditButton label="open" sortable={false} />
+      </Datagrid>
+    </List>
+  )
+};
 
 export const Record = (props) => (
   <Show {...props}>
