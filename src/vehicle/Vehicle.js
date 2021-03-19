@@ -120,6 +120,7 @@ export const ShowVehicle = (props) => {
             <Datagrid rowClick="expand" expand={<Offers />}>
               <TextField source="partnerName" label="Partner" />
               <TextField source="comment" />
+              <TextField source="saleComment" label="Sale Comment"/>
               <DateField source="createdAt" showTime />
               <DateField
                 label="Last offer received at"
