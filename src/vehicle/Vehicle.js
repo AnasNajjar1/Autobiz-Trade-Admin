@@ -60,6 +60,8 @@ import boolOrNullChoices from "../assets/choices/boolOrNull";
 import distributionBeltChoices from "../assets/choices/distributionBelt";
 import zone from "../assets/choices/zone";
 import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
+import vatChoices from "../assets/choices/vat";
+import vatDetailsChoices from "../assets/choices/vatDetails";
 
 export const CreateVehicle = (props) => {
   const form = VehicleForm("create");
@@ -455,8 +457,29 @@ const VehicleForm = (type) => {
           source="purchaseInvoice"
           validate={validateURL}
         />
-
-        <SelectInput label="vat" source="vat" choices={boolOrNullChoices} />
+        <SelectInput
+          label="vat"
+          source="vat"
+          choices={vatChoices}
+          options={{
+            SelectProps: { displayEmpty: true },
+            InputLabelProps: { shrink: true }
+          }}
+        />
+        <FormDataConsumer>
+          {
+            ({ formData, ...rest }) => formData.vat === true &&
+            <SelectInput
+              label="vatDetails"
+              source="vatDetails"
+              choices={vatDetailsChoices}
+              options={{
+                SelectProps: { displayEmpty: true },
+                InputLabelProps: { shrink: true }
+              }}
+            />
+          }
+        </FormDataConsumer>
         <SelectInput
           label="imported"
           source="imported"
