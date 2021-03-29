@@ -280,9 +280,8 @@ const VehicleForm = (type) => {
         />
         <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
           <SimpleFormIterator>
-            <TextInput source="dommage" label="description" />
-            <TextInput source="value" validate={validateURL} label="url" />
-            <ImageField source="value" />
+            <TextInput source="title" label="description" />
+            <S3CustomUploader source="link" label="url"/>
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
@@ -328,7 +327,7 @@ const VehicleForm = (type) => {
         <ArrayInput label="documents" source="documents">
           <SimpleFormIterator>
             <TextInput source="title" label="title" />
-            <TextInput source="link" label="link" validate={validateURL} />
+            <S3CustomUploader label="link" source="link" type="document" />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
