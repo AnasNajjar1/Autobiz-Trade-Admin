@@ -40,7 +40,6 @@ export const Sales = (props) => {
       {...props}
       title={translate(props.resource)}
       filters={<SalesFilter />}
-      filterDefaultValues={{ validationStatus: "DRAFT" }}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<SalesActions />}
