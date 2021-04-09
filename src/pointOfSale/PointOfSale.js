@@ -160,9 +160,9 @@ export const EditPointOfSale = (props) => {
 
         <ArrayInput label="documentation" source="documentation">
           <SimpleFormIterator>
-            <TextInput source="title" />
-            <TextInput source="pdf" validate={validateURL} />
-            <RichTextInput source="text" />
+            <TextInput label="title" source="title" />
+            <S3CustomUploader label="link" source="pdf" type="document"/>
+            <RichTextInput label="details" source="text" />
           </SimpleFormIterator>
         </ArrayInput>
       </SimpleForm>

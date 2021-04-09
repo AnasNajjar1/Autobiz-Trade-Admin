@@ -1,13 +1,17 @@
 import React, { useCallback } from "react";
-import { TextInput, ImageField } from "react-admin";
+import { TextInput, ImageField, regex } from "react-admin";
 import { useField, useForm } from "react-final-form";
 import { Storage } from "aws-amplify";
 import awsconfig from "../aws-config";
 
-const S3CustomUploader = (props) => {
+const S3CustomUploader = ({source, label, type="image"}) => {
   const b2bUploadPublicUrl = `https://${awsconfig.Storage.bucket}.s3-${awsconfig.Storage.region}.amazonaws.com/public/`;
   const form = useForm();
   const field = useField();
+  const value = field.input.value;
+  const src = Object.byString(value, source);
+  const fileExtention = src ? checkExtension(src) : "";
+
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -20,6 +24,8 @@ const S3CustomUploader = (props) => {
     };
   };
 
+  const validateURL = regex(new RegExp("^https*://.*\\.[a-z].{2,3}"),"Must be an URL");
+
   const handleChangeImage = useCallback(
     (fileObj) => {
       getBase64(fileObj[0], (result) => {
@@ -31,26 +37,26 @@ const S3CustomUploader = (props) => {
           ACL: "public-read",
         })
           .then((result) => {
-            form.change(props.source, b2bUploadPublicUrl + result.key);
+            form.change(source, b2bUploadPublicUrl + result.key);
           })
           .catch((err) => console.log(err));
       });
     },
-    [form]
+    [b2bUploadPublicUrl, form, source]
   );
-
-  const imgSrc = Object.byString(field.input.value, props.source);
 
   return (
     <div>
       <div style={{ marginBottom: "15px" }}>
-        <div>
-          <img src={imgSrc} style={{ maxWidth: "300px" }}></img>
-        </div>
+        {fileExtention === "img" && (
+          <div>
+            <img src={src} style={{ maxWidth: "300px" }}></img>
+          </div>)
+        }
 
-        <TextInput label={props.label} source={props.source} />
+        <TextInput label={label} source={source} validate={validateURL}/>
         <label
-          for={`file${props.source}`}
+          for={`file${source}`}
           style={{
             fontFamily: "Arial",
             padding: "15px",
@@ -63,12 +69,12 @@ const S3CustomUploader = (props) => {
             left: "15px",
           }}
         >
-          Upload image
+          Upload {type}
         </label>
         <input
-          id={`file${props.source}`}
+          id={`file${source}`}
           type="file"
-          accept="image/*"
+          accept={type === 'image' ? "image/*" : ""}
           style={{ display: "none" }}
           onChange={(e) => handleChangeImage(e.target.files)}
         ></input>
@@ -83,13 +89,34 @@ Object.byString = function (o, s) {
   var a = s.split(".");
   for (var i = 0, n = a.length; i < n; ++i) {
     var k = a[i];
-    if (k in o) {
+    if(o && k in o){
       o = o[k];
-    } else {
+    }else{
       return;
     }
   }
   return o;
+};
+
+const checkExtension = (file)  => {
+  var extension = file.substr((file.lastIndexOf('.') + 1));
+  switch (extension) {
+  case 'jpg':
+  case 'jpeg':
+  case 'png':
+  case 'gif':
+      return "img" // There's was a typo in the example where
+      break; // the alert ended with pdf instead of gif.
+  case 'mp4':
+  case 'mp3':
+  case 'ogg':
+      return "video"
+      break;
+  case 'html':
+      return "html"
+      break;
+
+  }
 };
 
 export default S3CustomUploader;
