@@ -214,7 +214,14 @@ const VehicleForm = (type) => {
           providerOptions={{ utils: MomentUtils }}
           options={{ format: "DD/MM/YYYY", clearable: true }}
         />
-
+        <br/>
+        <KeyboardDateInput
+          source="entryStockDate"
+          label="entryStockDate"
+          providerOptions={{ utils: MomentUtils }}
+          options={{ format: "DD/MM/YYYY", clearable: true }}
+        />
+        <br/>
         <SelectInput
           label="profileCosts"
           source="profileCosts"
