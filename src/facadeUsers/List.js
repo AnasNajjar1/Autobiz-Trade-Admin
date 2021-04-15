@@ -44,6 +44,7 @@ const UserFilter = (props) => (
       alwaysOn
       choices={countryChoices}
     />
+    <TextInput label="id" source="autobizUserId" defaultValue="" alwaysOn />
     <TextInput label="userName" source="username" defaultValue="" alwaysOn />
     <TextInput label="firstName" source="firstName" defaultValue="" alwaysOn />
     <TextInput label="lastName" source="lastName" defaultValue="" alwaysOn />
