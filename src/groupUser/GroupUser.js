@@ -13,6 +13,7 @@ import {
   ReferenceInput,
   SelectInput,
   ReferenceField,
+  AutocompleteInput
 } from "react-admin";
 
 // const validateOnlyOneGroup = (value, allValues) => {
@@ -71,7 +72,7 @@ export const EditGroupUser = (props) => {
               reference="group"
               allowEmpty
             >
-              <SelectInput optionValue="id" optionText="name" />
+              <AutocompleteInput optionValue="id" optionText="name"  />
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
@@ -84,7 +85,7 @@ export const EditGroupUser = (props) => {
               reference="group"
               allowEmpty
             >
-              <SelectInput optionValue="id" optionText="name" />
+              <AutocompleteInput optionValue="id" optionText="name" />
             </ReferenceInput>
           </SimpleFormIterator>
         </ArrayInput>
