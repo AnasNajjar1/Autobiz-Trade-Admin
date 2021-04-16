@@ -9,7 +9,7 @@ import {
   useTranslate,
 } from "react-admin";
 
-import countryChoices from "../assets/choices/country";
+import { countryChoices } from "../assets/choices/country";
 
 const PointOfSaleFilter = (props) => (
   <Filter {...props}>
