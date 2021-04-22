@@ -14,6 +14,7 @@ import {
   ReferenceField,
   Datagrid,
   CreateButton,
+  Pagination
 } from "react-admin";
 import { Link } from "react-router-dom";
 
@@ -78,7 +79,7 @@ export const ShowGroup = (props) => {
           <TextField label="name" source="name" />
         </Tab>
         <Tab label="owners" path="owners">
-          <ReferenceManyField reference="groupUser" target="groupOwners">
+          <ReferenceManyField pagination={<Pagination />} reference="groupUser" target="groupOwners">
             <Datagrid rowClick="expand">
               <TextField source="id" />
               <TextField label="autobizUserId" source="autobizUserId" />
@@ -94,7 +95,7 @@ export const ShowGroup = (props) => {
           <AddOwnerButton />
         </Tab>
         <Tab label="members" path="members">
-          <ReferenceManyField reference="groupUser" target="groupMembers">
+          <ReferenceManyField pagination={<Pagination />} reference="groupUser" target="groupMembers">
             <Datagrid rowClick="expand">
               <TextField source="id" />
               <TextField label="autobizUserId" source="autobizUserId" />
