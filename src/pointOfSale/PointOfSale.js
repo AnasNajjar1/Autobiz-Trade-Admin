@@ -20,7 +20,7 @@ import {
 import RichTextInput from "ra-input-rich-text";
 import S3CustomUploader from "../components/S3CustomUploader";
 
-import countryChoices from "../assets/choices/country";
+import { countryChoices } from "../assets/choices/country";
 
 export const CreatePointOfSale = (props) => {
   const translate = useTranslate();
