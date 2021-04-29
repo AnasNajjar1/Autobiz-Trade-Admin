@@ -109,6 +109,7 @@ export const Offers = (props) => {
           }}
         />
         <TextField label="offerType" source="offerType" />
+        <TextField label="offerStatus" source="sale.salesStat.status" />
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
 
