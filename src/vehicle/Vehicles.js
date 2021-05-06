@@ -6,6 +6,7 @@ import {
   DateField,
   useTranslate,
 } from "react-admin";
+import { ListActions, exporter } from "./VehiclesExport";
 import { VehiclesFilter } from "./VehiclesFilter";
 
 export const Vehicles = (props) => {
@@ -17,6 +18,8 @@ export const Vehicles = (props) => {
       filters={<VehiclesFilter />}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
+      actions={<ListActions />}
+      exporter={exporter}
     >
       <Datagrid rowClick="show">
         <TextField label="vehicleId" source="id" />
