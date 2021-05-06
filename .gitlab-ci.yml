@@ -23,6 +23,8 @@ test_merge_master:
     - test_merge_master_to_this_branch
   except:
     - master
+  tags:
+    - docker
 
 refresh_cached_dependencies:
   stage: dependencies
@@ -37,6 +39,8 @@ refresh_cached_dependencies:
   only:
     - master
   when: manual
+  tags:
+    - docker
 
 
 build_dev:
@@ -59,6 +63,8 @@ build_dev:
     - master
   environment:
     name: dev
+  tags:
+    - docker
 
 
 deploy_dev:
@@ -77,6 +83,8 @@ deploy_dev:
     - master
   dependencies:
     - build_dev
+  tags:
+    - docker
 
 build_stg:
   stage: build_stg
@@ -97,6 +105,8 @@ build_stg:
     - master-staging
   environment:
     name: staging
+  tags:
+    - docker
 
 deploy_staging:
   stage: deploy_stg
@@ -113,6 +123,8 @@ deploy_staging:
   when: manual
   dependencies:
     - build_stg
+  tags:
+    - docker
     
 build_ppr:
   stage: build_ppr
@@ -133,6 +145,8 @@ build_ppr:
     - master
   environment:
     name: ppr
+  tags:
+    - docker
 
 deploy_ppr:
   stage: deploy_ppr
@@ -148,6 +162,8 @@ deploy_ppr:
   when: manual
   dependencies: 
     - build_ppr
+  tags:
+    - docker
 
 build_prod:
   stage: build_prod
@@ -168,6 +184,8 @@ build_prod:
     - master
   environment:
     name: prod
+  tags:
+    - docker
 
 deploy_prod:
   stage: deploy_prod
@@ -183,3 +201,5 @@ deploy_prod:
   when: manual
   dependencies: 
     - build_prod
+  tags:
+    - docker
