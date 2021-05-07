@@ -18,7 +18,7 @@ import { withStyles } from "@material-ui/core/styles";
 import { TRADE_URL } from "../config";
 import Stars from "@material-ui/icons/Stars";
 import FlashOn from "@material-ui/icons/FlashOn";
-
+import { exporter, SalesActions} from "./SalesExporter"
 const styles = {
   link: {
     color: "#9097ac",
@@ -26,11 +26,6 @@ const styles = {
   },
 };
 
-const SalesActions = (props) => (
-  <CardActions>
-    <ExportButton />
-  </CardActions>
-);
 
 export const Sales = (props) => {
   const translate = useTranslate();
@@ -43,6 +38,7 @@ export const Sales = (props) => {
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<SalesActions />}
+      exporter={exporter}
     >
       <Datagrid>
         <TextField label="saleId" source="id" />
