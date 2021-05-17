@@ -13,6 +13,7 @@ import {
   SelectInput,
 } from "react-admin";
 import { countryChoices } from "../assets/choices/country";
+import { exporter, ListActions } from "./OffersExporter";
 
 const OffersFilter = (props) => (
   <Filter {...props}>
@@ -59,6 +60,8 @@ export const Offers = (props) => {
       filters={<OffersFilter />}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
+      actions={<ListActions />}
+      exporter={exporter}
     >
       <Datagrid>
         <TextField label="id" source="id" />
