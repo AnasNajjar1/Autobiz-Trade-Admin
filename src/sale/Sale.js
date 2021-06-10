@@ -35,6 +35,7 @@ import validationStatusChoices from "../assets/choices/validationStatus";
 import moment from "moment";
 import MomentUtils from "@date-io/moment";
 import SetWinnerButton from "./SetWinnerButton";
+import DeletewinnerButton from "./DeleteWinnerButton";
 import { withStyles } from "@material-ui/core/styles";
 import {
   KeyboardDateInput,
@@ -382,6 +383,7 @@ export const ShowSale = (props) => {
                 <TextField source="email" />
               </ReferenceField>
               *{record && record.requestWinner && <SetWinnerButton />}
+              {record && record.deleteWinner && <DeletewinnerButton />}
             </Datagrid>
           </ReferenceManyField>
         </Tab>
