@@ -14,7 +14,7 @@ import {
   ReferenceField,
   Datagrid,
   CreateButton,
-  Pagination
+  Pagination,
 } from "react-admin";
 import { Link } from "react-router-dom";
 
@@ -33,7 +33,7 @@ export const EditGroup = (props) => {
   return (
     <Edit undoable={false} {...props}>
       <SimpleForm>
-        <TextInput source="id" disabled />
+        <TextInput label="id" source="id" disabled />
         <TextInput label="name" source="name" validate={required()}></TextInput>
       </SimpleForm>
     </Edit>
@@ -71,33 +71,42 @@ const AddMemberButton = ({ classes, record }) => (
 );
 
 export const ShowGroup = (props) => {
+  const translate = useTranslate();
   return (
-    <Show {...props}>
+    <Show {...props} title={translate("group") + ` #${props.id}`}>
       <TabbedShowLayout>
         <Tab label="group">
-          <TextField source="id" />
+          <TextField label="Id" source="id" />
           <TextField label="name" source="name" />
         </Tab>
         <Tab label="owners" path="owners">
-          <ReferenceManyField pagination={<Pagination />} reference="groupUser" target="groupOwners">
+          <ReferenceManyField
+            pagination={<Pagination />}
+            reference="groupUser"
+            target="groupOwners"
+          >
             <Datagrid rowClick="expand">
-              <TextField source="id" />
+              <TextField label="Id" source="id" />
               <TextField label="autobizUserId" source="autobizUserId" />
               <ReferenceField
                 label="userName"
                 source="autobizUserId"
                 reference="facadeUser"
               >
-                <TextField source="name" />
+                <TextField label="name" source="name" />
               </ReferenceField>
             </Datagrid>
           </ReferenceManyField>
           <AddOwnerButton />
         </Tab>
         <Tab label="members" path="members">
-          <ReferenceManyField pagination={<Pagination />} reference="groupUser" target="groupMembers">
+          <ReferenceManyField
+            pagination={<Pagination />}
+            reference="groupUser"
+            target="groupMembers"
+          >
             <Datagrid rowClick="expand">
-              <TextField source="id" />
+              <TextField label="Id" source="id" />
               <TextField label="autobizUserId" source="autobizUserId" />
               <ReferenceField
                 label="userName"

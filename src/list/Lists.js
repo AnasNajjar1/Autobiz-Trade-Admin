@@ -12,7 +12,7 @@ export const Lists = (props) => {
       perPage={25}
     >
       <Datagrid rowClick="show">
-        <TextField source="id" />
+        <TextField label="Id" source="id" />
         <TextField label="name" source="name" />
       </Datagrid>
     </List>

@@ -29,7 +29,7 @@ export default async (type, params) => {
     return await Auth.signOut();
   }
   if (type === AUTH_LOGIN) {
-    storeTranslations();
+    //storeTranslations();
     const { username, password } = params;
     await signInAutobiz(
       username, // Required, the username
