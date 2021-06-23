@@ -18,14 +18,13 @@ import { withStyles } from "@material-ui/core/styles";
 import { TRADE_URL } from "../config";
 import Stars from "@material-ui/icons/Stars";
 import FlashOn from "@material-ui/icons/FlashOn";
-import { exporter, SalesActions} from "./SalesExporter"
+import { exporter, SalesActions } from "./SalesExporter";
 const styles = {
   link: {
     color: "#9097ac",
     fontWeight: "bold",
   },
 };
-
 
 export const Sales = (props) => {
   const translate = useTranslate();
@@ -78,7 +77,7 @@ const LinkRecord = withStyles(styles)(({ classes, record }) => {
   if (
     record &&
     record.status &&
-    ["LIVE", "CLOSED", "FINISHED"].includes(record.status)
+    ["LIVE", "CLOSED", "FINISHED", "INACTIVE"].includes(record.status)
   )
     return (
       <a
