@@ -6,17 +6,28 @@ import {
   ReferenceInput,
   SelectInput,
   useTranslate,
-  TextInput
+  TextInput,
 } from "react-admin";
 import { parse } from "query-string";
+import { useNotify } from "react-admin";
 
 export const CreateRequest = (props) => {
   const translate = useTranslate();
   const { vehicleId: vehicleIdString } = parse(props.location.search);
   const vehicleId = vehicleIdString ? parseInt(vehicleIdString, 10) : null;
 
+  const notify = useNotify();
+
+  const onFailure = (e) => {
+    notify(e.message?.error);
+  };
+
   return (
-    <Create {...props} title={translate("createANewRequest")}>
+    <Create
+      onFailure={onFailure}
+      {...props}
+      title={translate("createANewRequest")}
+    >
       <SimpleForm {...props}>
         <NumberInput
           source="vehicleId"
@@ -30,11 +41,8 @@ export const CreateRequest = (props) => {
         >
           <SelectInput optionText="name" />
         </ReferenceInput>
-        <TextInput multiline label="comment" source="comment"/>
+        <TextInput multiline label="comment" source="comment" />
       </SimpleForm>
     </Create>
   );
 };
-
-const redirect = (basePath, id, data) =>
-  `/vehicle/${data.vehicleId}/show/requests`;
