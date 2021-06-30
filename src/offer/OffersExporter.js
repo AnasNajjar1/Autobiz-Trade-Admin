@@ -9,6 +9,7 @@ import {
 } from "react-admin";
 import jsonExport from "jsonexport/dist";
 import moment from "moment";
+import _ from 'lodash'
 
 export const exporter = (posts) => {
   jsonExport(
@@ -55,6 +56,7 @@ export const exporter = (posts) => {
               "YYYY-MM-DD HH:mm:ss"
             );
           }
+          value = _.omit(value, ["offerIsWinner"]);
           return value;
         },
       },
