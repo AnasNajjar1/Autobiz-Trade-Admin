@@ -6,6 +6,7 @@ import {
   Filter,
   DateInput,
   CheckboxGroupInput,
+  AutocompleteInput
 } from "react-admin";
 export const SalesFilter = (props) => (
   <Filter {...props}>
@@ -49,8 +50,16 @@ export const SalesFilter = (props) => (
       resettable
       alwaysOn
     />
-    <ReferenceInput source="groupId" reference="group" alwaysOn>
-      <SelectInput label="Group" source="groupId" resettable />
+    <ReferenceInput
+      source="groupId"
+      reference="group"
+      sort={{ field: "name", order: "ASC" }}
+      perPage={1000}
+      alwaysOn
+    >
+      <AutocompleteInput
+        optionText="name"
+      />
     </ReferenceInput>
 
     <CheckboxGroupInput
