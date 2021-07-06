@@ -169,7 +169,7 @@ export const ShowVehicle = (props) => {
 
 const VehicleForm = (type) => {
   return (
-    <TabbedForm submitOnEnter={false}>
+    <TabbedForm submitOnEnter={false} redirect="show">
       <FormTab label="record" key="record">
         {type === "edit" && (
           <TextInput disabled label="vehicleId" source="id" label="id" />
