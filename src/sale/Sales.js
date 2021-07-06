@@ -46,7 +46,7 @@ export const Sales = (props) => {
         <TextField label="registration" source="vehicle.registration" />
         <TextField label="validationStatus" source="validationStatus" />
         <TextField label="status" source="status" />
-        <TextField label="supplyType" source="supplyType" />
+        <TextField label="saleType" source="supplyType" />
         <DateField label="salesStart" source="startDateTime" />
         <DateField label="salesEnd" source="endDateTime" />
         <TextField label="make" source="vehicle.brandLabel" />

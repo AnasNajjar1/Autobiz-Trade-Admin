@@ -29,7 +29,7 @@ export const SalesFilter = (props) => (
     </ReferenceInput>
 
     <SelectInput
-      label="supplyType"
+      label="saleType"
       source="supplyType"
       choices={[
         { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
