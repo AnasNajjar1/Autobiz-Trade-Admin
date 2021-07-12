@@ -9,8 +9,17 @@ import {
   useTranslate,
 } from "react-admin";
 
+import { makeStyles } from "@material-ui/core/styles";
+const useStyles = makeStyles((theme) => ({
+  commentSaleStyle: {
+    maxWidth: 300,
+    overflowWrap: "break-word",
+  },
+}));
+
 export const Requests = (props) => {
   const translate = useTranslate();
+  const classes = useStyles();
   return (
     <List
       {...props}
@@ -25,7 +34,11 @@ export const Requests = (props) => {
         <TextField label="statusId" source="statusId" />
         <TextField label="vehicleId" source="vehicleId" />
         <TextField label="comment" source="comment" />
-        <TextField label="Sale Comment" source="saleComment" />
+        <TextField
+          label="Sale Comment"
+          source="saleComment"
+          cellClassName={classes.commentSaleStyle}
+        />
         <TextField label="status" source="statusName" />
         <TextField label="partner" source="partnerName" />
         <NumberField
