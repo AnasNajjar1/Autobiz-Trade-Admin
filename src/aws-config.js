@@ -1,4 +1,5 @@
 import { B2B_API } from "./config";
+import auth from "./providers/Auth";
 
 const config = {
   Auth: {
@@ -47,10 +48,14 @@ const config = {
         name: "b2bPlateform",
         region: "eu-west-1",
         endpoint: B2B_API,
-        // custom_header: async () => {
-        //     //return { Authorization : 'token' }
-        //     // Alternatively, with Cognito User Pools use this:
-        //     return { Authorization: `Bearer ${(await Auth.currentSession()).getAccessToken().getJwtToken()}` }}
+        custom_header: async () => {
+          // Alternatively, with Cognito User Pools use this:
+          return auth.token()
+            ? {
+                Authorization: `Bearer ${auth.token()}`,
+              }
+            : {};
+        },
       },
     ],
   },

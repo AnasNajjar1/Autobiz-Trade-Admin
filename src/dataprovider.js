@@ -3,9 +3,10 @@ import { HttpError } from "react-admin";
 import simpleRestProvider from "ra-data-simple-rest";
 import _ from "lodash";
 import { API } from "aws-amplify";
+import auth from "./providers/Auth";
 
 //this method to get the signed api call
-const httpClientAWS = async (path, options) => {
+export const httpClientAWS = async (path, options) => {
   let { method, body } = options;
 
   if (body !== undefined) {
@@ -30,17 +31,17 @@ const httpClientAWS = async (path, options) => {
 
     return { headers: myHeaders, json };
   } catch (e) {
-    if (e.response && e.response.data) {
-      return Promise.reject(new HttpError(e.response.data));
-    } else {
-      throw new Error(e);
-    }
+    if (e.response?.status === 403) await auth.refreshToken();
+    return e.response?.data
+      ? Promise.reject(e.response?.data)
+      : Promise.reject(e);
   }
 };
 
 const restProvider = simpleRestProvider("", httpClientAWS);
 
 export default async (type, resource, params) => {
+  let path = "v2/admin/";
   switch (resource) {
     default:
     case "facadePointOfSale":
@@ -53,48 +54,36 @@ export default async (type, resource, params) => {
       return restProvider(type, "admin/facade/" + resource, params);
     }
     case "partnerRequests":
-      return restProvider(type, "admin/partner/requests", params);
+      return restProvider(type, "v2/admin/partner/requests", params);
     case "partnerOffers":
-      return restProvider(type, "admin/partner/offers", params);
+      return restProvider(type, "v2/admin/partner/offers", params);
     case "pointOfSale":
-    case "offer":
-    case "sale":
     case "log":
     case "status":
-    case "vehicle":
     case "group":
     case "groupUser":
     case "list":
     case "config":
-    case "partner":
-    case "auction": {
+    case "auction":
       return restProvider(type, "admin/" + resource, params);
-    }
-
-    // case "stock":
-
-    // case "stockOffline":
-    // case "stockPending":
-    // case "stockOnSale":
-    // case "stockAuctionFinished":
-    // case "stockAuctionFailed":
-    // case "stockPurchasedImmediately":
-    // case "stockSubmissionsOnlyFinished":
-    // case "stockSold":
-
-    // case "offertoprivate":
-
-    // case "offertoprivateOffline":
-    // case "offertoprivateOnSale":
-    // case "offertoprivatePending":
-    // case "offertoprivateAuctionFinished":
-    // case "offertoprivateAubmissionsOnlyFinished":
-    // case "offertoprivateAuctionFailed":
-    // case "offertoprivatePurchasedImmediately":
-    // case "offertoprivateSubmissionsOnlyFinished":
-    // case "offertoprivateSold": {
-    //   return restProvider(type, "admin/" + "vehicle", params);
-    // }
+    case "sale":
+    case "offer":
+      switch (type) {
+        case "DELETE":
+        case "DELETE_MANY":
+          path = "admin/";
+      }
+      return restProvider(type, path + resource, params);
+    case "vehicle":
+      switch (type) {
+        case "CREATE":
+        case "DELETE":
+        case "DELETE_MANY":
+          path = "admin/";
+      }
+      return restProvider(type, path + resource, params);
+    case "partner":
+      return restProvider(type, path + resource, params);
     case "users": {
       return getUserData(type, resource, params);
     }

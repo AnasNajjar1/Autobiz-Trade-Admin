@@ -26,7 +26,7 @@ const DeleteWinnerButton = (props) => {
     const { record } = props;
 
     try {
-      await API.put("b2bPlateform", `/admin/sale/${record.saleId}`, {
+      await API.put("b2bPlateform", `/v2/admin/sale/${record.saleId}`, {
         body: {
           winner: null,
         },

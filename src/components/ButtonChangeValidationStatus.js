@@ -15,7 +15,7 @@ const ButtonChangeValidationStatus = (props) => {
     const { record, showNotification } = props;
 
     try {
-      await API.put("b2bPlateform", `/admin/sale/${record.id}`, {
+      await API.put("b2bPlateform", `/v2/admin/sale/${record.id}`, {
         body: {
           validationStatus: newValidationStatus,
         },

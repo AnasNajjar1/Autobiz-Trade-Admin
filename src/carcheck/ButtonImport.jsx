@@ -13,7 +13,7 @@ const ButtonImport = (props) => {
     try {
       const sale = await API.post(
         "b2bPlateform",
-        `/carcheckImport/${record.id}`
+        `/v2/carcheckImport/${record.id}`
       );
       showNotification(`Sale created ${sale.saleId}`);
       push(`/vehicle/${sale.vehicleId}/show/sale`);

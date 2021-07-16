@@ -1,12 +1,13 @@
 import React, { useCallback, useState } from "react";
-import { TextInput, ImageField, regex } from "react-admin";
+import { TextInput, regex } from "react-admin";
 import { useField, useForm } from "react-final-form";
-import { Storage } from "aws-amplify";
 import awsconfig from "../aws-config";
 import Lightbox from "react-image-lightbox";
 import "react-image-lightbox/style.css";
+import { httpClientAWS } from "../dataprovider";
+
 const S3CustomUploader = ({ source, label, type = "image" }) => {
-  const b2bUploadPublicUrl = `https://${awsconfig.Storage.bucket}.s3-${awsconfig.Storage.region}.amazonaws.com/public/`;
+  const b2bUploadPublicUrl = `https://${awsconfig.Storage.bucket}.s3-${awsconfig.Storage.region}.amazonaws.com/`;
   const form = useForm();
   const field = useField();
   const value = field.input.value;
@@ -14,39 +15,37 @@ const S3CustomUploader = ({ source, label, type = "image" }) => {
   const fileExtention = src ? checkExtension(src) : "";
   const [zoomImage, setZoomImage] = useState(false);
 
-  const getBase64 = (file, cb) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      cb(reader.result);
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  };
-
   const validateURL = regex(
     new RegExp("^https*://.*\\.[a-z].{2,3}"),
     "Must be an URL"
   );
 
+  function convertFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = reject;
+    });
+  }
+
   const showLightbox = useCallback(() => setZoomImage(true), []);
   const hideLightbox = useCallback(() => setZoomImage(false), []);
   const handleChangeImage = useCallback(
-    (fileObj) => {
-      getBase64(fileObj[0], (result) => {
-        let filename = new Date().getTime();
-        const extension = fileObj[0].name.match(new RegExp("[^.]+$"));
-        filename = filename + "." + extension;
-        Storage.put(filename, fileObj[0], {
-          contentType: fileObj[0].type,
-          ACL: "public-read",
-        })
-          .then((result) => {
-            form.change(source, b2bUploadPublicUrl + result.key);
-          })
-          .catch((err) => console.log(err));
-      });
+    async (fileObj) => {
+      try {
+        const imgBase64 = await convertFileToBase64(fileObj[0]);
+        const result = await httpClientAWS("/admin/image", {
+          method: "POST",
+          body: JSON.stringify({
+            image: imgBase64,
+            bucket: awsconfig.Storage.bucket,
+          }),
+        });
+        return form.change(source, b2bUploadPublicUrl + result.json.path);
+      } catch (err) {
+        console.log(err);
+      }
     },
     [b2bUploadPublicUrl, form, source]
   );
@@ -119,15 +118,12 @@ const checkExtension = (file) => {
     case "png":
     case "gif":
       return "img"; // There's was a typo in the example where
-      break; // the alert ended with pdf instead of gif.
     case "mp4":
     case "mp3":
     case "ogg":
       return "video";
-      break;
     case "html":
       return "html";
-      break;
   }
 };
 
