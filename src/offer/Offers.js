@@ -11,6 +11,7 @@ import {
   DateField,
   useTranslate,
   SelectInput,
+  DateInput,
 } from "react-admin";
 import { countryChoices } from "../assets/choices/country";
 import { exporter, ListActions } from "./OffersExporter";
@@ -40,6 +41,18 @@ const OffersFilter = (props) => (
         { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
         { id: "STOCK", name: "STOCK" },
       ]}
+      alwaysOn
+    />
+    <DateInput
+      label="saleStartTime"
+      source="startDateTimeMin"
+      resettable
+      alwaysOn
+    />
+    <DateInput
+      label="saleEndTime"
+      source="endDateTimeMax"
+      resettable
       alwaysOn
     />
     <SelectInput
