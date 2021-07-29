@@ -6,8 +6,10 @@ import {
   Filter,
   DateInput,
   CheckboxGroupInput,
-  AutocompleteInput
+  AutocompleteInput,
+  useTranslate
 } from "react-admin";
+
 export const SalesFilter = (props) => (
   <Filter {...props}>
     <TextInput
@@ -24,7 +26,7 @@ export const SalesFilter = (props) => (
       alwaysOn
       resettable
     />
-    <ReferenceInput source="listId" reference="list" alwaysOn>
+    <ReferenceInput label="list" source="listId" reference="list" alwaysOn>
       <SelectInput source="name" resettable />
     </ReferenceInput>
 
@@ -51,6 +53,7 @@ export const SalesFilter = (props) => (
       alwaysOn
     />
     <ReferenceInput
+      label="group"
       source="groupId"
       reference="group"
       sort={{ field: "name", order: "ASC" }}
@@ -61,8 +64,8 @@ export const SalesFilter = (props) => (
         optionText="name"
       />
     </ReferenceInput>
-
     <CheckboxGroupInput
+      label="Status"
       source="status"
       choices={[
         { id: "INACTIVE", name: "INACTIVE" },
