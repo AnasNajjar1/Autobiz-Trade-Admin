@@ -34,14 +34,13 @@ import {
   ChipField,
   CreateButton,
   useTranslate,
+  DateInput,
 } from "react-admin";
-import MomentUtils from "@date-io/moment";
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import S3CustomUploader from "../components/S3CustomUploader";
 import { LogActionLabel } from "../components/LogActionLabel";
 import { LogPanel } from "../components/LogPanel";
-import { KeyboardDateInput } from "../components/CustomInput";
 import ButtonChangeValidationStatus from "../components/ButtonChangeValidationStatus";
 import RimSizeInput from "../components/RimSizeInput";
 
@@ -123,7 +122,7 @@ export const ShowVehicle = (props) => {
             <Datagrid rowClick="expand" expand={<Offers />}>
               <TextField source="partnerName" label="Partner" />
               <TextField source="comment" />
-              <TextField source="saleComment" label="Sale Comment"/>
+              <TextField source="saleComment" label="Sale Comment" />
               <DateField source="createdAt" showTime />
               <DateField
                 label="Last offer received at"
@@ -208,21 +207,19 @@ const VehicleForm = (type) => {
           )}
         </FormDataConsumer>
         <TextInput label="version" source="versionLabel" />
-
-        <KeyboardDateInput
+        <DateInput
           source="firstRegistrationDate"
           label="firstRegistrationDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
+          format={(v) => (v !== "" ? v : null)}
         />
-        <br/>
-        <KeyboardDateInput
+        <br />
+
+        <DateInput
           source="entryStockDate"
           label="entryStockDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
+          format={(v) => (v !== "" ? v : null)}
         />
-        <br/>
+        <br />
         <SelectInput
           label="profileCosts"
           source="profileCosts"
@@ -289,7 +286,7 @@ const VehicleForm = (type) => {
         <ArrayInput label="carPicturesOthers" source="carPicturesOthers">
           <SimpleFormIterator>
             <TextInput source="title" label="description" />
-            <S3CustomUploader source="link" label="url"/>
+            <S3CustomUploader source="link" label="url" />
           </SimpleFormIterator>
         </ArrayInput>
       </FormTab>
@@ -418,19 +415,17 @@ const VehicleForm = (type) => {
       </FormTab>
 
       <FormTab label="administrativeDetails">
-        <KeyboardDateInput
+        <DateInput
           source="purchaseDate"
           label="purchaseDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
-        />
-        <KeyboardDateInput
-          source="gcDate"
-          label="gcDate"
-          providerOptions={{ utils: MomentUtils }}
-          options={{ format: "DD/MM/YYYY", clearable: true }}
+          format={(v) => (v !== "" ? v : null)}
         />
 
+        <DateInput
+          source="gcDate"
+          label="gcDate"
+          format={(v) => (v !== "" ? v : null)}
+        />
         <TextInput source="registration" label="registration" />
 
         <SelectInput
@@ -470,21 +465,22 @@ const VehicleForm = (type) => {
           choices={vatChoices}
           options={{
             SelectProps: { displayEmpty: true },
-            InputLabelProps: { shrink: true }
+            InputLabelProps: { shrink: true },
           }}
         />
         <FormDataConsumer>
-          {
-            ({ formData, ...rest }) => formData.vat === true &&
-            <SelectInput
-              label="vatDetails"
-              source="vatDetails"
-              choices={vatDetailsChoices}
-              options={{
-                SelectProps: { displayEmpty: true },
-                InputLabelProps: { shrink: true }
-              }}
-            />
+          {({ formData, ...rest }) =>
+            formData.vat === true && (
+              <SelectInput
+                label="vatDetails"
+                source="vatDetails"
+                choices={vatDetailsChoices}
+                options={{
+                  SelectProps: { displayEmpty: true },
+                  InputLabelProps: { shrink: true },
+                }}
+              />
+            )
           }
         </FormDataConsumer>
         <SelectInput
