@@ -62,6 +62,7 @@ import zone from "../assets/choices/zone";
 import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
 import vatChoices from "../assets/choices/vat";
 import vatDetailsChoices from "../assets/choices/vatDetails";
+import boolOrNullOrDnk from "../assets/choices/boolOrNullOrDnk";
 
 export const CreateVehicle = (props) => {
   const form = VehicleForm("create");
@@ -446,12 +447,12 @@ const VehicleForm = (type) => {
         <SelectInput
           label="userManual"
           source="userManual"
-          choices={boolOrNullChoices}
+          choices={boolOrNullOrDnk}
         />
         <SelectInput
           label="secondSetKey"
           source="secondSetKey"
-          choices={boolOrNullChoices}
+          choices={boolOrNullOrDnk}
         />
       </FormTab>
 
