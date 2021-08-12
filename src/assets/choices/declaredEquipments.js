@@ -6,4 +6,7 @@ export default [
   { id: "parking_assistance", name: "parking_assistance" },
   { id: "auto_ac", name: "auto_ac" },
   { id: "bluetooth", name: "bluetooth" },
+  { id: "manual_ac", name: "climatisationManuelle" },
+  { id: "none", name: "climatisationAbsente" },
+
 ];
