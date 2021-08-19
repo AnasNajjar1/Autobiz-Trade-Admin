@@ -35,6 +35,7 @@ export const PointOfSales = (props) => {
       <Datagrid rowClick="edit">
         <TextField label="pointOfSaleId" source="id" />
         <TextField label="name" source="name" />
+        <TextField label="company" source="company" />
         <TextField label="zipCode" source="zipCode" />
         <TextField label="city" source="city" />
         <TextField label="country" source="country" />

@@ -83,7 +83,6 @@ export const CreatePointOfSale = (props) => {
             )
           }
         </FormDataConsumer>
-
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.action === "create" && (
@@ -95,7 +94,13 @@ export const CreatePointOfSale = (props) => {
             )
           }
         </FormDataConsumer>
-
+        <FormDataConsumer>
+          {({ formData, ...rest }) =>
+            formData.action === "create" && (
+              <TextInput label="company" source="company"></TextInput>
+            )
+          }
+        </FormDataConsumer>
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.action === "create" && (
@@ -103,7 +108,6 @@ export const CreatePointOfSale = (props) => {
             )
           }
         </FormDataConsumer>
-
         <FormDataConsumer>
           {({ formData, ...rest }) =>
             formData.action === "create" && (
@@ -128,6 +132,7 @@ export const EditPointOfSale = (props) => {
         <TextInput source="id" disabled />
         <TextInput source="uuid" disabled />
         <TextInput label="name" source="name" validate={required()}></TextInput>
+        <TextInput label="company" source="company"></TextInput>
         <S3CustomUploader label="picture" source="picture" />
         <RichTextInput label="info" source="info"></RichTextInput>
         <TextInput label="zipCode" source="zipCode"></TextInput>
@@ -161,7 +166,7 @@ export const EditPointOfSale = (props) => {
         <ArrayInput label="documentation" source="documentation">
           <SimpleFormIterator>
             <TextInput label="title" source="title" />
-            <S3CustomUploader label="link" source="pdf" type="document"/>
+            <S3CustomUploader label="link" source="pdf" type="document" />
             <RichTextInput label="details" source="text" />
           </SimpleFormIterator>
         </ArrayInput>
