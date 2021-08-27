@@ -10,6 +10,7 @@ import {
 } from "react-admin";
 
 import { makeStyles } from "@material-ui/core/styles";
+import RequestsFilter from "./RequestsFilter";
 const useStyles = makeStyles((theme) => ({
   commentSaleStyle: {
     maxWidth: 300,
@@ -27,6 +28,7 @@ export const Requests = (props) => {
       bulkActionButtons={false}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
+      filters={<RequestsFilter/>}
     >
       <Datagrid>
         <TextField label="id" source="id" />
