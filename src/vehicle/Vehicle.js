@@ -62,6 +62,7 @@ import salesSpeedNameChoices from "../assets/choices/salesSpeedName";
 import vatChoices from "../assets/choices/vat";
 import vatDetailsChoices from "../assets/choices/vatDetails";
 import boolOrNullOrDnk from "../assets/choices/boolOrNullOrDnk";
+import { colorChoices } from "../assets/choices/vehicleColor";
 
 export const CreateVehicle = (props) => {
   const form = VehicleForm("create");
@@ -370,6 +371,7 @@ const VehicleForm = (type) => {
         />
         <TextInput label="seats" source="seats" />
         <TextInput label="door" source="door" />
+        <SelectInput label="color" source="color" choices={colorChoices} />
         <TextInput label="ch" source="ch" />
         <TextInput label="kw" source="kw" />
         <TextInput label="fiscal" source="fiscal" />
