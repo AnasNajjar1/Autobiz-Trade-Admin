@@ -17,6 +17,7 @@ import {
   Pagination,
 } from "react-admin";
 import { Link } from "react-router-dom";
+import { ListShowActions } from "./MembersGroupExporter";
 
 export const CreateGroup = (props) => {
   const translate = useTranslate();
@@ -73,7 +74,11 @@ const AddMemberButton = ({ classes, record }) => (
 export const ShowGroup = (props) => {
   const translate = useTranslate();
   return (
-    <Show {...props} title={translate("group") + ` #${props.id}`}>
+    <Show
+      {...props}
+      title={translate("group") + ` #${props.id}`}
+      actions={<ListShowActions />}
+    >
       <TabbedShowLayout>
         <Tab label="group">
           <TextField label="Id" source="id" />
