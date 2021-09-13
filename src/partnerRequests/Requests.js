@@ -28,13 +28,14 @@ export const Requests = (props) => {
       bulkActionButtons={false}
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
-      filters={<RequestsFilter/>}
+      filters={<RequestsFilter />}
     >
       <Datagrid>
+        <TextField label="vehicleId" source="vehicleId" />
         <TextField label="id" source="id" />
+        <TextField label="fileNumber" source="fileNumber" />
         <TextField label="uuid" source="uuid" />
         <TextField label="statusId" source="statusId" />
-        <TextField label="vehicleId" source="vehicleId" />
         <TextField label="comment" source="comment" />
         <TextField
           label="Sale Comment"
