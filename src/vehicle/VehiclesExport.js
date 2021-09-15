@@ -1,14 +1,13 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import {
   downloadCSV,
   TopToolbar,
   CreateButton,
-  ExportButton,
   useListContext,
-  sanitizeListRestProps,
 } from "react-admin";
 import jsonExport from "jsonexport/dist";
 import moment from "moment";
+import ExportButtonCustom from "../components/ExportButtonCustom";
 
 export const exporter = (posts) => {
   jsonExport(
@@ -74,37 +73,22 @@ export const exporter = (posts) => {
 };
 
 export const ListActions = (props) => {
-  const { className, filters, ...rest } = props;
-  const {
-    currentSort,
-    resource,
-    displayedFilters,
-    filterValues,
-    basePath,
-    showFilter,
-    total,
-  } = useListContext();
+  const { className, ...rest } = props;
+  const { currentSort, resource, filterValues, basePath, total } =
+    useListContext();
   const date = new Date();
   const from = moment(date).subtract(4, "months").format("YYYY-MM-DD HH:mm:ss");
   const to = moment(date).format("YYYY-MM-DD HH:mm:ss");
-  filterValues.createdAtInterval = [from, to];
   return (
-    <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
-      {filters &&
-        cloneElement(filters, {
-          resource,
-          showFilter,
-          displayedFilters,
-          filterValues,
-          context: "button",
-        })}
+    <TopToolbar className={className}>
       <CreateButton basePath={basePath} />
-      <ExportButton
+      <ExportButtonCustom
         disabled={total === 0}
         resource={resource}
         sort={currentSort}
-        filterValues={filterValues}
+        filterPermanent={{ createdAtInterval: [from, to] }}
         maxResults={5000}
+        exporter={exporter}
       />
     </TopToolbar>
   );

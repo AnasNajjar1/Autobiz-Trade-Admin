@@ -1,17 +1,12 @@
 import React from "react";
-import {
-  downloadCSV,
-  TopToolbar,
-  ExportButton,
-  useListContext,
-  sanitizeListRestProps,
-  useTranslate,
-} from "react-admin";
+import { downloadCSV, TopToolbar, useTranslate } from "react-admin";
 import jsonExport from "jsonexport/dist";
 import moment from "moment";
 import _ from "lodash";
 import { Box, Button } from "@material-ui/core";
 import { FormatColorResetTwoTone } from "@material-ui/icons";
+import ExportButtonCustom from "../components/ExportButtonCustom";
+import { getCreatedAtInterval } from "../utils/exportFile";
 export const exporter = (posts) => {
   jsonExport(
     posts,
@@ -134,31 +129,35 @@ export const exporter = (posts) => {
 };
 
 export const SalesActions = (props) => {
-  const { className, filters, ...rest } = props;
-  const { currentSort, resource, filterValues, total, setFilters } =
-    useListContext();
-  const date = new Date();
-  const from = moment(date).subtract(4, "months").format("YYYY-MM-DD HH:mm:ss");
-  const to = moment(date).format("YYYY-MM-DD HH:mm:ss");
-  filterValues.createdAtInterval = [from, to];
+  const { className, currentSort, resource, filterValues, total, setFilters } =
+    props;
   const translate = useTranslate();
-  const resetFilter = () => {
-    setFilters({}, []);
+  const resetFilter = () => setFilters({}, []);
+  const { startDateTimeMin, endDateTimeMax } = filterValues;
+  const createdAtInterval = getCreatedAtInterval(
+    startDateTimeMin,
+    endDateTimeMax
+  );
+  const filterPermanent = {
+    startDateTimeMin: null,
+    endDateTimeMax: null,
+    createdAtInterval,
   };
   return (
-    <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
+    <TopToolbar className={className}>
       <Box>
         <Button size="small" color="primary" onClick={resetFilter}>
           <FormatColorResetTwoTone />
           <span> {translate("reset_filter")} </span>
         </Button>
       </Box>
-      <ExportButton
+      <ExportButtonCustom
         disabled={total === 0}
         resource={resource}
         sort={currentSort}
-        filterValues={filterValues}
+        filterPermanent={filterPermanent}
         maxResults={5000}
+        exporter={exporter}
       />
     </TopToolbar>
   );
