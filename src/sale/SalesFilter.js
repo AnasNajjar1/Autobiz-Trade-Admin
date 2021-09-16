@@ -42,13 +42,13 @@ export const SalesFilter = (props) => {
         />
 
         <DateInput
-          label="saleStartTime"
+          label="startDateTimeMin"
           source="startDateTimeMin"
           resettable
           alwaysOn
         />
         <DateInput
-          label="saleEndTime"
+          label="endDateTimeMax"
           source="endDateTimeMax"
           resettable
           alwaysOn

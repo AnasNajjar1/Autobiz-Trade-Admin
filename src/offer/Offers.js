@@ -12,10 +12,12 @@ import {
   useTranslate,
   SelectInput,
   DateInput,
+  SelectField,
 } from "react-admin";
 import { countryChoices } from "../assets/choices/country";
 import { exporter, ListActions } from "./OffersExporter";
-
+import { offerType} from "../assets/choices/offerType";
+import saleStatus from "../assets/choices/saleStatus";
 const OffersFilter = (props) => (
   <Filter {...props}>
     <TextInput
@@ -44,13 +46,13 @@ const OffersFilter = (props) => (
       alwaysOn
     />
     <DateInput
-      label="saleStartTime"
+      label="startDateTimeMin"
       source="startDateTimeMin"
       resettable
       alwaysOn
     />
     <DateInput
-      label="saleEndTime"
+      label="endDateTimeMax"
       source="endDateTimeMax"
       resettable
       alwaysOn
@@ -124,8 +126,18 @@ export const Offers = (props) => {
             currency: "EUR",
           }}
         />
-        <TextField label="offerType" source="offerType" />
-        <TextField label="offerStatus" source="sale.salesStat.status" />
+
+        <SelectField
+          source="offerType"
+          label="offerType"
+          choices={offerType}
+        />
+
+        <SelectField
+          source="sale.salesStat.status"
+          label="offerStatus"
+          choices={saleStatus}
+        />
         <DateField label="createdAt" source="createdAt" showTime />
         <TextField label="userId" source="userId" />
 

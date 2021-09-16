@@ -1,4 +1,4 @@
 export default [
-  { id: "auction", name: "auction" },
-  { id: "immediatePurchase", name: "immediatePurchase" }
+  { id: "OFFER_TO_PRIVATE", name: "OFFER_TO_PRIVATE" },
+  { id: "STOCK", name: "STOCK" },
 ];
