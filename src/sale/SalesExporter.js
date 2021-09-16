@@ -1,15 +1,17 @@
-import React, { cloneElement } from "react";
+import React from "react";
 import {
   downloadCSV,
   TopToolbar,
   ExportButton,
   useListContext,
   sanitizeListRestProps,
+  useTranslate,
 } from "react-admin";
 import jsonExport from "jsonexport/dist";
 import moment from "moment";
 import _ from "lodash";
-
+import { Box, Button } from "@material-ui/core";
+import { FormatColorResetTwoTone } from "@material-ui/icons";
 export const exporter = (posts) => {
   jsonExport(
     posts,
@@ -119,7 +121,7 @@ export const exporter = (posts) => {
             "commentInt",
             "carcheckId",
             "expressSale",
-            "vehicleId"
+            "vehicleId",
           ]);
           return value;
         },
@@ -133,29 +135,24 @@ export const exporter = (posts) => {
 
 export const SalesActions = (props) => {
   const { className, filters, ...rest } = props;
-  const {
-    currentSort,
-    resource,
-    displayedFilters,
-    filterValues,
-    showFilter,
-    total,
-  } = useListContext();
+  const { currentSort, resource, filterValues, total, setFilters } =
+    useListContext();
   const date = new Date();
   const from = moment(date).subtract(4, "months").format("YYYY-MM-DD HH:mm:ss");
   const to = moment(date).format("YYYY-MM-DD HH:mm:ss");
   filterValues.createdAtInterval = [from, to];
-
+  const translate = useTranslate();
+  const resetFilter = () => {
+    setFilters({}, []);
+  };
   return (
     <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
-      {filters &&
-        cloneElement(filters, {
-          resource,
-          showFilter,
-          displayedFilters,
-          filterValues,
-          context: "button",
-        })}
+      <Box>
+        <Button size="small" color="primary" onClick={resetFilter}>
+          <FormatColorResetTwoTone />
+          <span> {translate("reset_filter")} </span>
+        </Button>
+      </Box>
       <ExportButton
         disabled={total === 0}
         resource={resource}
