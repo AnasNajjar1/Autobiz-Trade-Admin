@@ -8,7 +8,7 @@ import {
   CheckboxGroupInput,
   AutocompleteInput,
 } from "react-admin";
-
+import { countryChoices } from "../assets/choices/country";
 export const SalesFilter = (props) => {
   return (
     <>
@@ -63,6 +63,12 @@ export const SalesFilter = (props) => {
         >
           <AutocompleteInput optionText="name" />
         </ReferenceInput>
+        <SelectInput
+          label="country"
+          source="country"
+          alwaysOn
+          choices={countryChoices}
+        />
         <CheckboxGroupInput
           label="Status"
           source="status"
