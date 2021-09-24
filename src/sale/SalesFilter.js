@@ -27,10 +27,6 @@ export const SalesFilter = (props) => {
           alwaysOn
           resettable
         />
-        <ReferenceInput label="list" source="listId" reference="list" alwaysOn>
-          <SelectInput source="name" resettable />
-        </ReferenceInput>
-
         <SelectInput
           label="saleType"
           source="supplyType"
