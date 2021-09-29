@@ -1,17 +1,18 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { TextInput, ImageField, regex } from "react-admin";
 import { useField, useForm } from "react-final-form";
 import { Storage } from "aws-amplify";
 import awsconfig from "../aws-config";
-
-const S3CustomUploader = ({source, label, type="image"}) => {
+import Lightbox from "react-image-lightbox";
+import "react-image-lightbox/style.css";
+const S3CustomUploader = ({ source, label, type = "image" }) => {
   const b2bUploadPublicUrl = `https://${awsconfig.Storage.bucket}.s3-${awsconfig.Storage.region}.amazonaws.com/public/`;
   const form = useForm();
   const field = useField();
   const value = field.input.value;
   const src = Object.byString(value, source);
   const fileExtention = src ? checkExtension(src) : "";
-
+  const [zoomImage, setZoomImage] = useState(false);
 
   const getBase64 = (file, cb) => {
     let reader = new FileReader();
@@ -24,8 +25,13 @@ const S3CustomUploader = ({source, label, type="image"}) => {
     };
   };
 
-  const validateURL = regex(new RegExp("^https*://.*\\.[a-z].{2,3}"),"Must be an URL");
+  const validateURL = regex(
+    new RegExp("^https*://.*\\.[a-z].{2,3}"),
+    "Must be an URL"
+  );
 
+  const showLightbox = useCallback(() => setZoomImage(true), []);
+  const hideLightbox = useCallback(() => setZoomImage(false), []);
   const handleChangeImage = useCallback(
     (fileObj) => {
       getBase64(fileObj[0], (result) => {
@@ -50,11 +56,18 @@ const S3CustomUploader = ({source, label, type="image"}) => {
       <div style={{ marginBottom: "15px" }}>
         {fileExtention === "img" && (
           <div>
-            <img src={src} style={{ maxWidth: "300px" }}></img>
-          </div>)
-        }
+            <img
+              src={src}
+              style={{ maxWidth: "300px" }}
+              onClick={showLightbox}
+            ></img>
+            {zoomImage && (
+              <Lightbox mainSrc={src} onCloseRequest={hideLightbox} />
+            )}
+          </div>
+        )}
 
-        <TextInput label={label} source={source} validate={validateURL}/>
+        <TextInput label={label} source={source} validate={validateURL} />
         <label
           for={`file${source}`}
           style={{
@@ -74,7 +87,7 @@ const S3CustomUploader = ({source, label, type="image"}) => {
         <input
           id={`file${source}`}
           type="file"
-          accept={type === 'image' ? "image/*" : ""}
+          accept={type === "image" ? "image/*" : ""}
           style={{ display: "none" }}
           onChange={(e) => handleChangeImage(e.target.files)}
         ></input>
@@ -89,33 +102,32 @@ Object.byString = function (o, s) {
   var a = s.split(".");
   for (var i = 0, n = a.length; i < n; ++i) {
     var k = a[i];
-    if(o && k in o){
+    if (o && k in o) {
       o = o[k];
-    }else{
+    } else {
       return;
     }
   }
   return o;
 };
 
-const checkExtension = (file)  => {
-  var extension = file.substr((file.lastIndexOf('.') + 1));
+const checkExtension = (file) => {
+  var extension = file.substr(file.lastIndexOf(".") + 1);
   switch (extension) {
-  case 'jpg':
-  case 'jpeg':
-  case 'png':
-  case 'gif':
-      return "img" // There's was a typo in the example where
+    case "jpg":
+    case "jpeg":
+    case "png":
+    case "gif":
+      return "img"; // There's was a typo in the example where
       break; // the alert ended with pdf instead of gif.
-  case 'mp4':
-  case 'mp3':
-  case 'ogg':
-      return "video"
+    case "mp4":
+    case "mp3":
+    case "ogg":
+      return "video";
       break;
-  case 'html':
-      return "html"
+    case "html":
+      return "html";
       break;
-
   }
 };
 
