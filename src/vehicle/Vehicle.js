@@ -36,6 +36,7 @@ import {
   useTranslate,
   DateInput,
 } from "react-admin";
+
 import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import S3CustomUploader from "../components/S3CustomUploader";
@@ -371,7 +372,13 @@ const VehicleForm = (type) => {
         />
         <TextInput label="seats" source="seats" />
         <TextInput label="door" source="door" />
-        <SelectInput label="color" source="color" choices={colorChoices} />
+
+        {type === "edit" ? (
+          <TextInput label="color" source="color" validate={validateColor} />
+        ) : (
+          <SelectInput label="color" source="color" choices={colorChoices} />
+        )}
+
         <TextInput label="ch" source="ch" />
         <TextInput label="kw" source="kw" />
         <TextInput label="fiscal" source="fiscal" />
@@ -628,3 +635,8 @@ const validateURL = regex(
 );
 
 const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
+
+const validateColor = regex(
+  new RegExp("^[a-zA-ZàÀâÂäÄáÁéÉèÈêÊëËìÌîÎïÏòÒôÔöÖùÙûÛüÜçÇ’'ñ0-9 ]*$"),
+  "Wrong Format Color"
+);
