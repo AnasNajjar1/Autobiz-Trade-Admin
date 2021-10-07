@@ -1,4 +1,10 @@
-export default [
-  { id: "offerToPrivate", name: "offerToPrivate" },
-  { id: "stock", name: "stock" }
+export const offerType = [
+  { id: "submission", name: "submission" },
+  { id: "auction", name: "auction" },
+  { id: "immediatePurchase", name: "immediatePurchase" },
 ];
+
+export const offerTypeAuction =[
+  { id: "auction", name: "auction" },
+  { id: "immediatePurchase", name: "immediatePurchase" },
+]

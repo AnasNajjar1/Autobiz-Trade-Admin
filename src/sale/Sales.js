@@ -10,6 +10,7 @@ import {
   BooleanField,
   CardActions,
   ExportButton,
+  SelectField,
 } from "react-admin";
 import { SalesFilter } from "./SalesFilter";
 import Button from "@material-ui/core/Button";
@@ -19,6 +20,8 @@ import { TRADE_URL } from "../config";
 import Stars from "@material-ui/icons/Stars";
 import FlashOn from "@material-ui/icons/FlashOn";
 import { exporter, SalesActions } from "./SalesExporter";
+import saleStatus from "../assets/choices/saleStatus";
+import salesType from "../assets/choices/salesType";
 const styles = {
   link: {
     color: "#9097ac",
@@ -45,8 +48,12 @@ export const Sales = (props) => {
         <TextField label="fileNumber" source="vehicle.fileNumber" />
         <TextField label="registration" source="vehicle.registration" />
         <TextField label="validationStatus" source="validationStatus" />
-        <TextField label="status" source="status" />
-        <TextField label="saleType" source="supplyType" />
+        <SelectField source="status" label="status" choices={saleStatus} />
+        <SelectField
+          source="supplyType"
+          label="saleType"
+          choices={salesType}
+        />
         <DateField label="salesStart" source="startDateTime" />
         <DateField label="salesEnd" source="endDateTime" />
         <TextField label="make" source="vehicle.brandLabel" />

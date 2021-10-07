@@ -5,10 +5,11 @@ import {
   TextField,
   DateField,
   useTranslate,
+  SelectField,
 } from "react-admin";
 import { ListActions, exporter } from "./VehiclesExport";
 import { VehiclesFilter } from "./VehiclesFilter";
-
+import fuel from "../assets/choices/fuel";
 export const Vehicles = (props) => {
   const translate = useTranslate();
   return (
@@ -28,7 +29,7 @@ export const Vehicles = (props) => {
         <TextField label="make" source="brandLabel" />
         <TextField label="model" source="modelLabel" />
         <TextField label="version" source="versionLabel" />
-        <TextField label="fuelLabel" source="fuelLabel" />
+        <SelectField source="fuelLabel" label="fuelLabel" choices={fuel} />
         <TextField label="mileage" source="mileage" />
         <TextField
           label="firstRegistrationDate"

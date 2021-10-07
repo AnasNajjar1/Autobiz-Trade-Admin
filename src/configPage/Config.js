@@ -10,7 +10,7 @@ import {
   ArrayInput,
   FormTab,
 } from "react-admin";
-import offerTypes from "../assets/choices/offerType";
+import {offerTypeAuction} from "../assets/choices/offerType";
 import auctionDateChoices from "../assets/choices/auctionDateChoices";
 import salesType from "../assets/choices/salesType";
 import auctionSelection from "../assets/choices/auctionSelection";
@@ -22,7 +22,7 @@ export const EditConfig = (props) => {
     return (
       <Edit {...props}>
         <TabbedForm submitOnEnter={false}>
-          {offerTypes.map((offerType) => (
+          {offerTypeAuction.map((offerType) => (
             <Auction {...props} offerType={offerType.id} />
           ))}
         </TabbedForm>
@@ -33,7 +33,7 @@ export const EditConfig = (props) => {
     return (
       <Edit {...props}>
         <TabbedForm submitOnEnter={false}>
-          {offerTypes.map((offerType) => (
+          {offerTypeAuction.map((offerType) => (
             <DocumentFilters {...props} offerType={offerType.id} />
           ))}
         </TabbedForm>
