@@ -20,7 +20,6 @@ export const Vehicles = (props) => {
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<ListActions />}
-      exporter={exporter}
     >
       <Datagrid rowClick="show">
         <TextField label="vehicleId" source="id" />

@@ -1,15 +1,10 @@
-import React, { cloneElement } from "react";
-import {
-  downloadCSV,
-  TopToolbar,
-  CreateButton,
-  ExportButton,
-  useListContext,
-  sanitizeListRestProps,
-} from "react-admin";
+import React from "react";
+import { downloadCSV, TopToolbar } from "react-admin";
 import jsonExport from "jsonexport/dist";
 import moment from "moment";
-import _ from 'lodash'
+import _ from "lodash";
+import ExportButtonCustom from "../components/ExportButtonCustom";
+import { getCreatedAtInterval } from "../utils/exportFile";
 
 export const exporter = (posts) => {
   jsonExport(
@@ -68,36 +63,27 @@ export const exporter = (posts) => {
 };
 
 export const ListActions = (props) => {
-  const { className, filters, ...rest } = props;
-  const {
-    currentSort,
-    resource,
-    displayedFilters,
-    filterValues,
-    basePath,
-    showFilter,
-    total,
-  } = useListContext();
-  const date = new Date();
-  const from = moment(date).subtract(4, "months").format("YYYY-MM-DD HH:mm:ss");
-  const to = moment(date).format("YYYY-MM-DD HH:mm:ss");
-  filterValues.createdAtInterval = [from, to];
+  const { className, currentSort, resource, filterValues, total } = props;
+  const { startDateTimeMin, endDateTimeMax } = filterValues;
+
+  const createdAtInterval = getCreatedAtInterval(
+    startDateTimeMin,
+    endDateTimeMax
+  );
+  const filterPermanent = {
+    startDateTimeMin: null,
+    endDateTimeMax: null,
+    createdAtInterval,
+  };
   return (
-    <TopToolbar className={className} {...sanitizeListRestProps(rest)}>
-      {filters &&
-        cloneElement(filters, {
-          resource,
-          showFilter,
-          displayedFilters,
-          filterValues,
-          context: "button",
-        })}
-      <ExportButton
+    <TopToolbar className={className}>
+      <ExportButtonCustom
         disabled={total === 0}
         resource={resource}
         sort={currentSort}
-        filterValues={filterValues}
+        filterPermanent={filterPermanent}
         maxResults={5000}
+        exporter={exporter}
       />
     </TopToolbar>
   );

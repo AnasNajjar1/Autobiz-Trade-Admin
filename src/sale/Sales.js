@@ -40,7 +40,6 @@ export const Sales = (props) => {
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<SalesActions />}
-      exporter={exporter}
     >
       <Datagrid>
         <TextField label="saleId" source="id" />
