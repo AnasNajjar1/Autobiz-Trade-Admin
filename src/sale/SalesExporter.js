@@ -7,6 +7,7 @@ import { Box, Button } from "@material-ui/core";
 import { FormatColorResetTwoTone } from "@material-ui/icons";
 import ExportButtonCustom from "../components/ExportButtonCustom";
 import { getCreatedAtInterval } from "../utils/exportFile";
+
 export const exporter = (posts) => {
   jsonExport(
     posts,
@@ -99,12 +100,12 @@ export const exporter = (posts) => {
         Object: function (value, name) {
           if (value.startDateTime) {
             value.startDateTime = moment(value.startDateTime).format(
-              "YYYY-MM-DD HH:MM:SS"
+              "YYYY-MM-DD HH:mm:ss"
             );
           }
           if (value.endDateTime) {
             value.endDateTime = moment(value.endDateTime).format(
-              "YYYY-MM-DD  HH:MM:SS"
+              "YYYY-MM-DD  HH:mm:ss"
             );
           }
           if (value.group === null) {
@@ -117,6 +118,8 @@ export const exporter = (posts) => {
             "carcheckId",
             "expressSale",
             "vehicleId",
+            "bestOffer",
+            "bestOfferType",
           ]);
           return value;
         },

@@ -5,12 +5,20 @@ import {
   useRefresh,
   useNotify,
   useUnselectAll,
+  downloadCSV,
+  ExportButton,
+  showNotification,
+  BulkExportButton,
 } from "react-admin";
 import { API } from "aws-amplify";
 import { Button } from "@material-ui/core";
 import { FileCopy } from "@material-ui/icons";
 import ActionUpdate from "@material-ui/icons/Edit";
 import UpdateValidationStatusDialog from "./UpdateValidationStatusDialog";
+import jsonExport from "jsonexport/dist";
+import { t } from "autobiz-translate";
+import _ from "lodash";
+import moment from "moment";
 
 export const BulkActionButtons = (props) => {
   const translate = useTranslate();
@@ -72,6 +80,142 @@ export const BulkActionButtons = (props) => {
     refresh();
   };
 
+  const exporter = async (sales) => {
+    try {
+      jsonExport(
+        sales,
+        {
+          headers: [
+            "id",
+            "vehicle.fileNumber",
+            "group.name",
+            "vehicle.registration",
+            "vehicle.brandLabel",
+            "vehicle.modelLabel",
+            "vehicle.pointofsale.name",
+            "startDateTime",
+            "endDateTime",
+            "auctionReservePrice",
+            "immediatePurchasePrice",
+            "countOffers",
+            "bestOffer",
+            "bestOfferType",
+            "bestOffererDetails.fullName",
+            "bestOffererDetails.email",
+            "bestOffererDetails.phoneNumber",
+          ],
+          rename: [
+            t("saleId"),
+            t("fileNumber"),
+            t("nameGroup"),
+            t("licencePlate"),
+            t("make"),
+            t("model"),
+            t("pointOfSales"),
+            t("startDateTime"),
+            t("endDateTime"),
+            t("reservePrice"),
+            t("immediatePurchasePrice"),
+            t("countOffers"),
+            t("bestOffer"),
+            t("bestOfferType"),
+            t("bestOffererName"),
+            t("bestOffererMail"),
+            t("bestOffererPhoneNumber"),
+          ],
+          typeHandlers: {
+            Object: function (value, name) {
+              if (value.group === null) {
+                value.group = { name: "" };
+              }
+
+              if (value.auctionReservePrice === null) {
+                value.auctionReservePrice = "-";
+              } else if (value.auctionReservePrice >= 0) {
+                value.auctionReservePrice = `${value.auctionReservePrice} €`;
+              }
+
+              if (value.immediatePurchasePrice === 0) {
+                value.immediatePurchasePrice = "-";
+              } else if (value.immediatePurchasePrice > 0) {
+                value.immediatePurchasePrice = `${value.immediatePurchasePrice} €`;
+              }
+
+              if (value.bestOffer) {
+                value.bestOffer = `${value.bestOffer} €`;
+              }
+
+              if (value.startDateTime) {
+                value.startDateTime = moment(value.startDateTime).format(
+                  "YYYY-MM-DD HH:mm:ss"
+                );
+              }
+              if (value.endDateTime) {
+                value.endDateTime = moment(value.endDateTime).format(
+                  "YYYY-MM-DD  HH:mm:ss"
+                );
+              }
+              if (parseInt(value.countOffers) === 0) {
+                value.countOffers = "0";
+              }
+
+              const valueToRemove = [
+                "winner",
+                "vehicleId",
+                "validationStatus",
+                "uuid",
+                "url",
+                "supplyType",
+                "status",
+                "requestWinner",
+                "ownerId",
+                "listId",
+                "groupId",
+                "expressSale",
+                "deleteWinner",
+                "countAuctions",
+                "commentInt",
+                "comment",
+                "carcheckId",
+                "auctionStepPrice",
+                "auctionStartPrice",
+                "acceptSubmission",
+                "acceptAuction",
+                "acceptImmediatePurchase",
+                "vehicle.id",
+                "vehicle.versionLabel",
+                "vehicle.fuelLabel",
+                "vehicle.mileage",
+                "vehicle.firstRegistrationDate",
+                "vehicle.pointofsale.city",
+                "vehicle.pointofsale.zipCode",
+                "vehicle.pointofsale.country",
+                "vehicle.b2cMarketValue",
+                "vehicle.standardMileage",
+                "vehicle.dpaProAmt",
+                "vehicle.salesSpeedName",
+                "bestOfferer",
+                "customBestOffer",
+                "maxOfferAmount",
+              ];
+
+              if (value.bestOffererDetails === null) {
+                valueToRemove.push("bestOffererDetails");
+              }
+              value = _.omit(value, valueToRemove);
+              return value;
+            },
+          },
+        },
+        (err, csv) => {
+          downloadCSV(csv, "SaleSelection");
+        }
+      );
+    } catch (error) {
+      showNotification(error);
+    }
+  };
+
   return (
     <>
       <UpdateValidationStatusDialog
@@ -80,6 +224,11 @@ export const BulkActionButtons = (props) => {
         handleConfirm={handleConfirm}
         handleClose={() => handleClick(false)}
         handleChange={handleChange}
+      />
+      <BulkExportButton
+        resource={props.resource}
+        selectedIds={props.selectedIds}
+        exporter={exporter}
       />
       <Button
         size="small"
