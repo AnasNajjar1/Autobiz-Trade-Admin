@@ -19,9 +19,10 @@ import { withStyles } from "@material-ui/core/styles";
 import { TRADE_URL } from "../config";
 import Stars from "@material-ui/icons/Stars";
 import FlashOn from "@material-ui/icons/FlashOn";
-import { exporter, SalesActions } from "./SalesExporter";
+import { SalesActions } from "./SalesExporter";
 import saleStatus from "../assets/choices/saleStatus";
 import salesType from "../assets/choices/salesType";
+import { BulkActionButtons } from "./BulkActionButton";
 const styles = {
   link: {
     color: "#9097ac",
@@ -40,6 +41,7 @@ export const Sales = (props) => {
       perPage={25}
       sort={{ field: "id", order: "DESC" }}
       actions={<SalesActions />}
+      bulkActionButtons={<BulkActionButtons />}
     >
       <Datagrid>
         <TextField label="saleId" source="id" />
@@ -48,11 +50,7 @@ export const Sales = (props) => {
         <TextField label="registration" source="vehicle.registration" />
         <TextField label="validationStatus" source="validationStatus" />
         <SelectField source="status" label="status" choices={saleStatus} />
-        <SelectField
-          source="supplyType"
-          label="saleType"
-          choices={salesType}
-        />
+        <SelectField source="supplyType" label="saleType" choices={salesType} />
         <DateField label="salesStart" source="startDateTime" />
         <DateField label="salesEnd" source="endDateTime" />
         <TextField label="make" source="vehicle.brandLabel" />
@@ -69,7 +67,6 @@ export const Sales = (props) => {
           source="expressSale"
           TrueIcon={FlashOn}
         />
-
         <LinkRecord label="urlAds" source="uuid" />
         <LinkToRelatedOffers />
         <ShowButton />
