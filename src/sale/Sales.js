@@ -48,12 +48,11 @@ export const Sales = (props) => {
         <TextField label="vehicleId" source="vehicle.id" />
         <TextField label="fileNumber" source="vehicle.fileNumber" />
         <TextField label="registration" source="vehicle.registration" />
-        <SelectField source="status" label="status" choices={saleStatus} />
+        <TextField label="make" source="vehicle.brandLabel" />
+        <TextField label="model" source="vehicle.modelLabel" />
         <SelectField source="supplyType" label="saleType" choices={salesType} />
         <DateField label="salesStart" source="startDateTime" />
         <DateField label="salesEnd" source="endDateTime" />
-        <TextField label="make" source="vehicle.brandLabel" />
-        <TextField label="model" source="vehicle.modelLabel" />
         <TextField label="pointOfSale" source="vehicle.pointofsale.name" />
         <BooleanField
           label="requestWinner"
