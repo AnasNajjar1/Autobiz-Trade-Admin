@@ -21,7 +21,8 @@ exports.TRADE_URL = autobizTradeUlrs[ENV];
 const translationBucket = {
   local: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
   dev: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
-  staging: "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
+  staging:
+    "https://translations-host-dev.s3-eu-west-1.amazonaws.com/trade-admin",
   ppr: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-admin",
   prod: "https://translations-host-prod.s3-eu-west-1.amazonaws.com/trade-admin",
 };
@@ -29,3 +30,12 @@ const translationBucket = {
 exports.TRANSLATION_BUCKET = translationBucket[ENV];
 
 exports.LANGUAGES = ["fr", "en", "es", "de", "it", "pt"];
+
+const domains = {
+  local: "localhost",
+  dev: ".shakazoola.com",
+  staging: ".shakazoola.com",
+  prod: ".autobiz.com",
+};
+
+exports.domain = domains[ENV];
