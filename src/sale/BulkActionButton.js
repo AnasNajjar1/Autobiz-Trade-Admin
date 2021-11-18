@@ -28,7 +28,7 @@ export const BulkActionButtons = (props) => {
   const duplicateSale = async () => {
     recordIds.map(async (recordId) => {
       try {
-        const sale = await API.get("b2bPlateform", `/admin/sale/${recordId}`);
+        const sale = await API.get("b2bPlateform", `/v2/admin/sale/${recordId}`);
         if (
           ["CLOSED", "FINISHED", "ARCHIVED", "INACTIVE"].includes(sale.status)
         )
@@ -44,7 +44,7 @@ export const BulkActionButtons = (props) => {
     const result = await Promise.allSettled(
       recordIds.map(async (id) => {
         try {
-          const data = await API.put("b2bPlateform", `/admin/sale/${id}`, {
+          const data = await API.put("b2bPlateform", `/v2/admin/sale/${id}`, {
             body: {
               validationStatus,
             },
