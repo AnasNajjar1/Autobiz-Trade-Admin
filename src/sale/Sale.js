@@ -382,6 +382,13 @@ export const ShowSale = (props) => {
               >
                 <TextField source="email" />
               </ReferenceField>
+              <ReferenceField
+                label="Phone"
+                source="userId"
+                reference="facadeUser"
+              >
+                <TextField source="phoneNumber" />
+              </ReferenceField>
               *{record && record.requestWinner && <SetWinnerButton />}
               {record && record.deleteWinner && <DeletewinnerButton />}
             </Datagrid>
