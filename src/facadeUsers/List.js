@@ -8,9 +8,12 @@ import {
   Filter,
   TextInput,
   SelectInput,
+  Button,
+  Link,
 } from "react-admin";
 import { countryChoices } from "../assets/choices/country";
 import ButtonGroupUser from "./ButtonGroupUser";
+import ListButton from "./ListButton";
 
 const FacadeUsers = (props) => {
   const translate = useTranslate();
@@ -31,6 +34,7 @@ const FacadeUsers = (props) => {
         <TextField label="email" source="email" sortable={false} />
         <TextField label="groupUserId" source="groupUserId" sortable={false} />
         <ButtonGroupUser {...props} />
+        <ListButton {...props} />
       </Datagrid>
     </List>
   );

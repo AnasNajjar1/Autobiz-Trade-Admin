@@ -25,7 +25,8 @@ const OffersFilter = (props) => (
       source="fileNumberLike"
       defaultValue=""
       alwaysOn
-    />
+    /> 
+    <TextInput label="userId" source="userId" defaultValue="" alwaysOn />
     <SelectInput
       label="offerType"
       source="offerType"
