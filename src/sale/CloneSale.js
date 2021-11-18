@@ -31,7 +31,7 @@ export const CloneSale = (props) => {
 
   const getSales = async (saleId) => {
     try {
-      return await API.get("b2bPlateform", `/admin/sale/${saleId}`);
+      return await API.get("b2bPlateform", `/v2/admin/sale/${saleId}`);
     } catch (e) {
       console.log(e);
       return;
