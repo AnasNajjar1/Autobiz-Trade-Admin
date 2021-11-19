@@ -59,6 +59,7 @@ export const CloneSale = (props) => {
         defaultValue={{
           ...sale,
           endDateTime: null,
+          validationStatus : "DRAFT",
           startDateTime: startDate,
         }}
         redirect={redirect}
