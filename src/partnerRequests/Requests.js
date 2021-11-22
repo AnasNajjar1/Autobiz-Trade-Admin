@@ -38,6 +38,11 @@ export const Requests = (props) => {
         <TextField label="statusId" source="statusId" />
         <TextField label="comment" source="comment" />
         <TextField
+          label="Offer Comment"
+          source="offerComment"
+          cellClassName={classes.commentSaleStyle}
+        />
+        <TextField
           label="Sale Comment"
           source="saleComment"
           cellClassName={classes.commentSaleStyle}
