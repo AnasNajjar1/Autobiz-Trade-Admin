@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   TabbedShowLayout,
   Tab,
@@ -28,6 +28,8 @@ import {
   EditButton,
   minValue,
   useTranslate,
+  SaveButton,
+  Toolbar,
 } from "react-admin";
 import { parse } from "query-string";
 import supplyTypeChoices from "../assets/choices/supplyType";
@@ -43,15 +45,18 @@ import {
 } from "../components/CustomInput";
 import { LogActionLabel } from "../components/LogActionLabel";
 import { LogPanel } from "../components/LogPanel";
+
+//import { Button } from "@material-ui/core";
+import ConfirmUpdateValidationStatus from "./ConfirmUpdateValidationStatus";
+
 const styles = {
   link: {
     fontWeight: "bold",
     fontFamily: "Arial",
   },
 };
-
 export const EditSale = (props, { basePath, data, resource }) => {
-  const form = SaleForm("edit", null);
+  const form = SaleForm("edit", null, props);
   return (
     <Edit {...props} undoable={false}>
       {form}
@@ -67,13 +72,23 @@ export const CreateSale = (props) => {
   return <Create {...props}>{form}</Create>;
 };
 
-const SaleForm = (type, vehicleId) => {
+const SaleForm = (type, vehicleId, props) => {
   //const vehicleInfo = formData.vehicle && formData.vehicle.brandLabel;
+  const [validationStatus, setValidationStatus] = useState("");
+  const handleChange = (e) => setValidationStatus(e.target.value);
   return (
     <SimpleForm
+      {...props}
       validate={validateSale}
       submitOnEnter={false}
       defaultValue={saleDefaultValue}
+      toolbar={
+        type === "edit" ? (
+          <CustomToolbar validationStatus={validationStatus} />
+        ) : (
+          <DefaultToolBar />
+        )
+      }
     >
       {type === "edit" && <TextInput disabled source="id" label="saleId" />}
       {type === "edit" && <TextInput disabled source="status" label="status" />}
@@ -97,6 +112,7 @@ const SaleForm = (type, vehicleId) => {
         source="validationStatus"
         choices={validationStatusChoices}
         validate={[required()]}
+        onChange={handleChange}
       />
 
       <ReferenceInput
@@ -474,3 +490,41 @@ const saleDatesValidation = (value, allValues) => {
 };
 
 const validateSaleDates = [required(), saleDatesValidation];
+
+const CustomToolbar = (props) => {
+  const { validationStatus } = props;
+  const [open, setOpen] = useState(false);
+
+  const handleClick = () => {
+    if (validationStatus === "CANCELED") setOpen(true);
+    else return props.handleSubmit();
+  };
+
+  const handleDialogClose = () => setOpen(false);
+
+  const handleConfirm = () => {
+    setOpen(false);
+    return props.handleSubmit();
+  };
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  return (
+    <Toolbar {...props}>
+      <ConfirmUpdateValidationStatus
+        open={open}
+        onConfirm={handleConfirm}
+        onClose={handleDialogClose}
+        cancel={handleCancel}
+      />
+      <SaveButton handleSubmitWithRedirect={handleClick} />
+    </Toolbar>
+  );
+};
+
+const DefaultToolBar = (props) => (
+  <Toolbar {...props}>
+    <SaveButton />
+  </Toolbar>
+);

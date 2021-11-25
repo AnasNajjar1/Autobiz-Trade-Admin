@@ -63,7 +63,7 @@ export const BulkActionButtons = (props) => {
   const handleConfirm = async () => {
     setDisabledUpdateStatusButton(true);
     const errors = await updateValidationStatus();
-    errors.length > 0
+    Array.isArray(errors) && errors.length > 0
       ? notify(`Failed to update theses Sales ${errors.join(", ")}`, "warning")
       : notify("Sales updated");
     setOpen(false);
