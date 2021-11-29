@@ -7,7 +7,7 @@ import {
   useTranslate,
   SelectField,
 } from "react-admin";
-import { ListActions, exporter } from "./VehiclesExport";
+import { ListActions } from "./VehiclesActions";
 import { VehiclesFilter } from "./VehiclesFilter";
 import fuel from "../assets/choices/fuel";
 export const Vehicles = (props) => {

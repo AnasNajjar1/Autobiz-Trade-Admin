@@ -20,7 +20,7 @@ import awsconfig from "./aws-config";
 import { muiThemeOverrides } from "./assets/theme/muiThemeOverrides";
 import MyLayout from "./Layout/MyLayout";
 import customRoutes from "./routes";
-
+import imports from "./import";
 import { TranslateProvider } from "autobiz-translate";
 import { stage } from "./utils/getStage";
 import { i18nProvider, locale } from "./utils/language";
@@ -48,6 +48,19 @@ const App = () => {
           <Resource name="vehicle" {...vehicle} />,
           <Resource name="sale" {...sale} />,
           <Resource name="offer" {...offer} />,
+          <Resource
+            name="dashbordImport"
+            key="dashbordImport"
+            options={{ label: "dashbordImport", isMenuParent: true }}
+          />,
+          <Resource
+            name="importVehicle"
+            options={{
+              label: "importVehicleSale",
+              menuParent: "dashbordImport",
+            }}
+            {...imports}
+          />,
           <Resource name="facadeCarcheck" {...facadeCarcheck} />,
           <Resource name="partnerRequests" {...partnerRequests} />,
           <Resource name="partner" />,
