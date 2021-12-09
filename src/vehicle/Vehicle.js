@@ -577,6 +577,13 @@ const VehicleForm = (type) => {
           choices={salesSpeedNameChoices}
         />
       </FormTab>
+      <FormTab label="frevo">
+        <TextInput
+          label="reconditioningCostsMerchant"
+          source="reconditioningCostsMerchant"
+          validate={validateReconditioningCosts}
+        />
+      </FormTab>
     </TabbedForm>
   );
 };
@@ -639,4 +646,8 @@ const validateMonth = regex(new RegExp("^[0-9]{4}-[0-9]{2}$"), "Wrong Format");
 const validateColor = regex(
   new RegExp("^[a-zA-ZàÀâÂäÄáÁéÉèÈêÊëËìÌîÎïÏòÒôÔöÖùÙûÛüÜçÇ’'ñ0-9 ]*$"),
   "Wrong Format Color"
+);
+const validateReconditioningCosts = regex(
+  new RegExp("^[0-9]+$"),
+  "Wrong Format"
 );
