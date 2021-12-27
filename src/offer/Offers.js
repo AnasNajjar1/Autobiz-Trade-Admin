@@ -13,11 +13,20 @@ import {
   SelectInput,
   DateInput,
   SelectField,
+  FunctionField,
 } from "react-admin";
 import { countryChoices } from "../assets/choices/country";
 import { exporter, ListActions } from "./OffersExporter";
-import { offerType} from "../assets/choices/offerType";
+import { offerType } from "../assets/choices/offerType";
 import saleStatus from "../assets/choices/saleStatus";
+import Close from "@material-ui/icons/Close";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+  numberField: {
+    fontWeight: "bold",
+  },
+});
 const OffersFilter = (props) => (
   <Filter {...props}>
     <TextInput
@@ -25,7 +34,13 @@ const OffersFilter = (props) => (
       source="fileNumberLike"
       defaultValue=""
       alwaysOn
-    /> 
+    />
+    <TextInput
+      label="licencePlate"
+      source="registrationLike"
+      defaultValue=""
+      alwaysOn
+    />
     <TextInput label="userId" source="userId" defaultValue="" alwaysOn />
     <SelectInput
       label="offerType"
@@ -69,6 +84,8 @@ const OffersFilter = (props) => (
 
 export const Offers = (props) => {
   const translate = useTranslate();
+  const classes = useStyles();
+
   return (
     <List
       {...props}
@@ -81,66 +98,68 @@ export const Offers = (props) => {
       <Datagrid>
         <TextField label="id" source="id" />
         <TextField label="fileNumber" source="sale.vehicle.fileNumber" />
+        <TextField label="licencePlate" source="sale.vehicle.registration" />
         <TextField label="make" source="sale.vehicle.brandLabel" />
         <TextField label="model" source="sale.vehicle.modelLabel" />
-        <TextField
-          label="pointOfSaleName"
-          source="sale.vehicle.pointofsale.name"
-        />
-
-        <NumberField
+        <FunctionField
           label="auctionStartPrice"
-          source="sale.auctionStartPrice"
-          options={{
-            minimumFractionDigits: 0,
-            style: "currency",
-            currency: "EUR",
-          }}
+          render={(record) =>
+            !record.sale.acceptAuction ? (
+              <Close />
+            ) : (
+              record.sale.auctionStartPrice.toLocaleString("fr-FR", {
+                minimumFractionDigits: 0,
+                style: "currency",
+                currency: "EUR",
+              })
+            )
+          }
         />
-        <NumberField
+        <FunctionField
           label="auctionReservePrice"
-          source="sale.auctionReservePrice"
-          emptyText="-"
-          options={{
-            minimumFractionDigits: 0,
-            style: "currency",
-            currency: "EUR",
-          }}
+          render={(record) =>
+            record.sale.acceptAuction && record.sale.auctionReservePrice ? (
+              record.sale.auctionReservePrice.toLocaleString("fr-FR", {
+                minimumFractionDigits: 0,
+                style: "currency",
+                currency: "EUR",
+              })
+            ) : (
+              <Close />
+            )
+          }
         />
-
-        <NumberField
+        <FunctionField
           label="immediatePurchasePrice"
-          source="sale.immediatePurchasePrice"
-          options={{
-            minimumFractionDigits: 0,
-            style: "currency",
-            currency: "EUR",
-          }}
+          render={(record) =>
+            !record.sale.acceptImmediatePurchase ? (
+              <Close />
+            ) : (
+              record.sale.immediatePurchasePrice.toLocaleString("fr-FR", {
+                minimumFractionDigits: 0,
+                style: "currency",
+                currency: "EUR",
+              })
+            )
+          }
         />
         <NumberField
           label="amount"
           source="amount"
+          className={classes.numberField}
           options={{
             minimumFractionDigits: 0,
             style: "currency",
             currency: "EUR",
           }}
         />
-
-        <SelectField
-          source="offerType"
-          label="offerType"
-          choices={offerType}
-        />
-
+        <SelectField source="offerType" label="offerType" choices={offerType} />
         <SelectField
           source="sale.salesStat.status"
           label="offerStatus"
           choices={saleStatus}
         />
         <DateField label="createdAt" source="createdAt" showTime />
-        <TextField label="userId" source="userId" />
-
         <ReferenceField
           label="userName"
           source="userId"
