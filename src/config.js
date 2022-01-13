@@ -39,3 +39,8 @@ const domains = {
 };
 
 exports.domain = domains[ENV];
+
+const recaptchaAccess = {
+  siteKeyInvisible: "6LeUv_UdAAAAAMAOPBg9tuc27JsNZGwaaBCq_Q1s",
+};
+exports.recaptchaAccess = recaptchaAccess;

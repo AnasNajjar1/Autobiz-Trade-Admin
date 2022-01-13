@@ -29,8 +29,13 @@ export default async (type, params) => {
 
     if (type === AUTH_LOGIN) {
       //storeTranslations();
-      const { username, password } = params;
-      await auth.login(username, password).catch(() => Promise.reject());
+      const { username, password, recaptchaRef } = params;
+      let recaptchaToken;
+      if (recaptchaRef?.current)
+        recaptchaToken = await recaptchaRef.current.executeAsync();
+      await auth
+        .login(username, password, recaptchaToken)
+        .catch(() => Promise.reject());
       return Promise.resolve();
     }
 
@@ -52,6 +57,7 @@ export default async (type, params) => {
         ? Promise.resolve("admin")
         : Promise.reject("user not allowed");
     }
+
     return Promise.reject("Unknown method");
   } catch (e) {
     console.log(e ? e : "error");
