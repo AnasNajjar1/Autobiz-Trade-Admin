@@ -67,6 +67,7 @@ export default async (type, resource, params) => {
     case "auction":
       return restProvider(type, "admin/" + resource, params);
     case "importVehicle":
+    case "importVehicleImages":
       return restProvider(type, "admin/import", params);
     case "sale":
     case "offer":

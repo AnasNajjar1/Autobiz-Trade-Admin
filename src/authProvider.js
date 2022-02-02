@@ -35,6 +35,9 @@ export default async (type, params) => {
         recaptchaToken = await recaptchaRef.current.executeAsync();
       await auth
         .login(username, password, recaptchaToken)
+        .then(async () => {
+          await auth.federateSignInCognito();
+        })
         .catch(() => Promise.reject());
       return Promise.resolve();
     }

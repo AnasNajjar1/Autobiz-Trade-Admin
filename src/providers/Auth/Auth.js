@@ -1,3 +1,4 @@
+import { Auth } from "aws-amplify";
 export default class AuthClass {
   constructor(authInstanceProvider) {
     this.auth = authInstanceProvider;
@@ -65,5 +66,25 @@ export default class AuthClass {
 
   isAdmin() {
     return this.auth.tokenData()?.user.role === "admin";
+  }
+
+  awsIdentity() {
+    return this.auth.awsData();
+  }
+
+  async federateSignInCognito() {
+    const awsIdentity = this.awsIdentity();
+    const { token, domain, tokenDuration, identityId } = awsIdentity;
+    Auth.federatedSignIn(
+      domain,
+      {
+        token,
+        identity_id: identityId,
+        expires_at: tokenDuration * 1000 + new Date().getTime(),
+      },
+      this.currentUser()
+    ).catch((e) => {
+      console.log("error", e.message);
+    });
   }
 }
