@@ -6,6 +6,7 @@ import {
   TextField,
   NumberField,
   DateField,
+  ReferenceField,
   useTranslate,
 } from "react-admin";
 
@@ -34,6 +35,9 @@ export const Requests = (props) => {
         <TextField label="vehicleId" source="vehicleId" />
         <TextField label="id" source="id" />
         <TextField label="fileNumber" source="fileNumber" />
+        <TextField label="registration" source="registration" />
+        <TextField label="make" source="brandLabel" />
+        <TextField label="model" source="modelLabel" />
         <TextField label="uuid" source="uuid" />
         <TextField label="statusId" source="statusId" />
         <TextField label="comment" source="comment" />
@@ -50,6 +54,7 @@ export const Requests = (props) => {
         <TextField label="status" source="statusName" />
         <TextField label="partner" source="partnerName" />
         <NumberField
+          label="value"
           source="value"
           options={{
             minimumFractionDigits: 0,
@@ -63,6 +68,22 @@ export const Requests = (props) => {
           showTime
         />
         <DateField label="createdAt" source="createdAt" showTime />
+        <ReferenceField
+          label="createdBy"
+          source="createdBy"
+          reference="facadeUser"
+          sortable={false}
+        >
+          <TextField source="name" />
+        </ReferenceField>
+        <ReferenceField
+          label="pointOfSale"
+          source="pointOfSaleId"
+          reference="pointOfSale"
+          sortable={false}
+        >
+          <TextField source="name" />
+        </ReferenceField>
       </Datagrid>
     </List>
   );

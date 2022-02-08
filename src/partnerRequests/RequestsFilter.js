@@ -1,5 +1,10 @@
 import React from "react";
-import { TextInput, Filter } from "react-admin";
+import {
+  TextInput,
+  Filter,
+  ReferenceInput,
+  AutocompleteInput,
+} from "react-admin";
 const RequestsFilter = (props) => {
   return (
     <Filter {...props}>
@@ -11,12 +16,22 @@ const RequestsFilter = (props) => {
         resettable
       />
       <TextInput
-        label="vehicleId"
-        source="vehicleId"
+        label="registration"
+        source="registrationLike"
         defaultValue=""
         alwaysOn
-        resettable
       />
+      <TextInput label="userId" source="createdBy" defaultValue="" alwaysOn />
+      <ReferenceInput
+        label="pointOfSaleName"
+        source="pointOfSaleId"
+        reference="pointOfSale"
+        sort={{ field: "name", order: "ASC" }}
+        perPage={1000}
+        alwaysOn
+      >
+        <AutocompleteInput optionText="name" />
+      </ReferenceInput>
     </Filter>
   );
 };
