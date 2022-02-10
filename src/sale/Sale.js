@@ -31,6 +31,7 @@ import {
   SaveButton,
   Toolbar,
 } from "react-admin";
+import RemoveIcon from "@material-ui/icons/Remove";
 import { parse } from "query-string";
 import supplyTypeChoices from "../assets/choices/supplyType";
 import validationStatusChoices from "../assets/choices/validationStatus";
@@ -266,6 +267,10 @@ export const ShowSale = (props) => {
   const vehicleId = record && record.vehicle.id;
   const groupId = record && record.groupId;
   const listId = record && record.listId;
+  const acceptAuction = record && record.acceptAuction;
+  const acceptImmediatePurchase = record && record.acceptImmediatePurchase;
+  const acceptSubmission = record && record.acceptSubmission;
+  const expressSale = record && record.expressSale;
 
   const translate = useTranslate();
 
@@ -279,36 +284,77 @@ export const ShowSale = (props) => {
           <TextField source="supplyType" source="supplyType" />
           <DateField label="salesStart" source="startDateTime" showTime />
           <DateField label="salesEnd" source="endDateTime" showTime />
-          <BooleanField source="acceptAuction" label="acceptAuction" />
+          <BooleanField
+            source="acceptAuction"
+            label="acceptAuction"
+            color={acceptAuction ? "secondary" : "error"}
+          />
           <BooleanField
             source="acceptImmediatePurchase"
             label="acceptImmediatePurchase"
+            color={acceptImmediatePurchase ? "secondary" : "error"}
           />
-          <BooleanField source="acceptSubmission" label="acceptSubmission" />
-          <NumberField
-            source="auctionStartPrice"
-            label="auctionStartPrice"
-            locales="fr-FR"
-            options={{ style: "currency", currency: "EUR" }}
+          <BooleanField
+            source="acceptSubmission"
+            label="acceptSubmission"
+            color={acceptSubmission ? "secondary" : "error"}
           />
-          <NumberField
-            source="auctionStepPrice"
-            label="auctionStepPrice"
-            locales="fr-FR"
-            options={{ style: "currency", currency: "EUR" }}
-          />
-          <NumberField
-            source="auctionReservePrice"
-            label="auctionReservePrice"
-            locales="fr-FR"
-            options={{ style: "currency", currency: "EUR" }}
-          />
-          <NumberField
-            source="immediatePurchasePrice"
-            label="immediatePurchasePrice"
-            locales="fr-FR"
-            options={{ style: "currency", currency: "EUR" }}
-          />
+          {acceptAuction ? (
+            <NumberField
+              source="auctionStartPrice"
+              label="auctionStartPrice"
+              locales="fr-FR"
+              options={{ style: "currency", currency: "EUR" }}
+            />
+          ) : (
+            <BooleanField
+              label="auctionStartPrice"
+              source="acceptAuction"
+              FalseIcon={RemoveIcon}
+            />
+          )}
+          {acceptAuction ? (
+            <NumberField
+              source="auctionStepPrice"
+              label="auctionStepPrice"
+              locales="fr-FR"
+              options={{ style: "currency", currency: "EUR" }}
+            />
+          ) : (
+            <BooleanField
+              label="auctionStepPrice"
+              source="acceptAuction"
+              FalseIcon={RemoveIcon}
+            />
+          )}
+          {acceptAuction ? (
+            <NumberField
+              source="auctionReservePrice"
+              label="auctionReservePrice"
+              locales="fr-FR"
+              options={{ style: "currency", currency: "EUR" }}
+            />
+          ) : (
+            <BooleanField
+              label="auctionReservePrice"
+              source="acceptAuction"
+              FalseIcon={RemoveIcon}
+            />
+          )}
+          {acceptImmediatePurchase ? (
+            <NumberField
+              source="immediatePurchasePrice"
+              label="immediatePurchasePrice"
+              locales="fr-FR"
+              options={{ style: "currency", currency: "EUR" }}
+            />
+          ) : (
+            <BooleanField
+              label="immediatePurchasePrice"
+              source="acceptImmediatePurchase"
+              FalseIcon={RemoveIcon}
+            />
+          )}
 
           <TextField label="comment" source="comment" />
 
@@ -324,7 +370,11 @@ export const ShowSale = (props) => {
             </ReferenceField>
           )}
 
-          <BooleanField source="expressSale" label="expressSale" />
+          <BooleanField
+            source="expressSale"
+            label="expressSale"
+            color={expressSale ? "secondary" : "error"}
+          />
           <BooleanField source="carcheckId" label="carcheckId" />
 
           <ReferenceField
