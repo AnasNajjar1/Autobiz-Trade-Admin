@@ -24,9 +24,12 @@ import imports from "./import";
 import { TranslateProvider } from "autobiz-translate";
 import { stage } from "./utils/getStage";
 import { i18nProvider, locale } from "./utils/language";
+import LoginFormCustom from "./login/LoginFormCustom";
 Amplify.configure(awsconfig);
 
-const MyLoginPage = () => <Login backgroundImage="/background.jpg" />;
+const LoginPage = () => (
+  <Login backgroundImage="/background.jpg" children={<LoginFormCustom redirectTo="/" />} />
+);
 
 const App = () => {
   return (
@@ -37,10 +40,10 @@ const App = () => {
     >
       <Admin
         theme={muiThemeOverrides}
+        loginPage={LoginPage}
         dataProvider={dataProvider}
         authProvider={authProvider}
         customRoutes={customRoutes}
-        loginPage={MyLoginPage}
         appLayout={MyLayout}
         i18nProvider={i18nProvider()}
       >
