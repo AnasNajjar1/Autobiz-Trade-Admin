@@ -109,7 +109,6 @@ const Menu = ({
    * Pushing the orphan resources for rendering
    * below other menu items
    */
-  console.log(resources);
   resRenderGroup.push(
     resources
       .filter(
