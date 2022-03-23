@@ -34,10 +34,10 @@ export const Requests = (props) => {
       <Datagrid>
         <TextField label="vehicleId" source="vehicleId" />
         <TextField label="id" source="id" />
-        <TextField label="fileNumber" source="fileNumber" />
-        <TextField label="registration" source="registration" />
-        <TextField label="make" source="brandLabel" />
-        <TextField label="model" source="modelLabel" />
+        <TextField label="fileNumber" source="vehicle.fileNumber" />
+        <TextField label="registration" source="vehicle.registration" />
+        <TextField label="make" source="vehicle.brandLabel" />
+        <TextField label="model" source="vehicle.modelLabel" />
         <TextField label="uuid" source="uuid" />
         <TextField label="statusId" source="statusId" />
         <TextField label="comment" source="comment" />
@@ -76,14 +76,7 @@ export const Requests = (props) => {
         >
           <TextField source="name" />
         </ReferenceField>
-        <ReferenceField
-          label="pointOfSale"
-          source="pointOfSaleId"
-          reference="pointOfSale"
-          sortable={false}
-        >
-          <TextField source="name" />
-        </ReferenceField>
+        <TextField label="pointOfSaleName" source="vehicle.pointofsale.name" />
       </Datagrid>
     </List>
   );
