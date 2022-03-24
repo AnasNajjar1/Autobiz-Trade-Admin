@@ -7,20 +7,43 @@ import {
   Filter,
   SelectInput,
   useTranslate,
+  ReferenceInput,
+  AutocompleteInput,
 } from "react-admin";
 
 import { countryChoices } from "../assets/choices/country";
+import _ from "lodash";
 
-const PointOfSaleFilter = (props) => (
-  <Filter {...props}>
-    <SelectInput
-      label="country"
-      source="country"
-      choices={countryChoices}
-      alwaysOn
-    ></SelectInput>
-  </Filter>
-);
+const PointOfSaleFilter = (props) => {
+  const companiesChoices = getCompaniesChoices(props.data);
+  return (
+    <Filter {...props}>
+      <SelectInput
+        label="country"
+        source="country"
+        choices={countryChoices}
+        alwaysOn
+      ></SelectInput>
+      <ReferenceInput
+        label="name"
+        source="id"
+        reference="pointOfSale"
+        sort={{ field: "name", order: "ASC" }}
+        perPage={1000}
+        alwaysOn
+      >
+        <AutocompleteInput optionValue="id" optionText="name" />
+      </ReferenceInput>
+      <SelectInput
+        label="company"
+        source="company"
+        reference="pointOfSale"
+        choices={companiesChoices}
+        alwaysOn
+      ></SelectInput>
+    </Filter>
+  );
+};
 
 export const PointOfSales = (props) => {
   const translate = useTranslate();
@@ -41,5 +64,12 @@ export const PointOfSales = (props) => {
         <TextField label="country" source="country" />
       </Datagrid>
     </List>
+  );
+};
+
+const getCompaniesChoices = (pointOfSales) => {
+  return _.map(
+    _.filter(pointOfSales, (pointOfSale) => pointOfSale.company),
+    (pointOfSale) => ({ id: pointOfSale.company, name: pointOfSale.company })
   );
 };
