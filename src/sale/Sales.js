@@ -78,7 +78,14 @@ const LinkRecord = withStyles(styles)(({ classes, record }) => {
   if (
     record &&
     record.status &&
-    ["LIVE", "CLOSED", "FINISHED", "INACTIVE"].includes(record.status)
+    [
+      "LIVE",
+      "CLOSED",
+      "FINISHED",
+      "INACTIVE",
+      "SCHEDULED",
+      "ARCHIVED",
+    ].includes(record.status)
   )
     return (
       <a
